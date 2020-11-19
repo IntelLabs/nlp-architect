@@ -52,8 +52,6 @@ def get_trainer(model, data, experiment, exp_id, log_dir=None, gpus=None, metric
     num_gpus = len(gpus) if isinstance(gpus, list) else gpus
     return pl.Trainer(
         logger=logger,
-        log_save_interval=10,
-        row_log_interval=10,
         accumulate_grad_batches=model.hparams.accumulate_grad_batches,
         gpus=gpus,
         max_epochs=model.hparams.max_epochs,
@@ -69,6 +67,5 @@ def get_trainer(model, data, experiment, exp_id, log_dir=None, gpus=None, metric
         deterministic=True,
         limit_train_batches=limit_data,
         limit_val_batches=limit_data,
-        limit_test_batches=limit_data,
-        precision=16
+        limit_test_batches=limit_data
     )

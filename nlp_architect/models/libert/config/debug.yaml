@@ -1,9 +1,9 @@
 max_epochs: 1
 model_type: libert # bert or libert
-base_init: [false]
+base_init: [false, true]
 
-data: ld dl # relative to nlp_architect/models/li_bert/data/preprocessed_conll
-limit_data: 0.1
+data: ld # relative to nlp_architect/models/li_bert/data/preprocessed_conll
+limit_data: 0.2
 splits: 2
 seeds: [58] #, 42, 23, 17]
 tag: # optional: name this experiment version
@@ -12,7 +12,7 @@ baseline_str: libert_rnd_init
 baseline_version: version_baseline
 
 num_workers: 44
-gpus: [0, 1]
+gpus: [1]
 parallel: false
 
 li_layer: #5
@@ -47,4 +47,5 @@ tokenizer_name: null
 val_check_interval: 1.0
 warmup_steps: 0
 weight_decay: 0.0
+lr_scheduler: linear
 logger: true

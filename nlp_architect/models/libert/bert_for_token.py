@@ -39,6 +39,7 @@ from transformers import (
     get_linear_schedule_with_warmup,
     AdamW
 )
+
 import absa_utils
 from libert_model import LiBertForToken, LiBertConfig
 #from libert_model_14heads import LiBertForToken, LiBertConfig
@@ -49,6 +50,13 @@ MODEL_CONFIG = {
     'bert': (BertForTokenClassification, BertConfig, BertTokenizer),
     'libert': (LiBertForToken, LiBertConfig, BertTokenizer)
 }
+
+# update this and the import above to support new schedulers from transformers.optimization
+arg_to_scheduler = {
+    "linear": get_linear_schedule_with_warmup
+}
+arg_to_scheduler_choices = sorted(arg_to_scheduler.keys())
+arg_to_scheduler_metavar = "{" + ", ".join(arg_to_scheduler_choices) + "}"
 
 class BertForToken(pl.LightningModule):
     """Lightning module for BERT for token classification."""
@@ -117,34 +125,6 @@ class BertForToken(pl.LightningModule):
                 log.debug("Saving features into cached file %s", cached_features_file)
                 torch.save(features, cached_features_file)
 
-    def load_dataset(self, mode, batch_size):
-        "Load datasets. Called after prepare data."
-        cached_features_file = self._feature_file(mode)
-        log.debug("Loading features from cached file %s", cached_features_file)
-        features = torch.load(cached_features_file)
-        all_input_ids = torch.tensor([f.input_ids for f in features], dtype=torch.long)
-        all_attention_mask = torch.tensor([f.attention_mask for f in features], dtype=torch.long)
-        if features[0].token_type_ids is not None:
-            all_token_type_ids = torch.tensor([f.token_type_ids for f in features],
-                                              dtype=torch.long)
-        else:
-            all_token_type_ids = torch.tensor([0 for f in features], dtype=torch.long)
-        all_label_ids = torch.tensor([f.label_ids for f in features], dtype=torch.long)
-
-        tensors = [all_input_ids, all_attention_mask, all_token_type_ids, all_label_ids]
-
-        if self.model_type is LiBertForToken:
-            #### Attatch syntactic info ###
-            dep_heads = torch.tensor([f.dep_heads for f in features], dtype=torch.float)
-            tensors.append(dep_heads)
-
-            head_idx = torch.tensor([f.head_idx for f in features], dtype=torch.long)
-            tensors.append(head_idx)
-
-        shuffle = mode == 'train'
-        return DataLoader(TensorDataset(*tensors), batch_size=batch_size, shuffle=shuffle,
-                          num_workers=self.hparams.num_workers, pin_memory=True)
-
     @staticmethod
     def map_to_inputs(batch):
         inputs = {"input_ids": batch[0], "attention_mask": batch[1], "token_type_ids": batch[2],
@@ -161,8 +141,8 @@ class BertForToken(pl.LightningModule):
         outputs, detailed_loss = self(**inputs)
         cls_loss, aux_loss = detailed_loss
         loss = outputs[0]
-        tensorboard_logs = {'train_loss_step': loss, 'lr': self.lr_scheduler.get_last_lr()[-1], 
-        "train_cls_loss_step": cls_loss.detach().cpu(), "train_aux_loss_step": aux_loss.detach().cpu()}
+        tensorboard_logs = {'train_loss_step': loss, "train_cls_loss_step": cls_loss.detach().cpu(),
+                            "train_aux_loss_step": aux_loss.detach().cpu()}
         return {'loss': loss, 'log': tensorboard_logs, 'cls_loss': cls_loss, 'aux_loss': aux_loss}
 
     def training_epoch_end(self, outputs):
@@ -245,53 +225,85 @@ class BertForToken(pl.LightningModule):
         ret["log"] = results
         return ret, pred, target
 
+    def total_steps(self) -> int:
+        """The number of total training steps that will be run. Used for lr scheduler purposes."""
+        num_devices = max(1, self.hparams.gpus)  # TODO: consider num_tpu_cores
+        effective_batch_size = self.hparams.train_batch_size * self.hparams.accumulate_grad_batches * num_devices
+        return (self.dataset_size / effective_batch_size) * self.hparams.max_epochs
+
+    def get_lr_scheduler(self):
+        get_schedule_func = arg_to_scheduler[self.hparams.lr_scheduler]
+        scheduler = get_schedule_func(
+            self.opt, num_warmup_steps=self.hparams.warmup_steps, num_training_steps=self.total_steps()
+        )
+        scheduler = {"scheduler": scheduler, "interval": "step", "frequency": 1}
+        return scheduler
+
+    def setup(self, mode):
+        if mode == "test":
+            self.dataset_size = len(self.test_dataloader().dataset)
+        else:
+            self.train_loader = self.get_dataloader("train", self.hparams.train_batch_size, shuffle=True)
+            self.dataset_size = len(self.train_dataloader().dataset)
+
     def configure_optimizers(self):
-        "Prepare optimizer and schedule (linear warmup and decay)"
+        """Prepare optimizer and schedule (linear warmup and decay)"""
         model = self.model
         no_decay = ["bias", "LayerNorm.weight"]
         optimizer_grouped_parameters = [
             {
-                "params": [p for n, p in model.named_parameters() if
-                           not any(nd in n for nd in no_decay)],
+                "params": [p for n, p in model.named_parameters() if not any(nd in n for nd in no_decay)],
                 "weight_decay": self.hparams.weight_decay,
             },
             {
-                "params": [p for n, p in model.named_parameters() if
-                           any(nd in n for nd in no_decay)],
+                "params": [p for n, p in model.named_parameters() if any(nd in n for nd in no_decay)],
                 "weight_decay": 0.0,
-            }
+            },
         ]
-        optimizer = AdamW(optimizer_grouped_parameters, lr=self.hparams.learning_rate,
-                          eps=self.hparams.adam_epsilon)
+        optimizer = AdamW(
+            optimizer_grouped_parameters, lr=self.hparams.learning_rate, eps=self.hparams.adam_epsilon
+        )
         self.opt = optimizer
-        return [optimizer]
 
-    def optimizer_step(self, epoch, batch_idx, optimizer, optimizer_idx, second_order_closure=None,
-                       on_tpu=False, using_native_amp=False, using_lbfgs=False):
-        optimizer.step()
-        optimizer.zero_grad()
-        self.lr_scheduler.step()  # By default, PL will only step every epoch.
+        scheduler = self.get_lr_scheduler()
+
+        return [optimizer], [scheduler]
+
+    def get_dataloader(self, mode, batch_size, shuffle):
+        "Load datasets. Called after prepare data."
+        cached_features_file = self._feature_file(mode)
+        log.debug("Loading features from cached file %s", cached_features_file)
+        features = torch.load(cached_features_file)
+        all_input_ids = torch.tensor([f.input_ids for f in features], dtype=torch.long)
+        all_attention_mask = torch.tensor([f.attention_mask for f in features], dtype=torch.long)
+        if features[0].token_type_ids is not None:
+            all_token_type_ids = torch.tensor([f.token_type_ids for f in features],
+                                              dtype=torch.long)
+        else:
+            all_token_type_ids = torch.tensor([0 for f in features], dtype=torch.long)
+        all_label_ids = torch.tensor([f.label_ids for f in features], dtype=torch.long)
+
+        tensors = [all_input_ids, all_attention_mask, all_token_type_ids, all_label_ids]
+
+        if self.model_type is LiBertForToken:
+            #### Attatch syntactic info ###
+            dep_heads = torch.tensor([f.dep_heads for f in features], dtype=torch.float)
+            tensors.append(dep_heads)
+
+            head_idx = torch.tensor([f.head_idx for f in features], dtype=torch.long)
+            tensors.append(head_idx)
+
+        return DataLoader(TensorDataset(*tensors), batch_size=batch_size, shuffle=shuffle,
+                          num_workers=self.hparams.num_workers, pin_memory=True)
 
     def train_dataloader(self):
-        train_batch_size = self.hparams.train_batch_size
-        dataloader = self.load_dataset("train", train_batch_size)
-        gpus = self.hparams.gpus
-        num_gpus = len(gpus) if isinstance(gpus, list) else gpus
-        t_total = (
-            (len(dataloader.dataset) // (train_batch_size * max(1, num_gpus)))
-            // self.hparams.accumulate_grad_batches
-            * float(self.hparams.max_epochs)
-        )
-        self.lr_scheduler = get_linear_schedule_with_warmup(
-            self.opt, num_warmup_steps=self.hparams.warmup_steps, num_training_steps=t_total
-        )
-        return dataloader
+        return self.train_loader
 
     def val_dataloader(self):
-        return self.load_dataset("dev", self.hparams.eval_batch_size)
+        return self.get_dataloader("dev", self.hparams.eval_batch_size, shuffle=False)
 
     def test_dataloader(self):
-        return self.load_dataset("test", self.hparams.eval_batch_size)
+        return self.get_dataloader("test", self.hparams.eval_batch_size, shuffle=False)
 
     def _feature_file(self, mode):
         return os.path.join(
