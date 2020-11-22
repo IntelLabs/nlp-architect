@@ -32,8 +32,8 @@ from pathlib import Path
 
 LIBERT_DIR = Path(realpath(__file__)).parent
 
-A = 0.7
-B = 0.3
+# A = 0.7
+# B = 0.3
 HEADS_IGNORE_IDX = 0
 class LiBertConfig(BertConfig):
 
@@ -53,14 +53,14 @@ class LiBertForToken(BertForTokenClassification):
         self.bert = LiBertModel(config)
         self.rnd_init = config.rnd_init
 
-        if not self.rnd_init:
-            self.syn_head_classifier = nn.Linear(config.hidden_size, 22)
-
+        # if not self.rnd_init:
+        #     self.syn_head_classifier = nn.Linear(config.hidden_size, 22)
+        self.gamma = 0.5
 
     def forward(self, input_ids=None, attention_mask=None, token_type_ids=None, position_ids=None,
                 head_mask=None, inputs_embeds=None, labels=None, output_attentions=None,
                 output_hidden_states=None, parse=None, heads_idx=None):
-        outputs = self.bert(
+        outputs, aux_loss = self.bert(
             input_ids,
             attention_mask=attention_mask,
             token_type_ids=token_type_ids,
@@ -88,21 +88,23 @@ class LiBertForToken(BertForTokenClassification):
                     torch.tensor(loss_fct.ignore_index).type_as(labels)
                 )
 
+                classifier_loss = loss_fct(active_logits, active_labels)
                 if self.rnd_init:
-                    loss = loss_fct(active_logits, active_labels)
-                    classifier_loss, aux_loss = torch.tensor(0.0), torch.tensor(0.0)
+                    loss, aux_loss = classifier_loss, torch.tensor(0.0)
                 else:
                     #### syn_head loss stuff ####
-                    syn_head_logits = self.syn_head_classifier(sequence_output)
+                    # syn_head_logits = self.syn_head_classifier(sequence_output)
 
-                    active_syn_head_logits = syn_head_logits.view(-1, 22)
-                    active_syn_head_labels = torch.where(
-                        active_loss, heads_idx.view(-1),
-                        torch.tensor(HEADS_IGNORE_IDX).type_as(heads_idx)
-                    )
-                    classifier_loss = A * loss_fct(active_logits, active_labels)
-                    aux_loss = B * loss_fct(active_syn_head_logits, active_syn_head_labels)
-                    loss = classifier_loss + aux_loss
+                    # active_syn_head_logits = syn_head_logits.view(-1, 22)
+                    # active_syn_head_labels = torch.where(
+                    #     active_loss, heads_idx.view(-1),
+                    #     torch.tensor(HEADS_IGNORE_IDX).type_as(heads_idx)
+                    # )
+                    # classifier_loss = A * loss_fct(active_logits, active_labels)
+                    # aux_loss = B * loss_fct(active_syn_head_logits, active_syn_head_labels)
+                    # loss = classifier_loss + aux_loss
+
+                    loss = classifier_loss + self.gamma * aux_loss
                         
             else:
                 loss = loss_fct(logits.view(-1, self.num_labels), labels.view(-1))
@@ -110,7 +112,7 @@ class LiBertForToken(BertForTokenClassification):
             outputs = (loss,) + outputs
 
         detailed_loss = classifier_loss, aux_loss
-        return outputs, detailed_loss  # (loss), scores, (hidden_states), (attentions)
+        return outputs, detailed_loss  # ((loss), scores, (hidden_states), (attentions)), (classifier_loss, aux_loss))
 
 class LiBertModel(BertModel):
     def __init__(self, config):
@@ -172,7 +174,7 @@ class LiBertModel(BertModel):
             input_ids=input_ids, position_ids=position_ids, token_type_ids=token_type_ids,
             inputs_embeds=inputs_embeds
         )
-        encoder_outputs = self.encoder(
+        encoder_outputs, aux_loss = self.encoder(
             embedding_output,
             attention_mask=extended_attention_mask,
             head_mask=head_mask,
@@ -185,10 +187,9 @@ class LiBertModel(BertModel):
         sequence_output = encoder_outputs[0]
         pooled_output = self.pooler(sequence_output)
 
-        outputs = (sequence_output, pooled_output,) + encoder_outputs[
-            1:
-        ]  # add hidden_states and attentions if they are here
-        return outputs  # sequence_output, pooled_output, (hidden_states), (attentions)
+        outputs = (sequence_output, pooled_output,) + encoder_outputs[1:]  # add hidden_states and attentions if they are here
+
+        return outputs, aux_loss  # (sequence_output, pooled_output, (hidden_states), (attentions)), (aux_loss,)
 
 class LiBertEncoder(BertEncoder):
     def __init__(self, config):
@@ -213,7 +214,7 @@ class LiBertEncoder(BertEncoder):
             if self.all_layers or i == self.li_layer or i in self.li_layers:
                 parse_layer = parse
 
-            layer_outputs = bert_layer(
+            layer_outputs, aux_loss = bert_layer(
                 hidden_states=hidden_states,
                 attention_mask=attention_mask,
                 head_mask=head_mask[i],
@@ -236,7 +237,7 @@ class LiBertEncoder(BertEncoder):
             outputs = outputs + (all_hidden_states,)
         if output_attentions:
             outputs = outputs + (all_attentions,)
-        return outputs  # last-layer hidden state, (all hidden states), (all attentions)
+        return outputs, aux_loss  # (last-layer hidden state, (all hidden states), (all attentions)), (aux_loss,)
 
 class LiBertLayer(BertLayer):
     def __init__(self, config, layer_num):
