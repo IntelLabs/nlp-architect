@@ -1,6 +1,6 @@
 max_epochs: 10
 model_type: libert # bert or libert
-base_init: [true, false]
+baseline: [true, false]
 
 data: rl rd lr ld dr dl
 limit_data: 1.0
@@ -8,7 +8,7 @@ splits: 3
 seeds: [25, 26, 7]
 tag: syn_head_loss_relative # optional: name this experiment version
 metric: asp_f1
-baseline_str: libert_rnd_init
+baseline_str: libert_baseline
 baseline_version: version_baseline
 
 num_workers: 44
@@ -47,4 +47,5 @@ tokenizer_name: null
 val_check_interval: 1.0
 warmup_steps: 0
 weight_decay: 0.0
+lr_scheduler: linear
 logger: true

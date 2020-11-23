@@ -37,14 +37,14 @@ LOG_ROOT = LIBERT_DIR / 'logs'
 GPUS_LOG = LOG_ROOT / 'gpus'
 
 @ray.remote(max_calls=1)
-def run_data(task_idx, cfg_yaml, time, rnd_init, data, log_dir, metric):
+def run_data(task_idx, cfg_yaml, time, baseline, data, log_dir, metric):
     # Routing output to log files
     tasks_log_dir = log_dir / 'tasks'
     with open(tasks_log_dir / f'task_{task_idx}.log', 'a', encoding='utf-8') as log_file:
         with redirect_stdout(log_file):
             with redirect_stderr(log_file):
                 cfg = load_config(cfg_yaml)
-                cfg.rnd_init = str(rnd_init) == 'True'
+                cfg.baseline = str(baseline) == 'True'
                 cfg.gpus = 1
 
                 train_versions, test_versions = [], []
@@ -54,7 +54,7 @@ def run_data(task_idx, cfg_yaml, time, rnd_init, data, log_dir, metric):
 
                     cfg.data_dir = f'{data}_{split}'
                     model = BertForToken(cfg)
-                    model_str = f'{cfg.model_type}_rnd_init' if cfg.rnd_init else f'{cfg.model_type}'
+                    model_str = f'{cfg.model_type}_baseline' if cfg.baseline else f'{cfg.model_type}'
                     exper_str = f'{model_str}_seed_{seed}_split_{split}'
                     log.info(f"\n{'*' * 150}\n{' ' * 50}Run {run_i}/{len(runs)}: \
                         {data}, {exper_str}\n{'*' * 150}")
@@ -121,10 +121,10 @@ def main(config_yaml):
     set_as_latest(log_dir)
 
     # Setting up run configurations
-    run_list = product(cfg.base_init, cfg.data)
+    run_list = product(cfg.baseline, cfg.data)
     args_list = []
-    for task_idx, (rnd_init, data) in enumerate(run_list):
-        args = task_idx, config_yaml, exp_id, rnd_init, data, log_dir, cfg.metric
+    for task_idx, (baseline, data) in enumerate(run_list):
+        args = task_idx, config_yaml, exp_id, baseline, data, log_dir, cfg.metric
         args_list.append(args)
 
     # Launching Ray tasks
@@ -140,7 +140,7 @@ def main(config_yaml):
 
 def post_analysis(cfg, log_dir, exp_id):
     # Run significance tests if baseline exists and last run was on model
-    if cfg.do_predict and True in cfg.base_init and False in cfg.base_init:
+    if cfg.do_predict and True in cfg.baseline and False in cfg.baseline:
         significance_from_cfg(cfg=cfg, log_dir=log_dir, exp_id=exp_id)
 
     # Write summary table to CSV

@@ -18,6 +18,7 @@
 # pylint: disable=missing-module-docstring, missing-function-docstring, too-many-statements, too-many-instance-attributes
 
 import math
+from os.path import realpath
 from torch import nn
 import torch
 from torch.nn import CrossEntropyLoss
@@ -25,10 +26,16 @@ torch.multiprocessing.set_sharing_strategy('file_system')
 from transformers.modeling_bert import BertEncoder, BertLayer, \
         BertAttention, BertSelfAttention, BertSelfOutput, BertConfig
 from transformers import BertForTokenClassification, BertModel
+from pytorch_lightning import _logger as log
+from pathlib import Path
 
+
+LIBERT_DIR = Path(realpath(__file__)).parent
+
+A = 0.7
+B = 0.3
+HEADS_IGNORE_IDX = 0
 class LiBertConfig(BertConfig):
-    def __init__(self, **kwargs):
-        super().__init__()
 
     def add_extra_args(self, hparams):
         # pylint: disable=attribute-defined-outside-init
@@ -39,16 +46,20 @@ class LiBertConfig(BertConfig):
         self.duplicated_rels = hparams.duplicated_rels
         self.transpose = hparams.transpose
         self.li_layers = hparams.li_layers
-        self.fourteen_head = hparams.fourteen_head
 
 class LiBertForToken(BertForTokenClassification):
     def __init__(self, config):
         super(LiBertForToken, self).__init__(config)
         self.bert = LiBertModel(config)
+        self.baseline = config.baseline
+
+        if not self.baseline:
+            self.syn_head_classifier = nn.Linear(config.hidden_size, 22)
+
 
     def forward(self, input_ids=None, attention_mask=None, token_type_ids=None, position_ids=None,
                 head_mask=None, inputs_embeds=None, labels=None, output_attentions=None,
-                output_hidden_states=None, parse=None):
+                output_hidden_states=None, parse=None, heads_idx=None):
         outputs = self.bert(
             input_ids,
             attention_mask=attention_mask,
@@ -61,11 +72,11 @@ class LiBertForToken(BertForTokenClassification):
             parse=parse
         )
         sequence_output = outputs[0]
-
         sequence_output = self.dropout(sequence_output)
         logits = self.classifier(sequence_output)
 
         outputs = (logits,) + outputs[2:]  # add hidden states and attention if they are here
+
         if labels is not None:
             loss_fct = CrossEntropyLoss()
             # Only keep active parts of the loss
@@ -76,16 +87,35 @@ class LiBertForToken(BertForTokenClassification):
                     active_loss, labels.view(-1),
                     torch.tensor(loss_fct.ignore_index).type_as(labels)
                 )
-                loss = loss_fct(active_logits, active_labels)
+
+                if self.baseline:
+                    loss = loss_fct(active_logits, active_labels)
+                    classifier_loss, aux_loss = torch.tensor(0.0), torch.tensor(0.0)
+                else:
+                    #### syn_head loss stuff ####
+                    syn_head_logits = self.syn_head_classifier(sequence_output)
+
+                    active_syn_head_logits = syn_head_logits.view(-1, 22)
+                    active_syn_head_labels = torch.where(
+                        active_loss, heads_idx.view(-1),
+                        torch.tensor(HEADS_IGNORE_IDX).type_as(heads_idx)
+                    )
+                    classifier_loss = A * loss_fct(active_logits, active_labels)
+                    aux_loss = B * loss_fct(active_syn_head_logits, active_syn_head_labels)
+                    loss = classifier_loss + aux_loss
+                        
             else:
                 loss = loss_fct(logits.view(-1, self.num_labels), labels.view(-1))
+
             outputs = (loss,) + outputs
 
-        return outputs  # (loss), scores, (hidden_states), (attentions)
+        detailed_loss = classifier_loss, aux_loss
+        return outputs, detailed_loss  # (loss), scores, (hidden_states), (attentions)
 
 class LiBertModel(BertModel):
     def __init__(self, config):
         super(LiBertModel, self).__init__(config)
+
         self.encoder = LiBertEncoder(config)
 
     def forward(self, input_ids=None, attention_mask=None, token_type_ids=None, position_ids=None,
@@ -183,13 +213,13 @@ class LiBertEncoder(BertEncoder):
                 parse_layer = parse
 
             layer_outputs = bert_layer(
-                hidden_states,
-                attention_mask,
-                head_mask[i],
-                encoder_hidden_states,
-                encoder_attention_mask,
-                parse_layer,
-                output_attentions
+                hidden_states=hidden_states,
+                attention_mask=attention_mask,
+                head_mask=head_mask[i],
+                encoder_hidden_states=encoder_hidden_states,
+                encoder_attention_mask=encoder_attention_mask,
+                parse=parse_layer,
+                output_attentions=output_attentions
             )
             hidden_states = layer_outputs[0]
 
@@ -237,8 +267,10 @@ class LiBertAttention(BertAttention):
     def forward(self, hidden_states, attention_mask=None, head_mask=None,
                 encoder_hidden_states=None, encoder_attention_mask=None,
                 output_attentions=False, parse=None):
-        self_outputs = self.self(hidden_states, attention_mask, head_mask, encoder_hidden_states,
-                                 encoder_attention_mask, output_attentions, parse)
+        self_outputs = self.self(hidden_states=hidden_states, attention_mask=attention_mask,
+                                 head_mask=head_mask, encoder_hidden_states=encoder_hidden_states,
+                                 encoder_attention_mask=encoder_attention_mask, 
+                                 output_attentions=output_attentions, parse=parse)
         attention_output = self.output(self_outputs[0], hidden_states, parse)
         outputs = (attention_output,) + self_outputs[1:]  # add attentions if we output them
         return outputs
@@ -251,49 +283,30 @@ class LiBertSelfAttention(BertSelfAttention):
         self.baseline = config.baseline
         self.duplicated_rels = config.duplicated_rels
         self.transpose = config.transpose
-        self.fourteen_head = config.fourteen_head
 
         #self.attention_head_size = int(config.hidden_size / config.num_attention_heads)
         if  (layer_num == config.li_layer or config.all_layers is True \
              or layer_num in config.li_layers):
             self.num_attention_heads = 13
-            # add 13th head (head->dep)
             self.extra_query = nn.Linear(config.hidden_size, self.attention_head_size)
             self.extra_key = nn.Linear(config.hidden_size, self.attention_head_size)
             self.extra_value = nn.Linear(config.hidden_size, self.attention_head_size)
-            self.random_init(self.extra_query, self.extra_key, self.extra_value)
-           
-            # --- head14 change ---
-            # add 14th head (dep->head)
-            if (self.fourteen_head == True):
-                self.num_attention_heads = 14
-                self.fourteen_query = nn.Linear(config.hidden_size, self.attention_head_size)
-                self.fourteen_key = nn.Linear(config.hidden_size, self.attention_head_size)
-                self.fourteen_value = nn.Linear(config.hidden_size, self.attention_head_size)
-                self.random_init(self.fourteen_query, self.fourteen_key, self.fourteen_value)                
-
-    def random_init(self, query, key, value):
-        nn.init.normal_(query.weight.data, mean=0, std=0.02)
-        nn.init.normal_(query.bias.data, mean=0, std=0.02)
-        nn.init.normal_(key.weight.data, mean=0, std=0.02)
-        nn.init.normal_(key.bias.data, mean=0, std=0.02)
-        nn.init.normal_(value.weight.data, mean=0, std=0.02)
-        nn.init.normal_(value.bias.data, mean=0, std=0.02)
-
+            nn.init.normal_(self.extra_key.weight.data, mean=0, std=0.02)
+            nn.init.normal_(self.extra_key.bias.data, mean=0, std=0.02)
+            nn.init.normal_(self.extra_query.weight.data, mean=0, std=0.02)
+            nn.init.normal_(self.extra_query.bias.data, mean=0, std=0.02)
+            nn.init.normal_(self.extra_value.weight.data, mean=0, std=0.02)
+            nn.init.normal_(self.extra_value.bias.data, mean=0, std=0.02)
 
     def forward(self, hidden_states, attention_mask=None, head_mask=None,
                 encoder_hidden_states=None, encoder_attention_mask=None,
-                output_attentions=False, head_probs=None):       
-        if head_probs is not None:
-            self.all_head_size = self.num_attention_heads * self.attention_head_size            
+                output_attentions=False, parse=None):
+        if parse is not None:
+            self.all_head_size = self.num_attention_heads * self.attention_head_size
             mixed_query_layer = torch.cat((self.query(hidden_states), self.extra_query(hidden_states)),2)
             mixed_key_layer = torch.cat((self.key(hidden_states), self.extra_key(hidden_states)),2)
             mixed_value_layer = torch.cat((self.value(hidden_states), self.extra_value(hidden_states)),2)
-            if (self.fourteen_head == True):
-                mixed_query_layer = torch.cat((mixed_query_layer, self.fourteen_query(hidden_states)),2)
-                mixed_key_layer = torch.cat((mixed_key_layer, self.fourteen_key(hidden_states)),2)
-                mixed_value_layer = torch.cat((mixed_value_layer, self.fourteen_value(hidden_states)),2)
-
+  
         else:
             self.all_head_size = self.num_attention_heads * self.attention_head_size
             mixed_query_layer = self.query(hidden_states)
@@ -304,66 +317,64 @@ class LiBertSelfAttention(BertSelfAttention):
         key_layer = self.transpose_for_scores(mixed_key_layer)
         value_layer = self.transpose_for_scores(mixed_value_layer)
 
-        attention_scores = torch.matmul(query_layer, key_layer.transpose(-1, -2))        
+        attention_scores = torch.matmul(query_layer, key_layer.transpose(-1, -2))      
 
-        if head_probs is not None and self.baseline is False:   
+        if parse is not None:   
 
             #  duplicated heads across all matrix (one vector duplicated across matrix)
             if self.duplicated_rels is True:
-                head_probs = head_probs.sum(1, keepdim=True)
+                parse = parse.sum(1, keepdim=True)
                 # duplicate sum vector
-                head_probs = head_probs.repeat(1,64,1)
+                parse = parse.repeat(1,64,1)
                  
-            head_probs_norm = head_probs / head_probs.max(2, keepdim=True)[0]
-            head_probs_norm[torch.isnan(head_probs_norm)] = 0
+            parse_norm = parse / parse.max(2, keepdim=True)[0]
+            parse_norm[torch.isnan(parse_norm)] = 0
+            
+            # _, indices = parse_norm.max(2)
+            # device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+            # ex_head_attention_probs = torch.zeros(parse_norm.shape).to(device)
+            
+            # for batch, tokens in enumerate(indices):
+            #     mask_matrix = torch.zeros([parse_norm.shape[1], parse_norm.shape[2]])
+            #     i=0
+            #     for token in tokens:
+            #         if token != 0:
+            #             mask_matrix[i][token] = 1.                        
+            #             i=i+1                        
+
+            #    ex_head_attention_probs[batch] = mask_matrix         
+
+            #if self.duplicated_rels is True:
+            #    parse_norm = ex_head_attention_probs
 
             original_12head_attn_scores = attention_scores[:, :self.orig_num_attention_heads]
             original_12head_attn_scores = original_12head_attn_scores / math.sqrt(self.attention_head_size)
             original_12head_attn_scores = original_12head_attn_scores + attention_mask
             original_12head_attn_probs = nn.Softmax(dim=-1)(original_12head_attn_scores)
 
-            # --- head14 change ---
-            #extra_head_attn = attention_scores[:,self.orig_num_attention_heads,:,:] 
-            extra_head_attn = attention_scores[:,self.orig_num_attention_heads:self.orig_num_attention_heads+1,:,:]
-
-            if (self.fourteen_head == True): 
-                fourteen_head_attn = attention_scores[:,self.orig_num_attention_heads+1:,:,:] 
-
-             # --- head14 change end ---
-
-            head_probs_norm = head_probs_norm*8+ attention_mask.squeeze(1)
-           
+            extra_head_attn = attention_scores[:,self.orig_num_attention_heads,:,:] 
+            parse_norm = parse_norm * 8 + attention_mask.squeeze(1)
+            
                     
             if self.replace_final is False: 
                 if self.transpose == True:                
-                    head_probs_norm = head_probs_norm.transpose(-1, -2)                   
+                    parse_norm = parse_norm.transpose(-1, -2)                   
 
-                #extra_head_scaled_attn = ((extra_head_attn *8) * head_probs_norm).unsqueeze(1)  
-                extra_head_scaled_attn = ((extra_head_attn *8) * head_probs_norm.unsqueeze(1))            
+                extra_head_scaled_attn = ((extra_head_attn * 8) * parse_norm).unsqueeze(1)       
                 extra_head_scaled_attn = extra_head_scaled_attn + attention_mask
                 extra_head_scaled_attn_probs = nn.Softmax(dim=-1)(extra_head_scaled_attn)
                 attention_probs = torch.cat((original_12head_attn_probs, extra_head_scaled_attn_probs), 1)
            
-                # --- head14 change ---
-                if (self.fourteen_head == True): 
-                    head_probs_norm_transposed = head_probs_norm.transpose(-1, -2)   
-                    #fourteen_head_scaled_attn = ((fourteen_head_attn *8) * head_probs_norm_transposed).unsqueeze(1)     
-                    fourteen_head_scaled_attn = ((fourteen_head_attn *8) * head_probs_norm_transposed.unsqueeze(1))    
-                    fourteen_head_scaled_attn = fourteen_head_scaled_attn + attention_mask
-                    fourteen_head_scaled_attn_probs = nn.Softmax(dim=-1)(fourteen_head_scaled_attn)
-                    attention_probs = torch.cat((attention_probs, fourteen_head_scaled_attn_probs), 1)
-                # --- head14 change ---
-
             # if self.replace_final is True:
             #     attention_probs = torch.cat((original_12head_attn_probs, ex_head_attention_probs.unsqueeze(1)),1)
 
-        if head_probs is None or self.baseline is True:
-            attention_scores = attention_scores / math.sqrt(self.attention_head_size)
-            # Apply the attention mask is (precomputed for all layers in BertModel forward() function)
-            attention_scores = attention_scores + attention_mask
+        # if parse is None or self.baseline is True:
+        #     attention_scores = attention_scores / math.sqrt(self.attention_head_size)
+        #     # Apply the attention mask is (precomputed for all layers in BertModel forward() function)
+        #     attention_scores = attention_scores + attention_mask
 
-            # Normalize the attention scores to probabilities.
-            attention_probs = nn.Softmax(dim=-1)(attention_scores)
+        #     # Normalize the attention scores to probabilities.
+        #     attention_probs = nn.Softmax(dim=-1)(attention_scores)
             
         # This is actually dropping out entire tokens to attend to, which might
         # seem a bit unusual, but is taken from the original Transformer paper.
@@ -389,29 +400,32 @@ class LiBertSelfOutput(BertSelfOutput):
              or layer_num in config.li_layers):
             self.original_num_attention_heads = config.num_attention_heads
             self.attention_head_size = int(config.hidden_size / self.original_num_attention_heads)
-            self.dense_extra_head = nn.Linear(self.attention_head_size, config.hidden_size)
-
-            # ---- 14head addition
-            self.fourteen_head = config.fourteen_head
-            self.dense_fourteen_head = nn.Linear(self.attention_head_size, config.hidden_size)
+            self.dense_13_head = nn.Linear(self.attention_head_size, config.hidden_size) # [64, 768]
 
     def forward(self, hidden_states, input_tensor, parse=None):
-        if parse is not None:
-            original_hidden_vec_size = self.original_num_attention_heads * self.attention_head_size                                    
-            if (self.fourteen_head == True): 
-                hidden_states = self.dense(hidden_states[:, :, :original_hidden_vec_size]) + \
-                self.dense_extra_head(hidden_states[:, :, original_hidden_vec_size:original_hidden_vec_size+self.attention_head_size]) + \
-                self.dense_fourteen_head(hidden_states[:, :, original_hidden_vec_size+self.attention_head_size:])    
-            
-            else:
-                hidden_states = self.dense(hidden_states[:, :, :original_hidden_vec_size]) + \
-                self.dense_extra_head(hidden_states[:, :, original_hidden_vec_size:])
-                # add relational embedddings:
-                # + relational_embeddings (shape: config.hidden_size)
+        
+        if parse is None: 
+            #~~~~ Standard Attention Head ~~~~#
+            hidden_states = self.dense(hidden_states)
 
         else:
-            hidden_states = self.dense(hidden_states)
+            #~~~~ Linguisticially-Informed Head ~~~~#
+
+            ####### Add Syntactic Head Info #######
+            hidden_size_12_heads = self.original_num_attention_heads * self.attention_head_size
+            output_12_heads = hidden_states[:, :, :hidden_size_12_heads]
+            output_13_head = hidden_states[:, :, hidden_size_12_heads:]
+
+            dense_output_12_heads = self.dense(output_12_heads)
+            dense_output_13_head = self.dense_13_head(output_13_head)
+
+            hidden_states = dense_output_12_heads + dense_output_13_head
 
         hidden_states = self.dropout(hidden_states)
         hidden_states = self.LayerNorm(hidden_states + input_tensor)
         return hidden_states
+
+
+def log_tensor_stats(a, name):
+    log.info(f"Var: {name}; Shape: {tuple(a.shape)}; [min, max]: [{a.min().item():.4f}, "\
+        f"{a.max().item():.4f}]; mean: {a.mean().item():.4f}; median: {a.median().item():.4f}")

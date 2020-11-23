@@ -378,7 +378,7 @@ def write_summary_tables(cfg, exp_id):
 
         for dataset in cfg.data:
             dataset_dir = LOG_ROOT / exp_id / dataset
-            baseline_dir = dataset_dir / 'libert_rnd_init_AGGREGATED_baseline_test' / 'csv'
+            baseline_dir = dataset_dir / 'libert_baseline_AGGREGATED_baseline_test' / 'csv'
             model_dir = dataset_dir / f'libert_AGGREGATED_{exp_id}_test' / 'csv'
 
             baseline_mean_asp, baseline_std_asp = get_score_from_csv_agg(baseline_dir, 'asp_f1')
@@ -412,7 +412,7 @@ def write_summary_tables(cfg, exp_id):
                 base_asp, model_asp, base_op, model_op = [], [], [], []
                 for split in cfg.splits:
                     dataset_dir = LOG_ROOT / exp_id / dataset
-                    baseline_csv = dataset_dir / f'libert_rnd_init_seed_{seed}_split_{split}_test'\
+                    baseline_csv = dataset_dir / f'libert_baseline_seed_{seed}_split_{split}_test'\
                         / 'version_baseline' / 'metrics.csv'
                     model_csv = dataset_dir / f'libert_seed_{seed}_split_{split}_test'\
                         / f'version_{exp_id}' / 'metrics.csv'

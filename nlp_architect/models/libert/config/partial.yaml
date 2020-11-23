@@ -1,19 +1,21 @@
 max_epochs: 10
 model_type: libert # bert or libert
-base_init: [true, false]
+baseline: [true, false]
 
-data: rl
+data: dr lr
 limit_data: 1.0
-splits: 3
-seeds: [7, 25]
-tag: # optional: name this experiment version
+splits: 1
+seeds: [26, 25]
+tag: partial # optional: name this experiment version
 metric: asp_f1
-baseline_str: libert_rnd_init
+baseline_str: libert_baseline
 baseline_version: version_baseline
 
 num_workers: 44
-gpus: [1, 2]
+gpus: [0, 1, 2, 3]
 parallel: true
+
+aux_layers: [7]
 
 li_layer: #5
 li_layers: #[2]
@@ -47,4 +49,5 @@ tokenizer_name: null
 val_check_interval: 1.0
 warmup_steps: 0
 weight_decay: 0.0
+lr_scheduler: linear
 logger: true
