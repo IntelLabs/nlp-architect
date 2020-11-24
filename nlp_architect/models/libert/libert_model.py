@@ -33,9 +33,6 @@ from pathlib import Path
 LIBERT_DIR = Path(realpath(__file__)).parent
 
 REL_EMBED_SIZE = 64
-# determine number of dep-relation labels by dep_relations.txt
-with open(LIBERT_DIR / "dep_relations.txt") as deprel_f:
-    NUM_REL_LABELS = len(deprel_f.read().splitlines()) + 1
 
 class LiBertConfig(BertConfig):
     def __init__(self, **kwargs):
@@ -50,6 +47,8 @@ class LiBertConfig(BertConfig):
         self.duplicated_rels = hparams.duplicated_rels
         self.transpose = hparams.transpose
         self.li_layers = hparams.li_layers
+        self.use_syntactic_rels = hparams.use_syntactic_rels
+        self.NUM_REL_LABELS = hparams.NUM_REL_LABELS
 
 class LiBertForToken(BertForTokenClassification):
     def __init__(self, config):
@@ -58,12 +57,12 @@ class LiBertForToken(BertForTokenClassification):
         self.use_syntactic_rels = config.use_syntactic_rels
         if config.use_syntactic_rels:
             self.classifier = nn.Linear(config.hidden_size + REL_EMBED_SIZE, config.num_labels)
-            self.rel_embed_layer = nn.Embedding(NUM_REL_LABELS, REL_EMBED_SIZE, padding_idx=0)
+            self.rel_embed_layer = nn.Embedding(config.NUM_REL_LABELS, REL_EMBED_SIZE, padding_idx=0)
 
 
     def forward(self, input_ids=None, attention_mask=None, token_type_ids=None, position_ids=None,
                 head_mask=None, inputs_embeds=None, labels=None, output_attentions=None,
-                output_hidden_states=None, parse=None):
+                output_hidden_states=None, parse=None, syn_rels=None):
         outputs = self.bert(
             input_ids,
             attention_mask=attention_mask,

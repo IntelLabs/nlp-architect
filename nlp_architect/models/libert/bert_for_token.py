@@ -58,9 +58,11 @@ class BertForToken(pl.LightningModule):
         if isinstance(hparams, dict):
             hparams = Namespace(**hparams)
 
-        data_root = Path(__file__).parent.absolute() / 'data' / 'csv'
-
-        self.labels = absa_utils.get_labels(data_root / hparams.labels)
+        # data_root = Path(__file__).parent.absolute() / 'data' / 'csv' / hparams.
+        general_data_root = Path(__file__).parent.absolute() / "data" # .../libert/data
+        data_root = hparams.csv_dir # dir of linguistically-enriched data, e.g. .../libert/data/csv/spacy 
+        
+        self.labels = absa_utils.get_labels(general_data_root / hparams.labels)
         num_labels = len(self.labels)
         hparams.data_dir = data_root / hparams.data_dir
 
@@ -112,7 +114,8 @@ class BertForToken(pl.LightningModule):
                     examples,
                     self.labels,
                     self.hparams.max_seq_length,
-                    self.tokenizer
+                    self.tokenizer,
+                    self.hparams
                 )
                 log.debug("Saving features into cached file %s", cached_features_file)
                 torch.save(features, cached_features_file)

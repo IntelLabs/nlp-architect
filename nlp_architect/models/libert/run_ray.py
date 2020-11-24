@@ -74,7 +74,7 @@ def run_data(task_idx, cfg_yaml, time, rnd_init, data, log_dir, metric):
                         log_model_and_version(trainer, cfg, test_versions, save=False)
 
                 # Aggregate tensorboard log metrics for all runs on this data
-                if len(train_versions) > 1:
+                if len(train_versions) >= 1:
                     aggregate(train_versions, exp_id + '_train', model_str)
                     aggregate(test_versions, exp_id + '_test', model_str)
                 return model_str, exp_id
@@ -151,3 +151,7 @@ if __name__ == "__main__":
         main(argv[1])
     else:
         print("Incorrect usage. Please try again.")
+
+#%%
+# main("ayal_debug")  # debug
+    
