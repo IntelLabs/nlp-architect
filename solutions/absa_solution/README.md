@@ -63,6 +63,8 @@ export BOKEH_ALLOW_WS_ORIGIN=127.0.0.1:5007
 
 ## Run
 
+Note: On first execution, you will be prompted to install Spacy. After installation, please re-run the solution.
+
 ### Served locally
 
 ```bash
