@@ -58,6 +58,7 @@ git clone https://github.com/IntelLabs/nlp-architect.git
 pip install -U pip
 pip install -e nlp-architect
 pip install -r nlp-architect/solutions/absa_solution/requirements.txt
+export BOKEH_ALLOW_WS_ORIGIN=127.0.0.1:5007
 ```
 
 ## Run
@@ -65,7 +66,7 @@ pip install -r nlp-architect/solutions/absa_solution/requirements.txt
 ### Served locally
 
 ```bash
-    python nlp-architect/nlp_architect/solutions/absa_solution/ui.py
+    absa_env/bin/python nlp-architect/nlp_architect/solutions/absa_solution/ui.py
     open http://localhost:5006
 ```
 
@@ -75,16 +76,7 @@ Replace `USER@REMOTE_HOST` with your username and server's hostname.
 
 ```bash
     ssh USER@REMOTE_HOST -L 5006:REMOTE_HOST:5006
-    export BOKEH_ALLOW_WS_ORIGIN=127.0.0.1:5007
-    python nlp-architect/nlp_architect/solutions/absa_solution/ui.py
-```
-
-When running for the first time, close the remote session (`Ctrl-D`) and reconnect, to update the environment variable:
-
-```bash
-    ssh USER@REMOTE_HOST -L 5006:REMOTE_HOST:5006
-    source absa_env/bin/activate
-    python nlp-architect/solutions/absa_solution/ui.py
+    absa_env/bin/python nlp-architect/nlp_architect/solutions/absa_solution/ui.py
 ```
 
 Open web browser to:  
