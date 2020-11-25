@@ -1,20 +1,20 @@
 <p align="center">
     <br>
-    <img src="https://raw.githubusercontent.com/NervanaSystems/nlp-architect/master/docs-source/source/assets/nlp_architect_logo_trans.png" width="400"/>
+    <img src="https://raw.githubusercontent.com/IntelLabs/nlp-architect/master/docs-source/source/assets/nlp_architect_logo_trans.png" width="400"/>
     <br>
 <p>
 <h2 align="center">
 A Deep Learning NLP/NLU library by <a href="https://www.intel.ai/research/">Intel® AI Lab</a>
 </h2>
 <p align="center">
-    <a href="https://github.com/NervanaSystems/nlp-architect/blob/master/LICENSE">
-        <img alt="GitHub" src="https://img.shields.io/github/license/NervanaSystems/nlp-architect.svg?color=blue&style=flat-square">
+    <a href="https://github.com/IntelLabs/nlp-architect/blob/master/LICENSE">
+        <img alt="GitHub" src="https://img.shields.io/github/license/IntelLabs/nlp-architect.svg?color=blue&style=flat-square">
     </a>
-    <a href="http://nlp_architect.nervanasys.com">
-        <img alt="Website" src="https://img.shields.io/website/http/nlp_architect.nervanasys.com.svg?down_color=red&down_message=offline&style=flat-square&up_message=online">
+    <a href="https://intellabs.github.io/nlp-architect">
+        <img alt="Website" src="https://img.shields.io/website/http/intellabs.github.io/nlp-architect.svg?down_color=red&down_message=offline&style=flat-square&up_message=online">
     </a>
-    <a href="https://github.com/NervanaSystems/nlp-architect/releases">
-        <img alt="GitHub release" src="https://img.shields.io/github/release/NervanaSystems/nlp-architect.svg?style=flat-square">
+    <a href="https://github.com/IntelLabs/nlp-architect/releases">
+        <img alt="GitHub release" src="https://img.shields.io/github/release/IntelLabs/nlp-architect.svg?style=flat-square">
     </a>
     <a href="https://pepy.tech/project/nlp-architect">
         <img src="https://pepy.tech/badge/nlp-architect">
@@ -25,10 +25,10 @@ A Deep Learning NLP/NLU library by <a href="https://www.intel.ai/research/">Inte
   <a href="#overview">Overview</a> |
   <a href="#models">Models</a> |
   <a href="#installing-nlp-architect">Installation</a> |
-  <a href="https://github.com/NervanaSystems/nlp-architect/tree/master/examples">Examples</a> <a href="http://nlp_architect.nervanasys.com/"></a> |
-  <a href="http://nlp_architect.nervanasys.com">Documentation</a> |
-  <a href="https://github.com/NervanaSystems/nlp-architect/tree/master/tutorials">Tutorials</a> |
-  <a href="http://nlp_architect.nervanasys.com/developer_guide.html">Contributing</a>
+  <a href="https://github.com/IntelLabs/nlp-architect/tree/master/examples">Examples</a> <a href="https://intellabs.github.io/nlp-architect/"></a> |
+  <a href="https://intellabs.github.io/nlp-architect">Documentation</a> |
+  <a href="https://github.com/IntelLabs/nlp-architect/tree/master/tutorials">Tutorials</a> |
+  <a href="https://intellabs.github.io/nlp-architect/developer_guide.html">Contributing</a>
 </h4>
 
 NLP Architect is an open source Python library for exploring state-of-the-art
@@ -74,7 +74,7 @@ pip install nlp-architect
 Includes core library, examples, solutions and tutorials:
 
 ```sh
-git clone https://github.com/NervanaSystems/nlp-architect.git
+git clone https://github.com/IntelLabs/nlp-architect.git
 cd nlp-architect
 pip install -e .  # install in developer mode
 ```
@@ -92,40 +92,40 @@ pip install .[all]
 
 NLP models that provide best (or near) in class performance:
 
-* [Word chunking](http://nlp_architect.nervanasys.com/tagging/sequence_tagging.html#word-chunker)
-* [Named Entity Recognition](http://nlp_architect.nervanasys.com/tagging/sequence_tagging.html#named-entity-recognition)
-* [Dependency parsing](http://nlp_architect.nervanasys.com/bist_parser.html)
-* [Intent Extraction](http://nlp_architect.nervanasys.com/intent.html)
-* [Sentiment classification](http://nlp_architect.nervanasys.com/sentiment.html#supervised-sentiment)
-* [Language models](http://nlp_architect.nervanasys.com/lm.html#language-modeling-with-tcn)
-* [Transformers](http://nlp_architect.nervanasys.com/transformers.html) (for NLP tasks)
+* [Word chunking](https://intellabs.github.io/nlp-architect/tagging/sequence_tagging.html#word-chunker)
+* [Named Entity Recognition](https://intellabs.github.io/nlp-architect/tagging/sequence_tagging.html#named-entity-recognition)
+* [Dependency parsing](https://intellabs.github.io/nlp-architect/bist_parser.html)
+* [Intent Extraction](https://intellabs.github.io/nlp-architect/intent.html)
+* [Sentiment classification](https://intellabs.github.io/nlp-architect/sentiment.html#supervised-sentiment)
+* [Language models](https://intellabs.github.io/nlp-architect/lm.html#language-modeling-with-tcn)
+* [Transformers](https://intellabs.github.io/nlp-architect/transformers.html) (for NLP tasks)
 
 Natural Language Understanding (NLU) models that address semantic understanding:
 
-* [Aspect Based Sentiment Analysis (ABSA)](http://nlp_architect.nervanasys.com/absa.html)
-* [Joint intent detection and slot tagging](http://nlp_architect.nervanasys.com/intent.html)
-* [Noun phrase embedding representation (NP2Vec)](http://nlp_architect.nervanasys.com/np2vec.html)
-* [Most common word sense detection](http://nlp_architect.nervanasys.com/word_sense.html)
-* [Relation identification](http://nlp_architect.nervanasys.com/identifying_semantic_relation.html)
-* [Cross document coreference](http://nlp_architect.nervanasys.com/cross_doc_coref.html)
-* [Noun phrase semantic segmentation](http://nlp_architect.nervanasys.com/np_segmentation.html)
+* [Aspect Based Sentiment Analysis (ABSA)](https://intellabs.github.io/nlp-architect/absa.html)
+* [Joint intent detection and slot tagging](https://intellabs.github.io/nlp-architect/intent.html)
+* [Noun phrase embedding representation (NP2Vec)](https://intellabs.github.io/nlp-architect/np2vec.html)
+* [Most common word sense detection](https://intellabs.github.io/nlp-architect/word_sense.html)
+* [Relation identification](https://intellabs.github.io/nlp-architect/identifying_semantic_relation.html)
+* [Cross document coreference](https://intellabs.github.io/nlp-architect/cross_doc_coref.html)
+* [Noun phrase semantic segmentation](https://intellabs.github.io/nlp-architect/np_segmentation.html)
 
 Optimizing NLP/NLU models and misc. optimization techniques:
 
-* [Quantized BERT (8bit)](http://nlp_architect.nervanasys.com/quantized_bert.html)
-* [Knowledge Distillation using Transformers](http://nlp_architect.nervanasys.com/transformers_distillation.html)
-* [Sparse and Quantized Neural Machine Translation (GNMT)](http://nlp_architect.nervanasys.com/sparse_gnmt.html)
+* [Quantized BERT (8bit)](https://intellabs.github.io/nlp-architect/quantized_bert.html)
+* [Knowledge Distillation using Transformers](https://intellabs.github.io/nlp-architect/transformers_distillation.html)
+* [Sparse and Quantized Neural Machine Translation (GNMT)](https://intellabs.github.io/nlp-architect/sparse_gnmt.html)
 
 Solutions (End-to-end applications) using one or more models:
 
-* [Term Set expansion](http://nlp_architect.nervanasys.com/term_set_expansion.html) - uses the included word chunker as a noun phrase extractor and NP2Vec to create semantic term sets
-* [Topics and trend analysis](http://nlp_architect.nervanasys.com/trend_analysis.html) - analyzing trending phrases in temporal corpora
-* [Aspect Based Sentiment Analysis (ABSA)](http://nlp_architect.nervanasys.com/absa_solution.html)
+* [Term Set expansion](https://intellabs.github.io/nlp-architect/term_set_expansion.html) - uses the included word chunker as a noun phrase extractor and NP2Vec to create semantic term sets
+* [Topics and trend analysis](https://intellabs.github.io/nlp-architect/trend_analysis.html) - analyzing trending phrases in temporal corpora
+* [Aspect Based Sentiment Analysis (ABSA)](https://intellabs.github.io/nlp-architect/absa_solution.html)
 
 ## Documentation
 
-Full library [documentation](http://nlp_architect.nervanasys.com/) of NLP models, algorithms, solutions and instructions
-on how to run each model can be found on our [website](http://nlp_architect.nervanasys.com/).
+Full library [documentation](https://intellabs.github.io/nlp-architect/) of NLP models, algorithms, solutions and instructions
+on how to run each model can be found on our [website](https://intellabs.github.io/nlp-architect/).
 
 ## NLP Architect library design philosophy
 
@@ -176,7 +176,7 @@ and NLP research communities are more than welcome.
 Contact the NLP Architect development team through Github issues or
 email: nlp_architect@intel.com
 
-[documentation]:http://nlp_architect.nervanasys.com
+[documentation]:https://intellabs.github.io/nlp-architect
 [TensorFlow]:https://www.tensorflow.org/
 [PyTorch]:https://pytorch.org/
 [Dynet]:https://dynet.readthedocs.io/en/latest/

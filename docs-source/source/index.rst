@@ -75,4 +75,4 @@
    nlp_architect API <generated_api/nlp_architect_api_index.rst>
    developer_guide.rst
 
-.. _https://github.com/NervanaSystems/nlp-architect: https://github.com/NervanaSystems/nlp-architect
+.. _https://github.com/IntelLabs/nlp-architect: https://github.com/IntelLabs/nlp-architect

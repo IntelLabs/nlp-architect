@@ -36,7 +36,7 @@ For more details see :doc:`ABSA <absa>`.
 
 Installing and Running
 ======================
-For instructions on running the end-to-end solution UI, see here: `ABSA Solution README <https://github.com/NervanaSystems/nlp-architect/tree/master/solutions/absa_solution#setup>`__
+For instructions on running the end-to-end solution UI, see here: `ABSA Solution README <https://github.com/IntelLabs/nlp-architect/tree/master/solutions/absa_solution#setup>`__
 
 
 Workflow and UI

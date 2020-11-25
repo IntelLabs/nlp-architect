@@ -1,4 +1,4 @@
-https://github.com/NervanaSystems/neon/blob/master/LICENSE
+https://github.com/IntelLabs/neon/blob/master/LICENSE
 
 
  Apache License

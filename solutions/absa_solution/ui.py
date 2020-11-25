@@ -74,7 +74,7 @@ def _create_header(train_dropdown, inference_dropdown, text_status) -> layouts.R
     """Utility function for creating and styling the header row in the UI layout."""
 
     architect_logo = Div(
-        text='<a href="http://nlp_architect.nervanasys.com"> <img border="0" '
+        text='<a href="https://intellabs.github.io/nlp-architect"> <img border="0" '
         'src="style/nlp_architect.jpg" width="200"></a> by Intel® AI Lab',
         style={
             "margin-left": "500px",

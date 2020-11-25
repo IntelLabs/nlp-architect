@@ -20,7 +20,7 @@ Contribution Process
 1. File an issue (to track your contribution):
 
    * Create an issue on GitHub:
-     https://github.com/NervanaSystems/nlp-architect/issues
+     https://github.com/IntelLabs/nlp-architect/issues
 
 2. Fork NLP Architect and/or update your checked out copy of 
    nlp-architect to ensure you have the
@@ -28,7 +28,7 @@ Contribution Process
 
   .. code-block:: bash
 
-      git clone https://github.com/NervanaSystems/nlp-architect.git
+      git clone https://github.com/IntelLabs/nlp-architect.git
       cd nlp-architect
       git fetch origin
       git checkout master
@@ -71,7 +71,7 @@ Contribution Process
       git commit -m "Added new awesome functionality.  Closes issue #1"
       git push origin my_new_feature_branch
 
-7. Create a new `pull request <https://github.com/NervanaSystems/nlp-architect/pulls>`_
+7. Create a new `pull request <https://github.com/IntelLabs/nlp-architect/pulls>`_
    to get your feature branch merged into master for others to use.
    You'll first need to ensure your feature branch contains the latest changes from
    master.

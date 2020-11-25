@@ -20,7 +20,7 @@ new Vue({
         cmd.push("pip install nlp-architect")
       }
       if (this.form.source == "0") {
-        cmd.push("git clone https://github.com/NervanaSystems/nlp-architect.git<br>cd nlp-architect")
+        cmd.push("git clone https://github.com/IntelLabs/nlp-architect.git<br>cd nlp-architect")
       }
       if (this.form.source == "0" && this.form.inst_type == "0") {
         cmd.push("pip3 install -e .")

@@ -185,7 +185,7 @@ if __name__ == "__main__":
         help="path to the input corpus. Compressed files (gz) are also supported. By default, "
         "it is a subset of English Wikipedia. "
         "get subset of English wikipedia from "
-        "https://github.com/NervanaSystems/nlp-architect/raw/"
+        "https://github.com/IntelLabs/nlp-architect/raw/"
         "master/datasets/wikipedia/enwiki-20171201_subset.txt.gz",
     )
     arg_parser.add_argument(

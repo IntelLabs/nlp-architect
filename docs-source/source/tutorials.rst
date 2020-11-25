@@ -45,10 +45,10 @@ If you don't have Jupyter installed, follow these instructions to install:
 
 List of tutorials
 -----------------
-- `Natural Language Question/Answering Systems <https://github.com/NervanaSystems/nlp-architect/blob/master/tutorials/Question_Answering/Natural_Language_Question_Answer_Systems.ipynb>`_
-- `Intent Extraction <https://github.com/NervanaSystems/nlp-architect/blob/master/tutorials/intent_extraction/intent_extraction_demo.ipynb>`_
-- `Named Entity Recognition <https://github.com/NervanaSystems/nlp-architect/blob/master/tutorials/ner/ner_demo.ipynb>`_
-- `NP Semantic Segmentation <https://github.com/NervanaSystems/nlp-architect/blob/master/tutorials/np_semantic_segmentation/np_semantic_segmentation_demo.ipynb>`_
-- `Sentiment Analysis <https://github.com/NervanaSystems/nlp-architect/blob/master/tutorials/sentiment/Deep_Learning_Sentiment_Demo.ipynb>`_
-- `NP2Vec <https://github.com/NervanaSystems/nlp-architect/blob/master/tutorials/NP2vec/NP2vec_training.ipynb>`_
-- `Term set expansion <https://github.com/NervanaSystems/private-nlp-architect/blob/master/tutorials/Term_Set_Expansion/term_set_expansion.ipynb>`_
+- `Natural Language Question/Answering Systems <https://github.com/IntelLabs/nlp-architect/blob/master/tutorials/Question_Answering/Natural_Language_Question_Answer_Systems.ipynb>`_
+- `Intent Extraction <https://github.com/IntelLabs/nlp-architect/blob/master/tutorials/intent_extraction/intent_extraction_demo.ipynb>`_
+- `Named Entity Recognition <https://github.com/IntelLabs/nlp-architect/blob/master/tutorials/ner/ner_demo.ipynb>`_
+- `NP Semantic Segmentation <https://github.com/IntelLabs/nlp-architect/blob/master/tutorials/np_semantic_segmentation/np_semantic_segmentation_demo.ipynb>`_
+- `Sentiment Analysis <https://github.com/IntelLabs/nlp-architect/blob/master/tutorials/sentiment/Deep_Learning_Sentiment_Demo.ipynb>`_
+- `NP2Vec <https://github.com/IntelLabs/nlp-architect/blob/master/tutorials/NP2vec/NP2vec_training.ipynb>`_
+- `Term set expansion <https://github.com/IntelLabs/private-nlp-architect/blob/master/tutorials/Term_Set_Expansion/term_set_expansion.ipynb>`_
