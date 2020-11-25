@@ -66,7 +66,7 @@ export BOKEH_ALLOW_WS_ORIGIN=127.0.0.1:5007
 ### Served locally
 
 ```bash
-    absa_env/bin/python nlp-architect/nlp_architect/solutions/absa_solution/ui.py
+    absa_env/bin/python nlp-architect/solutions/absa_solution/ui.py
     open http://localhost:5006
 ```
 
@@ -76,7 +76,7 @@ Replace `USER@REMOTE_HOST` with your username and server's hostname.
 
 ```bash
     ssh USER@REMOTE_HOST -L 5006:REMOTE_HOST:5006
-    absa_env/bin/python nlp-architect/nlp_architect/solutions/absa_solution/ui.py
+    absa_env/bin/python nlp-architect/solutions/absa_solution/ui.py
 ```
 
 Open web browser to:  
