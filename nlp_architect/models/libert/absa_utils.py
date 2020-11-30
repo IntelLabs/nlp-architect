@@ -40,6 +40,8 @@ from significance import significance_from_cfg as significance
 LIBERT_DIR = Path(realpath(__file__)).parent
 LOG_ROOT = LIBERT_DIR / 'logs'
 
+DEP_REL_MAP = {rel.strip(): i + 1 for i, rel in enumerate(open(LIBERT_DIR / 'dep_relations.txt', encoding='utf-8'))}
+
 @dataclass
 class InputExample:
     """
@@ -56,6 +58,7 @@ class InputExample:
     labels: Optional[List[str]]
     heads: Optional[List[int]]
     head_words: Optional[List[str]]
+    syn_rels: Optional[List[str]]
     pos_tags: Optional[List[str]]
     sub_toks: Optional[List[List[str]]]
 
@@ -71,6 +74,7 @@ class InputFeatures:
     label_ids: Optional[List[int]] = None
     dep_heads: Optional[List[float]] = None
     head_idx: Optional[List[int]] = None
+    syn_rels: Optional[List[int]] = None
     
 class Split(Enum):
     train = "train"
@@ -85,27 +89,28 @@ def read_examples_from_file(data_dir, mode: Union[Split, str]) -> List[InputExam
     examples = []
     empty_row = ['_'] * 7
     with open(file_path, encoding='utf-8') as f:
-        words, labels, heads, head_words, pos_tags, sub_toks = [], [], [], [], [], []
+        words, labels, heads, head_words, syn_rels, pos_tags, sub_toks = [], [], [], [], [], [], []
         reader = csv.reader(f)
         next(reader, None)
         for row in reader:
             if row == empty_row:
                 if words:
                     examples.append(InputExample(guid=f"{mode}-{guid_index}", words=words, labels=labels,
-                                                    heads=heads, head_words=head_words, pos_tags=pos_tags, sub_toks=sub_toks))
+                                                    heads=heads, head_words=head_words, syn_rels=syn_rels, pos_tags=pos_tags, sub_toks=sub_toks))
                     guid_index += 1
                     words, labels, heads, head_words, pos_tags, sub_toks = [], [], [], [], [], []
             else:
-                word, label, head, head_word, _, pos_tag, sub_tok = row
+                word, label, head, head_word, syn_rel, pos_tag, sub_tok = row
                 words.append(word)
                 labels.append(label)
                 heads.append(int(head))
                 head_words.append(head_word)
+                syn_rels.append(syn_rel)
                 pos_tags.append(pos_tag)
                 sub_toks.append(sub_tok.split() if sub_tok else [word])
         if words:
             examples.append(InputExample(guid=f"{mode}-{guid_index}", words=words, labels=labels,
-                                            heads=heads, head_words=head_words,
+                                            heads=heads, head_words=head_words, syn_rels=syn_rels,
                                             pos_tags=pos_tags, sub_toks=sub_toks))
     return examples
 
@@ -113,6 +118,11 @@ def read_examples_from_file(data_dir, mode: Union[Split, str]) -> List[InputExam
 def pad_heads(a):
     target = np.zeros((64, 64), float)
     target[:a.shape[0], :a.shape[1]] = a[:64, :64]
+    return target
+
+def pad_syn_rels(a):
+    target = np.zeros((64), int)
+    target[:a.shape[0]] = a[:64]
     return target
 
 def indexify(a):
@@ -144,6 +154,12 @@ def apply_heads_to_subtokens(heads, sub_tokens, zero_sub_tokens=False):
     heads.insert(0, [0] * (len(heads) + 1))
     return np.array(heads)
 
+def apply_syn_rels_to_subtokens(syn_rels, sub_tokens_list):
+    res = [0] ## add null relation for CLS token
+    for syn_rel, sub_tokens in zip(syn_rels, sub_tokens_list):
+        res.extend([syn_rel] * len(sub_tokens))
+    return np.array(res)
+
 def binarize(preds):
     res = []
     for pred in preds:
@@ -170,9 +186,10 @@ def convert_examples_to_features(
     for (ex_index, ex) in enumerate(examples):
         if ex_index % 1_000 == 0:
             log.debug("Writing example %d of %d", ex_index, len(examples))
-        tokens, label_ids, heads, sub_toks = [], [], [], []
+        tokens, label_ids, heads, sub_toks, syn_rels = [], [], [], [], []
 
-        for word, label, head, _, sub_tok in zip(ex.words, ex.labels, ex.heads, ex.pos_tags, ex.sub_toks):
+        for word, label, head, syn_rel, _, sub_tok in zip(ex.words, ex.labels, ex.heads, ex.syn_rels, ex.pos_tags, ex.sub_toks):
+            syn_rels.append(DEP_REL_MAP[syn_rel.lower()])
             heads.append(head)
             sub_toks.append(sub_tok)
             word_tokens = tokenizer.tokenize(word)
@@ -187,6 +204,7 @@ def convert_examples_to_features(
 
         ######### Add syntactic information #################
         binary_heads = apply_heads_to_subtokens(binarize(heads), sub_toks)
+        syn_rels = apply_syn_rels_to_subtokens(syn_rels, sub_toks)
 
         ####################### DEBUG ############################
         # if binary_heads.shape[1] != len(tokens) + 1:
@@ -204,6 +222,8 @@ def convert_examples_to_features(
 
         assert binary_heads.shape[0] == binary_heads.shape[1] == len(tokens) + 1
         padded_heads = pad_heads(binary_heads)
+        padded_syn_rels = pad_syn_rels(syn_rels)
+
         #######################################################################################
 
         padded_heads_idx = indexify(padded_heads)
@@ -271,7 +291,7 @@ def convert_examples_to_features(
 
         input_features = InputFeatures(input_ids=input_ids, attention_mask=input_mask,
                                       token_type_ids=segment_ids, label_ids=label_ids, 
-                                      dep_heads=padded_heads, head_idx=padded_heads_idx)
+                                      dep_heads=padded_heads, head_idx=padded_heads_idx, syn_rels=padded_syn_rels)
         features.append(input_features)
     return features
 

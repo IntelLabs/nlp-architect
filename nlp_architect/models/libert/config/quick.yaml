@@ -1,6 +1,6 @@
 max_epochs: 2
 model_type: libert # bert or libert
-baseline: [true, false]
+baseline: [false, true]
 
 data: rl # lr ld dr dl # relative to nlp_architect/models/li_bert/data/preprocessed_conll
 limit_data: 0.2
@@ -15,6 +15,7 @@ num_workers: 44
 gpus: [1]
 parallel: true
 
+aux_labels_type: 'syn_rels' # ['syn_rels', 'heads_idx']
 aux_layers: [8]
 
 li_layer: #5
