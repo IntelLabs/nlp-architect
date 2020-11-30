@@ -47,7 +47,6 @@ class CustomBertConfig(BertConfig):
     def add_extra_args(self, hparams):
         # pylint: disable=attribute-defined-outside-init
         self.custom_layers = hparams.custom_layers
-        self.n_clusters = hparams.n_clusters
         self.grl = hparams.grl
         self.beta = hparams.beta
         self.gamma = hparams.gamma
@@ -82,7 +81,7 @@ class CustomBertForTokenClassification(BertForTokenClassification):
         output_attentions=None,
         output_hidden_states=None,
         return_dict=None,
-        cluster_labels=None,
+        review_embeddings=None,
     ):
         r"""
         labels (:obj:`torch.LongTensor` of shape :obj:`(batch_size, sequence_length)`, `optional`):
@@ -101,10 +100,10 @@ class CustomBertForTokenClassification(BertForTokenClassification):
             output_attentions=output_attentions,
             output_hidden_states=output_hidden_states,
             return_dict=return_dict,
-            cluster_labels=cluster_labels,
+            review_embeddings=review_embeddings,
         )
         normal_outputs = outputs[0]
-        cluster_loss = outputs[1]
+        reconstruction_loss = outputs[1]
         sequence_output = normal_outputs[0]
 
         sequence_output = self.dropout(sequence_output)
@@ -128,17 +127,17 @@ class CustomBertForTokenClassification(BertForTokenClassification):
             if hasattr(self, 'gamma'):
                 if self.learn_gamma:
                     gamma_eff = torch.sigmoid(self.gamma)
-                    total_loss = 2 * ((gamma_eff * asp_loss) + (1-gamma_eff) * cluster_loss)
+                    total_loss = 2 * ((gamma_eff * asp_loss) + (1-gamma_eff) * reconstruction_loss)
                 else:
-                    total_loss = asp_loss + self.gamma * cluster_loss
+                    total_loss = asp_loss + self.gamma * reconstruction_loss
                     gamma_eff = self.gamma
             else:
-                total_loss = asp_loss + cluster_loss
+                total_loss = asp_loss + reconstruction_loss
                 gamma_eff = 1
 
-            outputs = (total_loss,) + outputs + (asp_loss, cluster_loss, gamma_eff)
+            outputs = (total_loss,) + outputs + (asp_loss, reconstruction_loss, gamma_eff)
 
-        return outputs  # total_loss, scores, (hidden_states), (attentions), asp_loss, cluster_loss
+        return outputs  # total_loss, scores, (hidden_states), (attentions), asp_loss, reconstruction_loss
 
         #if not return_dict:
         #    output = (logits,) + outputs[2:]
@@ -171,7 +170,7 @@ class CustomBertModel(BertModel):
         output_attentions=None,
         output_hidden_states=None,
         return_dict=None,
-        cluster_labels=None,
+        review_embeddings=None,
     ):
         r"""
         encoder_hidden_states  (:obj:`torch.FloatTensor` of shape :obj:`(batch_size, sequence_length, hidden_size)`, `optional`):
@@ -241,15 +240,15 @@ class CustomBertModel(BertModel):
             output_attentions=output_attentions,
             output_hidden_states=output_hidden_states,
             return_dict=return_dict,
-            cluster_labels=cluster_labels,
+            review_embeddings=review_embeddings,
         )
         regular_encoder_outputs = encoder_outputs[0]
-        cluster_loss = encoder_outputs[1]
+        reconstruction_loss = encoder_outputs[1]
         sequence_output = regular_encoder_outputs[0]
         pooled_output = self.pooler(sequence_output) if self.pooler is not None else None
 
         if not return_dict:
-            return ((sequence_output, pooled_output) + regular_encoder_outputs[1:], cluster_loss)
+            return ((sequence_output, pooled_output) + regular_encoder_outputs[1:], reconstruction_loss)
 
         #return BaseModelOutputWithPooling(
         #    last_hidden_state=sequence_output,
@@ -275,9 +274,9 @@ class CustomBertEncoder(BertEncoder):
         output_attentions=False,
         output_hidden_states=False,
         return_dict=False,
-        cluster_labels=None,
+        review_embeddings=None,
     ):
-        cluster_loss = 0
+        reconstruction_loss = 0
 
         all_hidden_states = () if output_hidden_states else None
         all_attentions = () if output_attentions else None
@@ -302,7 +301,7 @@ class CustomBertEncoder(BertEncoder):
                     layer_head_mask,
                     encoder_hidden_states,
                     encoder_attention_mask,
-                    cluster_labels,
+                    review_embeddings,
                 )
             else:
                 layer_outputs = layer_module(
@@ -312,25 +311,24 @@ class CustomBertEncoder(BertEncoder):
                     encoder_hidden_states,
                     encoder_attention_mask,
                     output_attentions,
-                    cluster_labels,
+                    review_embeddings,
                 )
-
             hidden_states = layer_outputs[0]
             if output_attentions:
                 all_attentions = all_attentions + (layer_outputs[1],)
                 # New
-                cluster_loss += layer_outputs[2]
+                reconstruction_loss += layer_outputs[2]
             else:
-                cluster_loss += layer_outputs[1]
-            
+                reconstruction_loss += layer_outputs[1]
+
         if output_hidden_states:
             all_hidden_states = all_hidden_states + (hidden_states,)
 
-        # Normalizing cluster loss by number of layers used
-        cluster_loss = cluster_loss / len(self.config.custom_layers)
+        # Normalizing reconstruction loss by number of layers used
+        reconstruction_loss = reconstruction_loss / len(self.config.custom_layers)
 
         if not return_dict:
-            return (tuple(v for v in [hidden_states, all_hidden_states, all_attentions] if v is not None), cluster_loss)
+            return (tuple(v for v in [hidden_states, all_hidden_states, all_attentions] if v is not None), reconstruction_loss)
         #return BaseModelOutput(
         #    last_hidden_state=hidden_states, hidden_states=all_hidden_states, attentions=all_attentions
         #)
@@ -341,7 +339,7 @@ class CustomBertLayer(BertLayer):
         super().__init__(config)
         self.base_bert = base_bert
         if not self.base_bert:
-            self.cluster_predictor = ClusterPredictor(config)  # SEE BELOW but can be arbitrary module
+            self.reconstruction_module = ReconstructionModule(config)  # SEE BELOW but can be arbitrary module
             if config.grl:
                 self.grl = GradientReversalLayer(config)
 
@@ -353,7 +351,7 @@ class CustomBertLayer(BertLayer):
         encoder_hidden_states=None,
         encoder_attention_mask=None,
         output_attentions=False,
-        cluster_labels=None,
+        review_embeddings=None,
     ):
         self_attention_outputs = self.attention(
             hidden_states,
@@ -384,13 +382,13 @@ class CustomBertLayer(BertLayer):
         )
 
         # New
-        if hasattr(self, "cluster_predictor"):
+        if hasattr(self, "reconstruction_module"):
             if hasattr(self, "grl"):
                 #if layer_output.requires_grad: layer_output.register_hook(lambda x: print(f"after grl grad: {x}"))
-                cp_input = self.grl(layer_output)
+                reconstruction_input = self.grl(layer_output)
                 #if layer_output.requires_grad: layer_output.register_hook(lambda x: print(f"before grl grad: {x}"))
             else:
-                cp_input = layer_output
+                reconstruction_input = layer_output
 
             # Masking (zeroing) PAD tokens
             #if attention_mask is not None:
@@ -398,11 +396,11 @@ class CustomBertLayer(BertLayer):
             #    active_mask = active_mask.view((layer_output.size()[:2] + (1,)))  # Reshaping to (batch_size, seq_len, 1) for broadcast
             #    cp_input = torch.mul(cp_input, active_mask)                       # Zeroing pad tokens with mask
 
-            cluster_loss = self.cluster_predictor(cp_input, cluster_labels=cluster_labels)
+            reconstruction_loss = self.reconstruction_module(reconstruction_input, review_embeddings=review_embeddings)
         else:
-            cluster_loss = 0
-
-        outputs = (layer_output,) + outputs + (cluster_loss,)
+            reconstruction_loss = 0
+        
+        outputs = (layer_output,) + outputs + (reconstruction_loss,)
         return outputs
 
     def feed_forward_chunk(self, attention_output):
@@ -431,20 +429,18 @@ class GradientReversalLayer(nn.Module):
         #return GRLFunction.apply(hidden_states, self.beta)
         return GRLFunction.apply(hidden_states)
 
-class ClusterPredictor(nn.Module):
+class ReconstructionModule(nn.Module):
     def __init__(self, config):
         super().__init__()
-        self.n_clusters = config.n_clusters
         self.dense1 = nn.Linear(config.hidden_size, config.intermediate_size)
         if isinstance(config.hidden_act, str):
             self.intermediate_act_fn = ACT2FN[config.hidden_act]
         else:
             self.intermediate_act_fn = config.hidden_act
-        self.dense2 = nn.Linear(config.intermediate_size, self.n_clusters)
+        self.dense2 = nn.Linear(config.intermediate_size, config.hidden_size)
         #self.LayerNorm = nn.LayerNorm(config.hidden_size, eps=config.layer_norm_eps)
         #self.dropout = nn.Dropout(config.hidden_dropout_prob)
-        self.log_softmax = nn.LogSoftmax(dim=1)
-        self.cluster_loss = nn.NLLLoss()
+        self.reconstruction_loss = nn.MSELoss()
 
     def forward(
         self,
@@ -454,22 +450,20 @@ class ClusterPredictor(nn.Module):
         encoder_hidden_states=None,
         encoder_attention_mask=None,
         output_attentions=False,
-        cluster_labels=None,
+        review_embeddings=None,
     ):
-        # Summing to get sentence vector
-        sentence_vectors = torch.sum(hidden_states, dim=1)  # (batch_size, max_seq_len) TODO: remove padded terms?
-
+        review_embeddings = review_embeddings.squeeze()
+    
         # Normalizing sum
-        #num_nonzero = torch.count_nonzero(hidden_states, dim=1)
         #num_nonzero = (hidden_states != 0).sum(dim=1)
+        sentence_vectors = torch.sum(hidden_states, dim=1)  # (batch_size, max_seq_len) TODO: remove padded terms?
         #sentence_vectors = torch.div(sentence_vectors, num_nonzero)
 
         # MLP
         sentence_vectors = self.dense1(sentence_vectors)
         sentence_vectors = self.intermediate_act_fn(sentence_vectors)
-        sentence_vectors = self.dense2(sentence_vectors)  # (batch_size)
-        cluster_predictions = self.log_softmax(sentence_vectors)
-        loss = self.cluster_loss(cluster_predictions, cluster_labels)
+        review_embeddings_pred = self.dense2(sentence_vectors)  # (batch_size)
+        loss = self.reconstruction_loss(review_embeddings_pred, review_embeddings)
         return loss
 
 
