@@ -15,7 +15,7 @@ num_workers: 44
 gpus: [1, 2, 3]
 parallel: true
 
-aux_labels_type: 'syn_rels' # ['syn_rels', 'heads_idx']
+aux_labels_type: ['syn_rels'] # ['syn_rels', 'heads_idx']
 aux_layers: [0, 1, 2, 3, 4, 5, 6]
 
 li_layer: #5
