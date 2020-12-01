@@ -15,7 +15,7 @@
 # ******************************************************************************
 # pylint: disable=logging-fstring-interpolation, no-member, unsubscriptable-object
 # pylint: disable=no-value-for-parameter
-
+#%%
 import os
 from pathlib import Path
 from sys import argv
@@ -48,11 +48,15 @@ def run_data(task_idx, cfg_yaml, time, rnd_init, data, log_dir, metric):
                 cfg.gpus = 1
 
                 train_versions, test_versions = [], []
-                runs = list(product(cfg.seeds, cfg.splits))
+
+                runs = list(product(cfg.seeds, cfg.splits(data)))
                 for run_i, (seed, split) in enumerate(runs, start=1):
                     pl.seed_everything(seed)
+                    if cfg.is_cross_domain(data):
+                        cfg.data_dir = f'{data}_{split}'
+                    else:               # in-domain setting - stating only domain name 
+                        cfg.data_dir = f'{data}_in_domain_{split}'
 
-                    cfg.data_dir = f'{data}_{split}'
                     model = BertForToken(cfg)
                     model_str = f'{cfg.model_type}_rnd_init' if cfg.rnd_init else f'{cfg.model_type}'
                     exper_str = f'{model_str}_seed_{seed}_split_{split}'
