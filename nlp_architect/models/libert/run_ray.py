@@ -140,7 +140,7 @@ def main(config_yaml):
 
 def post_analysis(cfg, log_dir, exp_id):
     # Run significance tests if baseline exists and last run was on model
-    if cfg.do_predict and True in cfg.base_init and False in cfg.base_init:
+    if cfg.do_predict and True in cfg.baseline and False in cfg.baseline:
         sig_result = significance_from_cfg(cfg=cfg, log_dir=log_dir, exp_id=exp_id)
 
         # Write summary table to CSV

@@ -34,7 +34,6 @@ LIBERT_DIR = Path(realpath(__file__)).parent
 NUM_OF_RELATIONS = 52
 RELATIVE_IDX_RANGE = 22
 HEADS_IGNORE_IDX = 0
-AUX_OUTPUTS = {'heads_idx': RELATIVE_IDX_RANGE, 'syn_rels': NUM_OF_RELATIONS}
 class LiBertConfig(BertConfig):
 
     def add_extra_args(self, hparams):
@@ -60,12 +59,10 @@ class LiBertForToken(BertForTokenClassification):
     def forward(self, input_ids=None, attention_mask=None, token_type_ids=None, position_ids=None,
                 head_mask=None, inputs_embeds=None, labels=None, output_attentions=None,
                 output_hidden_states=None, parse=None, heads_idx=None, syn_rels=None):
-        
-        aux_labels = {}
-        if 'syn_rels' in self.aux_labels_type:
-            aux_labels['syn_rels'] = syn_rels
-        if 'heads_idx' in self.aux_labels_type:
-            aux_labels['heads_idx'] = heads_idx
+        if self.aux_labels_type == 'syn_rels':
+            aux_labels = syn_rels
+        if self.aux_labels_type == 'heads_idx':
+            aux_labels = heads_idx
 
         outputs, aux_loss = self.bert(
             input_ids,
@@ -243,16 +240,13 @@ class LiBertLayer(BertLayer):
         super(LiBertLayer, self).__init__(config)
         self.attention = LiBertAttention(config, layer_num)
 
-        self.is_aux_layer = not config.baseline and layer_num in config.aux_layers
+        self.is_aux_layer = not config.baseline and layer_num + 1 in config.aux_layers
         self.aux_labels_type = config.aux_labels_type
 
         if self.is_aux_layer:
-            self.aux_output_size = {}
-            self.aux_classifier = {}
+            self.aux_output_size = RELATIVE_IDX_RANGE if self.aux_labels_type == 'heads_idx' else NUM_OF_RELATIONS
+            self.aux_classifier = nn.Linear(config.hidden_size, self.aux_output_size)
             self.aux_loss_fct = CrossEntropyLoss()
-            for label_type in self.aux_labels_type:
-                self.aux_output_size[label_type] = AUX_OUTPUTS[label_type]
-                self.aux_classifier = nn.Linear(config.hidden_size, AUX_OUTPUTS[label_type])
 
     def forward(self, hidden_states, attention_mask=None, head_mask=None,
                 encoder_hidden_states=None, encoder_attention_mask=None,
@@ -267,15 +261,17 @@ class LiBertLayer(BertLayer):
         intermediate_output = self.intermediate(attention_output)
         layer_output = self.output(intermediate_output, attention_output)
 
-        aux_loss = {}
         if self.is_aux_layer:
-            for label_type in self.aux_labels_type:
-                aux_classifier = self.aux_classifier[label_type]
-                aux_logits = aux_classifier(layer_output)
-                active_aux_logits = aux_logits.view(-1, self.aux_output_size[label_type])
-                active_aux_labels = aux_labels.view(-1)
-                aux_loss = self.aux_loss_fct(active_aux_logits, active_aux_labels)
-               
+            aux_logits = self.aux_classifier(layer_output)
+
+            # active_loss = attention_mask.view(-1) == 1
+            active_aux_logits = aux_logits.view(-1, self.aux_output_size)
+            active_aux_labels = aux_labels.view(-1)
+            # active_aux_labels = torch.where(
+            #     active_loss, aux_labels.view(-1),
+            #     torch.tensor(HEADS_IGNORE_IDX).type_as(aux_labels)
+            # )
+            aux_loss = self.aux_loss_fct(active_aux_logits, active_aux_labels)
         else:
             aux_loss = torch.tensor(0.0)
 
