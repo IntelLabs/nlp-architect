@@ -2,6 +2,7 @@
 import csv 
 import json
 import os
+import glob
 import argparse
 from pathlib import Path
 from itertools import permutations
@@ -196,11 +197,14 @@ def parse_in_domain(domains: list, spacy_model: str, subdir: str):
         ds_file = str(DOMAINS_DIR / f'{domain}.txt')
         print('File: ' + ds_file)
         parse_file(ds_file, spacy_bert_tok, subdir=subdir)
+    # further in_domain conll files
+    for conll_in_domain_file in glob.glob(f"{CONLL_DIR}/*_in_domain_*/*.txt"):
+        print('File: ' + conll_in_domain_file)
+        parse_file(conll_in_domain_file, spacy_bert_tok, subdir=subdir)
 
 def get_dep_relations_from_csv(subdir: str):
     """ Retrieve all dependecny relation labels from ALL CSVs """
     import pandas as pd
-    import glob
     path = DATA_DIR / 'csv' / subdir
     all_files = glob.glob(str(path) + "/*/*.csv")
     dfs = [pd.read_csv(filename, index_col=None)
@@ -326,9 +330,6 @@ def convert_mrp_file(conll_file: str, parse_mrp_file: str, subdir: str):
 
 
 def prepare_from_semantic_parses(formalism: str, domains, splits=3, modes=('train', 'dev', 'test')):
-    # formalism = "dm"
-    # splits=3
-    # modes=('train', 'dev', 'test')
     PARSES_DIR = DATA_DIR / "semantic_parses" / formalism
     for domain_a, domain_b in permutations(domains, r=2):
         print('\nSetting: ' + domain_a + ' to ' + domain_b)
@@ -338,6 +339,21 @@ def prepare_from_semantic_parses(formalism: str, domains, splits=3, modes=('trai
                 parse_mrp_file = str(PARSES_DIR / f'{domain_a}_to_{domain_b}_{split + 1}' / f'{ds}.mrp')
                 print(f"Converting {conll_file}...")
                 convert_mrp_file(conll_file, parse_mrp_file, subdir=formalism)
+    # in-domain files
+    for domain in domains:
+        # "domains_all" file
+        conll_file = str(CONLL_DIR / f'domains_all' / f'{domain}.txt')
+        parse_mrp_file = str(PARSES_DIR / f'domains_all' / f'{domain}.mrp')
+        convert_mrp_file(conll_file, parse_mrp_file, subdir=formalism)
+        # in-domain dirs with 4 different settings (cross-validation)
+        setting_subdirs = [f"{domain}_in_domain_{suff}" for suff in range(1, 5)]
+        for setting in setting_subdirs:
+            for ds in tqdm(modes):
+                conll_file = str(CONLL_DIR / f'{setting}' / f'{ds}.txt')
+                parse_mrp_file = str(PARSES_DIR / f'{setting}' / f'{ds}.mrp')
+                print(f"Converting {conll_file}...")
+                convert_mrp_file(conll_file, parse_mrp_file, subdir=formalism)
+
 
 
 #%%
