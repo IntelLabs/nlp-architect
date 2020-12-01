@@ -54,8 +54,8 @@ class InputExample:
     guid: str
     words: List[str]
     labels: Optional[List[str]]
-    heads: Optional[List[int]]
-    head_words: Optional[List[str]]
+    heads: Optional[List[List[int]]]
+    head_words: Optional[List[List[str]]]
     pos_tags: Optional[List[str]]
     sub_toks: Optional[List[List[str]]]
 
@@ -95,11 +95,18 @@ def read_examples_from_file(data_dir, mode: Union[Split, str]) -> List[InputExam
                     guid_index += 1
                     words, labels, heads, head_words, pos_tags, sub_toks = [], [], [], [], [], []
             else:
-                word, label, head, head_word, _, pos_tag, sub_tok = row
+                word, label, head, head_word, syn_rel, pos_tag, sub_tok = row
+                """
+                For representing bilexical graphs in our Conll-like CSVs, 
+                where a token might have 0 or >1 heads, 
+                we use '_' to denote None heads, 
+                and use '~' as an intra-cell delimiter for multiple entries
+                in `head`, `head_word` and `syn_rel`.
+                """
                 words.append(word)
                 labels.append(label)
-                heads.append(int(head))
-                head_words.append(head_word)
+                heads.append([int(h) for h in head.split('~')] if head is not "_" else [])
+                head_words.append(head_word.split('~') if head_word is not "_" else [])
                 pos_tags.append(pos_tag)
                 sub_toks.append(sub_tok.split() if sub_tok else [word])
         if words:
@@ -133,10 +140,38 @@ def apply_heads_to_subtokens(heads, sub_tokens, zero_sub_tokens=False):
     heads.insert(0, [0] * (len(heads) + 1))
     return np.array(heads)
 
-def binarize(preds):
+def binarize(preds: List[int]):
+    "take an sequence of token-idxs, and convert each token-idx to a one-hot vector - returns a matrix"
     res = []
     for pred in preds:
         res.append([1 if i == pred else 0 for i in range(len(preds) + 1)])
+    return res
+
+def binarize_multi_hot(heads: List[List[int]]):
+    """
+    While `binarize` take an sequence of token-idxs, and convert each token-idx to a one-hot vector 
+    (at length of sequence + 1), this function is a variant that handles a sequence of List[token-idxs].
+    The function is used for supporting multiple token-heads (for graph-structured, vs. tree-structured, 
+    linguistic formalisms, e.g. semantic dependencies). Therefore, a token's head is represented in the input 
+    (and in `heads`) as a list of integeres rather than a single integer. 
+    In output matrix, each row will be a "multi-hot" vector.
+     
+    E.g. binarize_multi_hot([[1],[0,1]]) -> [[0,1,0], 
+                                             [1,1,0]]
+    Args:
+        heads (List[List[int]]): a sequence-lengthed list of lists of head-indices. 
+
+    Returns:
+        [List[List[int]]]: a list of "multi-hot" binary vectors. 
+    """
+    res = []
+    for head in heads:
+        vec = [1 if i in head else 0 for i in range(len(heads) + 1)]
+        # special handling for tokens with no-heads (in which head==[]):
+        # Don't represent as all-zero vector as it will zero the attention; rather, by a all-one vector
+        if not head:
+            vec = [1] * (len(heads) + 1)
+        res.append(vec)
     return res
 
 def convert_examples_to_features(
@@ -144,6 +179,7 @@ def convert_examples_to_features(
         label_list: List[str],
         max_seq_length: int,
         tokenizer: PreTrainedTokenizer,
+        hparams: Namespace
     ) -> List[InputFeatures]:
     """ Loads a data file into a list of `InputFeatures`."""
 
@@ -175,7 +211,7 @@ def convert_examples_to_features(
                 label_ids.extend([label_map[label]] + [pad_token_label_id] * (len(word_tokens) - 1))
 
         ######### Add syntactic information #################
-        binary_heads = apply_heads_to_subtokens(binarize(heads), sub_toks)
+        binary_heads = apply_heads_to_subtokens(binarize_multi_hot(heads), sub_toks)
 
         ####################### DEBUG ############################
         # if binary_heads.shape[1] != len(tokens) + 1:
@@ -316,6 +352,17 @@ def load_config(name):
 
     if isinstance(cfg.splits, int):
         cfg.splits = list(range(1, cfg.splits + 1))
+    
+    if not hasattr(cfg, 'formalism'):   # backward compatible with older configs
+        cfg.formalism = 'spacy'         # default formalism is spacy dependency parser
+    cfg.csv_dir = LIBERT_DIR / 'data' / 'csv' / cfg.formalism
+    with open(cfg.csv_dir / "dep_relations.txt", encoding='utf-8') as deprel_f:
+        dep_relations = [l.strip() for l in deprel_f.read().splitlines()]
+        cfg.DEP_REL_MAP = {rel: i + 1 for i, rel in enumerate(dep_relations)}
+        # determine number of dep-relation labels by dep_relations.txt
+        cfg.NUM_REL_LABELS = len(dep_relations) + 1
+
+    # for relation labels
 
     cfg.tag = '' if cfg.tag is None else '_' + cfg.tag
     ds = {'l': 'laptops', 'r': 'restaurants', 'd': 'device'}

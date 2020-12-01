@@ -4,7 +4,7 @@
 
 - Linux (tested on Ubuntu 16.04)
 - Python 3.6.x
-- GPU + CUDA 10.1+
+- GPU + CUDA 10.2+
 
 ## Automated Setup
 
@@ -19,11 +19,11 @@ chmod +x setup.sh && ./setup.sh
 
 ```
 
-### For machines with CUDA 10.1:
+### For machines with CUDA 11:
 
 ```bash
-curl -O  https://raw.githubusercontent.com/NervanaSystems/nlp-architect/libert/nlp_architect/models/libert/setup-cu101.sh
-chmod +x setup-cu101.sh && ./setup-cu101.sh
+curl -O  https://raw.githubusercontent.com/NervanaSystems/nlp-architect/libert/nlp_architect/models/libert/setup-cu11.sh
+chmod +x setup-cu11.sh && ./setup-cu11.sh
 
 ```
 
@@ -50,11 +50,11 @@ pip install -r nlp-architect/nlp_architect/models/libert/requirements.txt
 python -m spacy download en_core_web_lg
 ```
 
-#### For machines with CUDA 10.1:
+#### For machines with CUDA 11:
 
 ```bash
 pip install -r nlp-architect/nlp_architect/models/libert/requirements_no_torch.txt
-pip install torch==1.6.0+cu101 torchvision==0.7.0+cu101 -f https://download.pytorch.org/whl/torch_stable.html
+pip install torch==1.7.0+cu110 torchvision==0.8.1+cu110 torchaudio===0.7.0 -f https://download.pytorch.org/whl/torch_stable.html
 python -m spacy download en_core_web_lg
 ```
 

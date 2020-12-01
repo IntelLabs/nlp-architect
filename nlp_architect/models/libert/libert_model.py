@@ -45,6 +45,8 @@ class LiBertConfig(BertConfig):
         self.duplicated_rels = hparams.duplicated_rels
         self.transpose = hparams.transpose
         self.li_layers = hparams.li_layers
+        self.use_syntactic_rels = hparams.use_syntactic_rels
+        self.NUM_REL_LABELS = hparams.NUM_REL_LABELS
 
 class LiBertForToken(BertForTokenClassification):
     def __init__(self, config):
@@ -53,7 +55,7 @@ class LiBertForToken(BertForTokenClassification):
 
     def forward(self, input_ids=None, attention_mask=None, token_type_ids=None, position_ids=None,
                 head_mask=None, inputs_embeds=None, labels=None, output_attentions=None,
-                output_hidden_states=None, parse=None):
+                output_hidden_states=None, parse=None, syn_rels=None):
         outputs = self.bert(
             input_ids,
             attention_mask=attention_mask,
