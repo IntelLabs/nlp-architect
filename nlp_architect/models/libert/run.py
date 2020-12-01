@@ -35,9 +35,9 @@ LIBERT_DIR = Path(realpath(__file__)).parent
 LOG_ROOT = LIBERT_DIR / 'logs'
 GPUS_LOG = LOG_ROOT / 'gpus'
 
-def run_data(cfg_yaml, time, rnd_init, data, log_dir, metric):
+def run_data(cfg_yaml, time, baseline, data, log_dir, metric):
     cfg = load_config(cfg_yaml)
-    cfg.rnd_init = str(rnd_init) == 'True'
+    cfg.baseline = str(baseline) == 'True'
     cfg.gpus = 1
     train_versions, test_versions = [], []
     runs = list(product(cfg.seeds, cfg.splits))
@@ -46,7 +46,7 @@ def run_data(cfg_yaml, time, rnd_init, data, log_dir, metric):
 
         cfg.data_dir = f'{data}_{split}'
         model = BertForToken(cfg)
-        model_str = f'{cfg.model_type}_rnd_init' if cfg.rnd_init else f'{cfg.model_type}'
+        model_str = f'{cfg.model_type}_baseline' if cfg.baseline else f'{cfg.model_type}'
         exper_str = f'{model_str}_seed_{seed}_split_{split}'
         log.info(f"\n{'*' * 150}\n{' ' * 50}Run {run_i}/{len(runs)}: \
             {data}, {exper_str}\n{'*' * 150}")
@@ -81,7 +81,7 @@ def main(config_yaml):
     set_as_latest(log_dir)
     this_module = realpath(__file__)
 
-    run_queue = deque(product(cfg.base_init, cfg.data))
+    run_queue = deque(product(cfg.baseline, cfg.data))
     num_procs = min(len(cfg.gpus), len(run_queue))
 
     # Parallel: each experiment runs on a single GPU
@@ -90,16 +90,16 @@ def main(config_yaml):
             procs = []
             for gpu_i in cfg.gpus[:num_procs]:
                 os.environ["CUDA_VISIBLE_DEVICES"] = str(gpu_i)
-                rnd_init, data = run_queue.popleft()
-                args = config_yaml, exp_tag, rnd_init, data, log_dir, cfg.metric
+                baseline, data = run_queue.popleft()
+                args = config_yaml, exp_tag, baseline, data, log_dir, cfg.metric
                 cmd = [python] + [this_module] + [f'{_}' for _ in args]
                 with open(gpus_log_dir / f'gpu_{gpu_i}.log', 'a', encoding='utf-8') as log_file:
                     proc = Popen(cmd, bufsize=-1, stdout=log_file, stderr=STDOUT, encoding='utf-8')
 
                 print(f"PID: {proc.pid}: yaml: {config_yaml}.yaml, time: {exp_tag}, " \
-                    f"rnd_init: {rnd_init}, data: {data}, gpu: {gpu_i}")
+                    f"baseline: {baseline}, data: {data}, gpu: {gpu_i}")
                 procs.append(proc)
-                model_str = f"{cfg.model_type}_rnd_init" if rnd_init else f'{cfg.model_type}'
+                model_str = f"{cfg.model_type}_baseline" if baseline else f'{cfg.model_type}'
                 if not run_queue:
                     break
 
@@ -110,9 +110,9 @@ def main(config_yaml):
     # Sequential: each experiment runs in turn on all gpus
     else:
         while run_queue:
-            rnd_init, data = run_queue.popleft()
-            run_data(config_yaml, exp_tag, rnd_init, data, log_dir, cfg.metric)
-            model_str = f'{cfg.model_type}_rnd_init' if rnd_init else f'{cfg.model_type}'
+            baseline, data = run_queue.popleft()
+            run_data(config_yaml, exp_tag, baseline, data, log_dir, cfg.metric)
+            model_str = f'{cfg.model_type}_baseline' if baseline else f'{cfg.model_type}'
     
     post_analysis(cfg, log_dir, exp_tag, model_str)
 

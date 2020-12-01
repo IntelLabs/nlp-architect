@@ -40,7 +40,7 @@ class LiBertConfig(BertConfig):
         # pylint: disable=attribute-defined-outside-init
         self.li_layer = hparams.li_layer
         self.replace_final = hparams.replace_final
-        self.rnd_init = hparams.rnd_init
+        self.baseline = hparams.baseline
         self.all_layers = hparams.all_layers
         self.duplicated_rels = hparams.duplicated_rels
         self.transpose = hparams.transpose
@@ -257,7 +257,7 @@ class LiBertSelfAttention(BertSelfAttention):
         super(LiBertSelfAttention, self).__init__(config)
         self.orig_num_attention_heads = config.num_attention_heads
         self.replace_final = config.replace_final
-        self.rnd_init = config.rnd_init
+        self.baseline = config.baseline
         self.duplicated_rels = config.duplicated_rels
         self.transpose = config.transpose
 
@@ -296,7 +296,7 @@ class LiBertSelfAttention(BertSelfAttention):
 
         attention_scores = torch.matmul(query_layer, key_layer.transpose(-1, -2))        
 
-        if parse is not None and self.rnd_init is False:   
+        if parse is not None and self.baseline is False:   
 
             #  duplicated heads across all matrix (one vector duplicated across matrix)
             if self.duplicated_rels is True:
@@ -345,7 +345,7 @@ class LiBertSelfAttention(BertSelfAttention):
             # if self.replace_final is True:
             #     attention_probs = torch.cat((original_12head_attn_probs, ex_head_attention_probs.unsqueeze(1)),1)
 
-        if parse is None or self.rnd_init is True:
+        if parse is None or self.baseline is True:
             attention_scores = attention_scores / math.sqrt(self.attention_head_size)
             # Apply the attention mask is (precomputed for all layers in BertModel forward() function)
             attention_scores = attention_scores + attention_mask

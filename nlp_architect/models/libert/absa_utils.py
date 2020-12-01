@@ -346,14 +346,17 @@ def set_as_latest(log_dir):
         pass
     os.symlink(log_dir, link, target_is_directory=True)
 
-def write_summary_tables(cfg, exp_id):
-    filename = f'summary_table_{exp_id}'
+def write_summary_tables(cfg, exp_id, sig_result):
+    _, _, all_alphas_scores = sig_result
+
+    filename = f'{exp_id}'
     with open(LOG_ROOT / exp_id / f'{filename}.csv', 'w', newline='', encoding='utf-8') as csv_file:
         csv_writer = csv.writer(csv_file)
         header = ['']
         for dataset in cfg.data:
             ds_split = dataset.split('_')
-            ds_str = f"{ds_split[0][0]}-->{ds_split[2][0]}".upper()
+            ds_str = f"{ds_split[0][0]}-->{ds_split[2][0]}".upper() if len(ds_split) == 3 else \
+                f"{ds_split[0][0]}_{ds_split[1][0]}-->{ds_split[3][0]}".upper()
             header.extend([ds_str, f'{ds_str} '])
         sub_header = ['Seeds Average'] + ['AS', 'OP'] * len(cfg.data) + ['ASP_MEAN', 'OP_MEAN']
         csv_writer.writerow(header)
@@ -363,7 +366,7 @@ def write_summary_tables(cfg, exp_id):
 
         for dataset in cfg.data:
             dataset_dir = LOG_ROOT / exp_id / dataset
-            baseline_dir = dataset_dir / 'libert_rnd_init_AGGREGATED_baseline_test' / 'csv'
+            baseline_dir = dataset_dir / 'libert_baseline_AGGREGATED_baseline_test' / 'csv'
             model_dir = dataset_dir / f'libert_AGGREGATED_{exp_id}_test' / 'csv'
 
             baseline_mean_asp, baseline_std_asp = get_score_from_csv_agg(baseline_dir, 'asp_f1')
@@ -387,17 +390,21 @@ def write_summary_tables(cfg, exp_id):
         csv_writer.writerow(['model'] + format_list(model_row[:-2], model_std_row) + model_row[-2:])
         csv_writer.writerow(['delta'] + [f'{d:.2f}' for d in deltas_row])
 
-        for seed in cfg.seeds:
+        for i, seed in enumerate(cfg.seeds):
+            alpha_001_sig = all_alphas_scores[1][i]
+            alpha_005_sig = all_alphas_scores[2][i]
+
             baseline_row, baseline_std_row, model_row, model_std_row = [], [], [], []
             csv_writer.writerow([''] * ((2 * len(cfg.data)) + 3))
-            seed_header = [f'Seed {seed}'] + ['AS', 'OP'] * len(cfg.data) + ['ASP_MEAN', 'OP_MEAN']
+            seed_header = [f'Seed {seed}'] + ['AS', 'OP'] * len(cfg.data) + \
+                ['ASP_MEAN', 'OP_MEAN', 'SIGNIFICANCE @ p=0.01', 'SIGNIFICANCE @ p=0.05']
             csv_writer.writerow(seed_header)
 
             for dataset in cfg.data:
                 base_asp, model_asp, base_op, model_op = [], [], [], []
                 for split in cfg.splits:
                     dataset_dir = LOG_ROOT / exp_id / dataset
-                    baseline_csv = dataset_dir / f'libert_rnd_init_seed_{seed}_split_{split}_test'\
+                    baseline_csv = dataset_dir / f'libert_baseline_seed_{seed}_split_{split}_test'\
                         / 'version_baseline' / 'metrics.csv'
                     model_csv = dataset_dir / f'libert_seed_{seed}_split_{split}_test'\
                         / f'version_{exp_id}' / 'metrics.csv'
@@ -420,7 +427,8 @@ def write_summary_tables(cfg, exp_id):
             deltas_row = np.array(model_row) - np.array(baseline_row)
             format_list = lambda means, stds: [f'{m:.2f} ({s:.2f})' for m, s in zip(means, stds)]
             csv_writer.writerow(['baseline'] + format_list(baseline_row[:-2], baseline_std_row) + baseline_row[-2:])
-            csv_writer.writerow(['model'] + format_list(model_row[:-2], model_std_row) + model_row[-2:])
+            sig_str = [f'{v:.2f}' for v in [alpha_001_sig, alpha_005_sig]]
+            csv_writer.writerow(['model'] + format_list(model_row[:-2], model_std_row) + model_row[-2:] + sig_str)
             csv_writer.writerow(['delta'] + [f'{d:.2f}' for d in deltas_row])
 
 def get_score_from_csv(csv_file, metric):

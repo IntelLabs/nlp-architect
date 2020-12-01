@@ -111,7 +111,7 @@ def replicability(alpha, pvals):
     return k_est, rejlist
 
 def significance_from_cfg(cfg, log_dir, exp_id):
-    significance_report(cfg.data, exp_id, cfg.seeds, cfg.splits, log_dir,
+    return significance_report(cfg.data, exp_id, cfg.seeds, cfg.splits, log_dir,
                         cfg.baseline_str, cfg.baseline_version, cfg.model_type)
 
 def significance_report(
@@ -192,7 +192,7 @@ def significance_report(
     with open(log_root / f"significance_{model}_vs_{baseline}_{exp_id}.txt", 'w', encoding='utf-8') as report_file:
         report_file.write(res_str)
 
-    return
+    return seeds, alphas, all_alphas_scores
 
 def get_significance_report_plot(alphas, all_alphas_scores):
 
