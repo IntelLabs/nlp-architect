@@ -1,4 +1,3 @@
-#%%
 import csv
 import os
 from pathlib import Path
@@ -7,6 +6,9 @@ from transformers import BertTokenizer
 from tqdm import tqdm
 import spacy
 from spacy.tokens import Doc
+import urllib
+import pandas as pd
+import glob
 
 LIBERT_DIR = Path(os.path.realpath(__file__)).parent
 DATA_DIR = LIBERT_DIR / 'data'
@@ -181,24 +183,55 @@ def parse_in_domain(domains: list):
         print('File: ' + ds_file)
         parse_file(ds_file, spacy_bert_tok)
 
-if __name__ == "__main__":
-    parse_cross_domain(domains=['restaurants', 'laptops', 'device'])
-    # parse_in_domain(domains=['restaurants', 'laptops', 'device'])
-    
-    # Save label set to label.txt
-    with open(DATA_DIR / 'csv' / 'labels.txt', 'w', encoding='utf-8') as labels_f:
-        labels_f.write('\n'.join(['O', 'B-ASP', 'I-ASP', 'B-OP', 'I-OP']))
+def add_rel_group_column():
+    clear_nlp_readme_url = \
+    'https://raw.githubusercontent.com/clir/clearnlp-guidelines/master/md/specifications/dependency_labels.md'
 
-    # Prepare dep_relations.txt with all dependecny relation labels from ALL CSVs
-    import pandas as pd
-    import glob
+    txt = urllib.request.urlopen(clear_nlp_readme_url).read().decode("utf-8")
+    group_descriptions = txt.split('\n## ')[3:]
+
+    rel_to_group = {'cop': 'Miscellaneous', 'intj': 'Miscellaneous', 'nn': 'Compound', 'nounmod': 'Nominals',
+        'obj': 'Objects', 'obl': 'Miscellaneous', 'quantmod': 'Miscellaneous', 'npadvmod': 'Noun'}
+
+    for group_desc in group_descriptions:
+        clean_desc = group_desc.replace('###', '')
+        desc_words = clean_desc.split()
+        group_name = desc_words[0]
+
+        rels = [w[2: -2] for w in desc_words if w.startswith("(`")]
+        for rel in rels:
+            rel_to_group[rel] = group_name
+
+    rel_to_group['ROOT'] = 'ROOT'
+    rel_to_group['_'] = '_'
+
+    for filename in tqdm(glob.glob(str(DATA_DIR / 'csv') + "/*/*.csv")):
+        df = pd.read_csv(filename, index_col=None)
+        df['REL_GROUP'] = df.apply(lambda row: rel_to_group[row['DEP_REL']], axis=1)
+        df.to_csv(filename, index=False)
+        
+def generate_dep_relations_txt():
     path = DATA_DIR / 'csv' 
     all_files = glob.glob(str(path) + "/*/*.csv")
-    dfs = [pd.read_csv(filename, index_col=None)
-        for filename in all_files]
+    dfs = [pd.read_csv(filename, index_col=None) for filename in all_files]
     df = pd.concat(dfs, axis=0, ignore_index=False)
     dep_relations = [l.lower() for l in set(df['DEP_REL'])] 
     # Save dep_relations.txt
     with open(LIBERT_DIR / 'dep_relations.txt', 'w', encoding='utf-8') as dep_rel_labels_f:
         dep_rel_labels_f.write('\n'.join(dep_relations))
 
+# if __name__ == "__main__":
+#     parse_cross_domain(domains=['restaurants', 'laptops', 'device'])
+#     # parse_in_domain(domains=['restaurants', 'laptops', 'device'])
+    
+#     # Save label set to label.txt
+#     with open(DATA_DIR / 'csv' / 'labels.txt', 'w', encoding='utf-8') as labels_f:
+#         labels_f.write('\n'.join(['O', 'B-ASP', 'I-ASP', 'B-OP', 'I-OP']))
+
+#     # Prepare dep_relations.txt with all dependecny relation labels from ALL CSVs
+#     generate_dep_relations_txt()
+
+#     # Add column to ALL CSVs containing relation group which each relation type belongs to
+#     add_rel_group_column()
+
+add_rel_group_column()

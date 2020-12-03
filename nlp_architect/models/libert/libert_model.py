@@ -33,7 +33,7 @@ from pathlib import Path
 LIBERT_DIR = Path(realpath(__file__)).parent
 NUM_OF_RELATIONS = 52
 RELATIVE_IDX_RANGE = 22
-HEADS_IGNORE_IDX = 0
+
 class LiBertConfig(BertConfig):
 
     def add_extra_args(self, hparams):
@@ -59,6 +59,7 @@ class LiBertForToken(BertForTokenClassification):
     def forward(self, input_ids=None, attention_mask=None, token_type_ids=None, position_ids=None,
                 head_mask=None, inputs_embeds=None, labels=None, output_attentions=None,
                 output_hidden_states=None, parse=None, heads_idx=None, syn_rels=None):
+        
         if self.aux_labels_type == 'syn_rels':
             aux_labels = syn_rels
         if self.aux_labels_type == 'heads_idx':
@@ -190,6 +191,8 @@ class LiBertEncoder(BertEncoder):
     def __init__(self, config):
         super(LiBertEncoder, self).__init__(config)
         
+        self.aux_layers = config.aux_layers
+
         self.layer = nn.ModuleList([LiBertLayer(config, layer_num) for \
             layer_num in range(config.num_hidden_layers)])
         self.li_layer = config.li_layer
@@ -201,6 +204,8 @@ class LiBertEncoder(BertEncoder):
                 output_attentions=False, output_hidden_states=False, parse=None, aux_labels=None):
         all_hidden_states = ()
         all_attentions = ()
+        norm_aux_loss = 0
+
         for i, bert_layer in enumerate(self.layer):
             if output_hidden_states:
                 all_hidden_states = all_hidden_states + (hidden_states,)
@@ -209,7 +214,7 @@ class LiBertEncoder(BertEncoder):
             if self.all_layers or i == self.li_layer or i in self.li_layers:
                 parse_layer = parse
 
-            layer_outputs, aux_loss = bert_layer(
+            bert_layer_output = bert_layer(
                 hidden_states=hidden_states,
                 attention_mask=attention_mask,
                 head_mask=head_mask[i],
@@ -219,6 +224,13 @@ class LiBertEncoder(BertEncoder):
                 output_attentions=output_attentions,
                 aux_labels=aux_labels
             )
+            if len(bert_layer_output) > 1:
+                layer_outputs, aux_loss = bert_layer_output
+                norm_aux_loss += aux_loss
+
+            else:
+                layer_outputs = bert_layer_output
+
             hidden_states = layer_outputs[0]
 
             if output_attentions:
@@ -228,19 +240,22 @@ class LiBertEncoder(BertEncoder):
         if output_hidden_states:
             all_hidden_states = all_hidden_states + (hidden_states,)
 
+        # Normalizing cluster loss by number of layers used
+        norm_aux_loss = norm_aux_loss / len(self.aux_layers)
+
         outputs = (hidden_states,)
         if output_hidden_states:
             outputs = outputs + (all_hidden_states,)
         if output_attentions:
             outputs = outputs + (all_attentions,)
-        return outputs, aux_loss  # (last-layer hidden state, (all hidden states), (all attentions)), (aux_loss,)
+        return outputs, norm_aux_loss  # (last-layer hidden state, (all hidden states), (all attentions)), (aux_loss,)
 
 class LiBertLayer(BertLayer):
     def __init__(self, config, layer_num):
         super(LiBertLayer, self).__init__(config)
         self.attention = LiBertAttention(config, layer_num)
 
-        self.is_aux_layer = not config.baseline and layer_num + 1 in config.aux_layers
+        self.is_aux_layer = not config.baseline and layer_num in config.aux_layers
         self.aux_labels_type = config.aux_labels_type
 
         if self.is_aux_layer:
@@ -272,11 +287,12 @@ class LiBertLayer(BertLayer):
             #     torch.tensor(HEADS_IGNORE_IDX).type_as(aux_labels)
             # )
             aux_loss = self.aux_loss_fct(active_aux_logits, active_aux_labels)
+            outputs = (layer_output,) + outputs
+            return outputs, aux_loss            
         else:
-            aux_loss = torch.tensor(0.0)
+            outputs = (layer_output,) + outputs
+            return outputs
 
-        outputs = (layer_output,) + outputs
-        return outputs, aux_loss
 
 class LiBertAttention(BertAttention):
     def __init__(self, config, layer_num):
