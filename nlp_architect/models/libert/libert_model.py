@@ -31,7 +31,7 @@ from pathlib import Path
 
 
 LIBERT_DIR = Path(realpath(__file__)).parent
-NUM_OF_RELATIONS = 52
+NUM_OF_RELATIONS = 15
 RELATIVE_IDX_RANGE = 22
 
 class LiBertConfig(BertConfig):

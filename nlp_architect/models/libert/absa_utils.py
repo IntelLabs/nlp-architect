@@ -40,7 +40,7 @@ from significance import significance_from_cfg as significance
 LIBERT_DIR = Path(realpath(__file__)).parent
 LOG_ROOT = LIBERT_DIR / 'logs'
 
-DEP_REL_MAP = {rel.strip(): i + 1 for i, rel in enumerate(open(LIBERT_DIR / 'dep_relations.txt', encoding='utf-8'))}
+GROUPING = True
 
 @dataclass
 class InputExample:
@@ -87,25 +87,25 @@ def read_examples_from_file(data_dir, mode: Union[Split, str]) -> List[InputExam
     file_path = os.path.join(data_dir, f"{mode}.csv")
     guid_index = 1
     examples = []
-    empty_row = ['_'] * 7
+
     with open(file_path, encoding='utf-8') as f:
         words, labels, heads, head_words, syn_rels, pos_tags, sub_toks = [], [], [], [], [], [], []
         reader = csv.reader(f)
         next(reader, None)
         for row in reader:
-            if row == empty_row:
+            if set(row) == {'_'}:
                 if words:
                     examples.append(InputExample(guid=f"{mode}-{guid_index}", words=words, labels=labels,
                                                     heads=heads, head_words=head_words, syn_rels=syn_rels, pos_tags=pos_tags, sub_toks=sub_toks))
                     guid_index += 1
-                    words, labels, heads, head_words, pos_tags, sub_toks = [], [], [], [], [], []
+                    words, labels, heads, head_words, pos_tags, sub_toks, rel_group = [], [], [], [], [], [], []
             else:
-                word, label, head, head_word, syn_rel, pos_tag, sub_tok = row
+                word, label, head, head_word, syn_rel, pos_tag, sub_tok, rel_group = row
                 words.append(word)
                 labels.append(label)
                 heads.append(int(head))
                 head_words.append(head_word)
-                syn_rels.append(syn_rel)
+                syn_rels.append(rel_group if GROUPING else syn_rel)
                 pos_tags.append(pos_tag)
                 sub_toks.append(sub_tok.split() if sub_tok else [word])
         if words:
@@ -174,6 +174,9 @@ def convert_examples_to_features(
     ) -> List[InputFeatures]:
     """ Loads a data file into a list of `InputFeatures`."""
 
+    dep_rel_map = {r.strip(): i + 1 for i, r in enumerate(open(LIBERT_DIR / 'dep_relations.txt', encoding='utf-8'))}
+    rel_group_map = {r.strip(): i + 1 for i, r in enumerate(open(LIBERT_DIR / 'rel_groups.txt', encoding='utf-8'))}
+
     label_map = {label: i for i, label in enumerate(label_list)}
     cls_token = tokenizer.cls_token
     sep_token = tokenizer.sep_token
@@ -188,8 +191,14 @@ def convert_examples_to_features(
             log.debug("Writing example %d of %d", ex_index, len(examples))
         tokens, label_ids, heads, sub_toks, syn_rels = [], [], [], [], []
 
-        for word, label, head, syn_rel, _, sub_tok in zip(ex.words, ex.labels, ex.heads, ex.syn_rels, ex.pos_tags, ex.sub_toks):
-            syn_rels.append(DEP_REL_MAP[syn_rel.lower()])
+        for word, label, head, syn_rel, _, sub_tok in \
+            zip(ex.words, ex.labels, ex.heads, ex.syn_rels, ex.pos_tags, ex.sub_toks):
+            
+            if GROUPING:
+                syn_rels.append(rel_group_map[syn_rel])
+            else:
+                syn_rels.append(dep_rel_map[syn_rel.lower()])
+
             heads.append(head)
             sub_toks.append(sub_tok)
             word_tokens = tokenizer.tokenize(word)

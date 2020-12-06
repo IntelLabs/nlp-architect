@@ -203,13 +203,17 @@ def add_rel_group_column():
             rel_to_group[rel] = group_name
 
     rel_to_group['ROOT'] = 'ROOT'
+
+    with open(LIBERT_DIR / 'rel_groups.txt', 'w', encoding='utf-8') as rel_groups_f:
+        rel_groups_f.write('\n'.join(set(rel_to_group.values())))
+
     rel_to_group['_'] = '_'
 
     for filename in tqdm(glob.glob(str(DATA_DIR / 'csv') + "/*/*.csv")):
         df = pd.read_csv(filename, index_col=None)
         df['REL_GROUP'] = df.apply(lambda row: rel_to_group[row['DEP_REL']], axis=1)
         df.to_csv(filename, index=False)
-        
+
 def generate_dep_relations_txt():
     path = DATA_DIR / 'csv' 
     all_files = glob.glob(str(path) + "/*/*.csv")
@@ -220,18 +224,16 @@ def generate_dep_relations_txt():
     with open(LIBERT_DIR / 'dep_relations.txt', 'w', encoding='utf-8') as dep_rel_labels_f:
         dep_rel_labels_f.write('\n'.join(dep_relations))
 
-# if __name__ == "__main__":
-#     parse_cross_domain(domains=['restaurants', 'laptops', 'device'])
-#     # parse_in_domain(domains=['restaurants', 'laptops', 'device'])
+if __name__ == "__main__":
+    parse_cross_domain(domains=['restaurants', 'laptops', 'device'])
+    # parse_in_domain(domains=['restaurants', 'laptops', 'device'])
     
-#     # Save label set to label.txt
-#     with open(DATA_DIR / 'csv' / 'labels.txt', 'w', encoding='utf-8') as labels_f:
-#         labels_f.write('\n'.join(['O', 'B-ASP', 'I-ASP', 'B-OP', 'I-OP']))
+    # Save label set to label.txt
+    with open(DATA_DIR / 'csv' / 'labels.txt', 'w', encoding='utf-8') as labels_f:
+        labels_f.write('\n'.join(['O', 'B-ASP', 'I-ASP', 'B-OP', 'I-OP']))
 
-#     # Prepare dep_relations.txt with all dependecny relation labels from ALL CSVs
-#     generate_dep_relations_txt()
+    # Prepare dep_relations.txt with all dependecny relation labels from ALL CSVs
+    generate_dep_relations_txt()
 
-#     # Add column to ALL CSVs containing relation group which each relation type belongs to
-#     add_rel_group_column()
-
-add_rel_group_column()
+    # Add column to ALL CSVs containing relation group which each relation type belongs to
+    add_rel_group_column()

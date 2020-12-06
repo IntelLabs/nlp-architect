@@ -2,7 +2,7 @@ max_epochs: 10
 model_type: libert # bert or libert
 baseline: [true, false]
 
-data: lr rl #
+data: rl lr #
 limit_data: 1.0
 splits: 1
 seeds: [25, 26]
@@ -14,9 +14,9 @@ num_workers: 44
 gpus: [0, 1, 2, 3]
 parallel: true
 
-aux_labels_type: 'heads_idx' # ['syn_rels', 'heads_idx']
-aux_layers: [7]
-tag: aux_idx_layer_7 # optional: name this experiment version
+aux_labels_type: 'syn_rels' # ['syn_rels', 'heads_idx']
+aux_layers: [5, 6, 7]
+tag: aux_rel_groups_layers_1_7 # optional: name this experiment version
 
 li_layer: #5
 li_layers: #[2]
