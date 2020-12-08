@@ -268,6 +268,15 @@ class LiBertSelfAttention(BertSelfAttention):
             self.extra_query = nn.Linear(config.hidden_size, self.attention_head_size)
             self.extra_key = nn.Linear(config.hidden_size, self.attention_head_size)
             self.extra_value = nn.Linear(config.hidden_size, self.attention_head_size)
+
+            # init head 13 with parameters copied from pre-trained head #0
+            # self.extra_key.weight.data = self.key.weight.data[:64]
+            # self.extra_key.bias.data = self.key.bias.data[:64]           
+            # self.extra_query.weight.data = self.query.weight.data[:64]
+            # self.extra_query.bias.data = self.query.bias.data[:64]
+            # self.extra_value.weight.data = self.value.weight.data[:64]
+            # self.extra_value.bias.data = self.value.bias.data[:64]
+
             nn.init.normal_(self.extra_key.weight.data, mean=0, std=0.02)
             nn.init.normal_(self.extra_key.bias.data, mean=0, std=0.02)
             nn.init.normal_(self.extra_query.weight.data, mean=0, std=0.02)
@@ -275,6 +284,7 @@ class LiBertSelfAttention(BertSelfAttention):
             nn.init.normal_(self.extra_value.weight.data, mean=0, std=0.02)
             nn.init.normal_(self.extra_value.bias.data, mean=0, std=0.02)
 
+            
     def forward(self, hidden_states, attention_mask=None, head_mask=None,
                 encoder_hidden_states=None, encoder_attention_mask=None,
                 output_attentions=False, parse=None):

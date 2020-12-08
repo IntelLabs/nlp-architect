@@ -131,6 +131,8 @@ def apply_heads_to_subtokens(heads, sub_tokens, zero_sub_tokens=False):
 
     # insert zeros row for [CLS] token
     heads.insert(0, [0] * (len(heads) + 1))
+    # debug insert ones row for [CLS] token
+    #heads.insert(0, [1] * (len(heads) + 1))  
     return np.array(heads)
 
 def binarize(preds):
