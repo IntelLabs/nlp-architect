@@ -15,7 +15,7 @@
 # ******************************************************************************
 # pylint: disable=logging-fstring-interpolation, no-member, unsubscriptable-object
 # pylint: disable=no-value-for-parameter
-
+#%%
 import os
 from pathlib import Path
 from sys import argv
@@ -37,24 +37,28 @@ LOG_ROOT = LIBERT_DIR / 'logs'
 GPUS_LOG = LOG_ROOT / 'gpus'
 
 @ray.remote(max_calls=1)
-def run_data(task_idx, cfg_yaml, time, rnd_init, data, log_dir, metric):
+def run_data(task_idx, cfg_yaml, time, baseline, data, log_dir, metric):
     # Routing output to log files
     tasks_log_dir = log_dir / 'tasks'
     with open(tasks_log_dir / f'task_{task_idx}.log', 'a', encoding='utf-8') as log_file:
         with redirect_stdout(log_file):
             with redirect_stderr(log_file):
                 cfg = load_config(cfg_yaml)
-                cfg.rnd_init = str(rnd_init) == 'True'
+                cfg.baseline = str(baseline) == 'True'
                 cfg.gpus = 1
 
                 train_versions, test_versions = [], []
-                runs = list(product(cfg.seeds, cfg.splits))
+
+                runs = list(product(cfg.seeds, cfg.splits(data)))
                 for run_i, (seed, split) in enumerate(runs, start=1):
                     pl.seed_everything(seed)
+                    if cfg.is_cross_domain(data):
+                        cfg.data_dir = f'{data}_{split}'
+                    else:               # in-domain setting - stating only domain name 
+                        cfg.data_dir = f'{data}_in_domain_{split}'
 
-                    cfg.data_dir = f'{data}_{split}'
                     model = BertForToken(cfg)
-                    model_str = f'{cfg.model_type}_rnd_init' if cfg.rnd_init else f'{cfg.model_type}'
+                    model_str = f'{cfg.model_type}_baseline' if cfg.baseline else f'{cfg.model_type}'
                     exper_str = f'{model_str}_seed_{seed}_split_{split}'
                     log.info(f"\n{'*' * 150}\n{' ' * 50}Run {run_i}/{len(runs)}: \
                         {data}, {exper_str}\n{'*' * 150}")
@@ -74,7 +78,7 @@ def run_data(task_idx, cfg_yaml, time, rnd_init, data, log_dir, metric):
                         log_model_and_version(trainer, cfg, test_versions, save=False)
 
                 # Aggregate tensorboard log metrics for all runs on this data
-                if len(train_versions) > 1:
+                if len(train_versions) >= 1:
                     aggregate(train_versions, exp_id + '_train', model_str)
                     aggregate(test_versions, exp_id + '_test', model_str)
                 return model_str, exp_id
@@ -121,10 +125,10 @@ def main(config_yaml):
     set_as_latest(log_dir)
 
     # Setting up run configurations
-    run_list = product(cfg.base_init, cfg.data)
+    run_list = product(cfg.baseline, cfg.data)
     args_list = []
-    for task_idx, (rnd_init, data) in enumerate(run_list):
-        args = task_idx, config_yaml, exp_id, rnd_init, data, log_dir, cfg.metric
+    for task_idx, (baseline, data) in enumerate(run_list):
+        args = task_idx, config_yaml, exp_id, baseline, data, log_dir, cfg.metric
         args_list.append(args)
 
     # Launching Ray tasks
@@ -140,14 +144,15 @@ def main(config_yaml):
 
 def post_analysis(cfg, log_dir, exp_id):
     # Run significance tests if baseline exists and last run was on model
-    if cfg.do_predict and True in cfg.base_init and False in cfg.base_init:
-        significance_from_cfg(cfg=cfg, log_dir=log_dir, exp_id=exp_id)
+    if cfg.do_predict and True in cfg.baseline and False in cfg.baseline:
+        sig_result = significance_from_cfg(cfg=cfg, log_dir=log_dir, exp_id=exp_id)
 
-    # Write summary table to CSV
-    write_summary_tables(cfg, exp_id)
+        # Write summary table to CSV
+        write_summary_tables(cfg, exp_id, sig_result)
 
 if __name__ == "__main__":
     if len(argv) == 2:
         main(argv[1])
     else:
         print("Incorrect usage. Please try again.")
+  

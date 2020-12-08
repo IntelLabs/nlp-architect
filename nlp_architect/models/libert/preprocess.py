@@ -1,6 +1,8 @@
+#%%
 import json, os
 from tqdm import tqdm
 import random
+from typing import List, Tuple, Any
 from pathlib import Path
 from itertools import permutations
 import re
@@ -13,7 +15,7 @@ NUM_SPLITS = 3
 CONLL_DIR = DATA_DIR / 'conll'
 
 
-def create_dev_sets(domains: list):
+def create_cross_domain_dev_sets(domains: list):
     for domain_a, domain_b in tqdm(permutations(domains, r=2)):
         for split in range(1, 4):
             src_dir = CONLL_DIR / (domain_b + '_to_' + domain_a + '_' + str(split))
@@ -31,7 +33,8 @@ def dai2019_single_to_conll_and_raw(sent_file, tok_file, conll_out: str, raw_out
     Args:
         sentence: Path to textfile sentence desciptors, one json per line.
         token_spans: Path to textfile containing token char ranges
-        conll_out: Path for output file.
+        conll_out: Path for conll output file.
+        raw_out: Path for raw-sentence output file.
     """
     sentences = []
     token_spans = []
@@ -171,8 +174,8 @@ def preprocess_laptops_and_restaurants_dai2019_cross_domain(seed, opinion_labels
             
             dai2019_single_to_conll_and_raw([p[0] for p in train], [p[1] for p in train], out_train_dir + 'train.txt', 
                 out_train_dir + 'raw_train.txt', opinion_labels)
-            dai2019_single_to_conll_and_raw([p[0] for p in test], [p[1] for p in test], out_test_dir + 'test.txt', out_test_dir + 'raw_test.txt',
-                opinion_labels)
+            dai2019_single_to_conll_and_raw([p[0] for p in test], [p[1] for p in test], out_test_dir + 'test.txt', 
+                out_test_dir + 'raw_test.txt', opinion_labels)
 
 def count_phrase_in_token_list(phrase, tokens):
     phrase_len = len(phrase)
@@ -324,12 +327,79 @@ def preprocess_devices_wang2018_cross_domain(seed):
     device_text_op_file, device_asp_pol_file = 'Wang2018/addsenti_device', 'Wang2018/aspect_op_device'
     for domain, years in [('restaurants', ('14', '15')), ('laptops', ('14',))]:
         preprocess_wang2018(device_text_op_file, device_asp_pol_file, domain, years, seed)
+    
+
+def create_in_domain_cross_validation_sets(domains, seed, devtest_proportion = 0.25):
+    """ 
+    Generate cross-validation sets (conll) for training and testing in-domain.
+    In each setting, a different `devtest_proportion` percent of data is for dev&test 
+    while the rest is for train.    
+    """
+    dev_proportion = 0.40 # out of dev-test
+    def split_sentences_to_train_dev_test(sentences: List[Any], split: int) -> Tuple[List[Any], List[Any], List[Any]]: 
+        # split sentences to train, dev & test
+        quarter = round(len(sentences)*devtest_proportion)
+        quarters = [sentences[i*quarter:(i+1)*quarter] 
+                    for i in range(num_splits)]
+        devtest = quarters[split]
+        train_set = [sent for q in quarters[:split] + quarters[split+1:]
+                          for sent in q]
+
+        dev_test_split = round(dev_proportion * len(devtest)) # dev is 0.4*0.25 = 0.10 from total domain
+        dev_set = devtest[:dev_test_split]
+        test_set = devtest[dev_test_split:] # test is thus 0.15 from total domain
+        return train_set, dev_set, test_set
+
+    random.seed(seed)
+    num_splits = int(1/devtest_proportion)
+    for domain in domains:
+        with open(CONLL_DIR / "domains_all" / f"{domain}.txt", encoding="utf8") as fin:
+            # read all conll data of domain
+            conll_sentences = fin.read().strip().split("\n\n")
+        random.shuffle(conll_sentences)
+        # cross-validation setting - for each setting, 
+        # one quarter is devtest while rest (0.75) is train
+        for split in range(num_splits): 
+            out_dir = CONLL_DIR / f"{domain}_in_domain_{split+1}" 
+            os.makedirs(out_dir, exist_ok=True)
+            train_set, dev_set, test_set = split_sentences_to_train_dev_test(conll_sentences, split)
+            # generate conll files
+            with open(out_dir / 'train.txt', 'w', encoding='utf-8') as f:
+                f.write('\n\n'.join(train_set) + '\n\n')
+            with open(out_dir / 'dev.txt', 'w', encoding='utf-8') as f:
+                f.write('\n\n'.join(dev_set) + '\n\n')
+            with open(out_dir / 'test.txt', 'w', encoding='utf-8') as f:
+                f.write('\n\n'.join(test_set) + '\n\n')
+    
+    # generate semantic parses from "domains_all"
+    for formalism in ("dm", "psd"):
+        random.seed(seed)
+        for domain in domains:
+            with open(DATA_DIR / "semantic_parses" / formalism / "domains_all" / f"{domain}.mrp", encoding="utf8") as fin:
+                # read all mrp data (semantic parse) of domain, jsonl format
+                mrp_sentences = fin.read().strip().split("\n")
+            random.shuffle(mrp_sentences)
+            # split sentences to train, dev & test --- should follow the same shuffling as above, due to seed re-init
+            for split in range(num_splits): 
+                out_dir = DATA_DIR / "semantic_parses" / formalism / f"{domain}_in_domain_{split+1}" 
+                os.makedirs(out_dir, exist_ok=True)
+                train_set, dev_set, test_set = split_sentences_to_train_dev_test(mrp_sentences, split)
+                # generate mrp files
+                with open(out_dir / 'train.mrp', 'w', encoding='utf-8') as f:
+                    f.write('\n'.join(train_set) + '\n')
+                with open(out_dir / 'dev.mrp', 'w', encoding='utf-8') as f:
+                    f.write('\n'.join(dev_set) + '\n')
+                with open(out_dir / 'test.mrp', 'w', encoding='utf-8') as f:
+                    f.write('\n'.join(test_set) + '\n')
 
 
 def prepare_all_datasets(seed):
-    preprocess_laptops_and_restaurants_dai2019_cross_domain(seed=seed)
-    preprocess_devices_wang2018_cross_domain(seed=seed)
-    create_dev_sets(domains=['laptops', 'restaurants', 'device'])
+    # preprocess_laptops_and_restaurants_dai2019_cross_domain(seed=seed)
+    # preprocess_devices_wang2018_cross_domain(seed=seed)
+    domains=['laptops', 'restaurants', 'device']
+    # create_cross_domain_dev_sets(domains=domains, seed=seed)
+    create_in_domain_cross_validation_sets(domains=domains, seed=seed)
 
+#%%
 if __name__ == "__main__":
     prepare_all_datasets(seed=16)
