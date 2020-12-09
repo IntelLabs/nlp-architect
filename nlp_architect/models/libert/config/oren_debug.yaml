@@ -1,16 +1,15 @@
 max_epochs: 1 #10
 model_type: libert # bert or libert
-#baseline: [true, false]
-baseline: [false]
+formalism: spacy # source of linguistic information - ud, dm, psd
+base_init: [false, true]
 
 data: rl #rl rd lr ld dr dl # relative to nlp_architect/models/li_bert/data/preprocessed_conll
-#data: rl
 limit_data: 0.1
-splits: 1 #3
+splits: 3
 seeds: [7] #[7, 25, 26]
-tag: # optional: name this experiment version
+tag: li-spacy-full # optional: name this experiment version
 metric: asp_f1 #
-baseline_str: libert_baseline
+baseline_str: libert_rnd_init
 baseline_version: version_baseline
 
 num_workers: 44
@@ -25,7 +24,6 @@ parse_probs: false
 replace_final: false
 duplicated_rels: false
 transpose: false
-fourteen_head: true
 use_syntactic_rels: false
 
 do_train: true

@@ -74,11 +74,11 @@ def main(config_yaml):
     review_df.to_pickle(data_dir/'review_df.pkl')
     
     range_n_clusters = range(2,21)
-    cluster_results = cluster_data(review_df, range_n_clusters)
+    clustering_results = cluster_data(review_df, range_n_clusters)
     
     # generate data-frame with cluster labels
     df_file_name = (data_dir/'review_with_cluster_labels_df.pkl')
-    generate_df_w_cluster_labels(review_df, df_file_name,cluster_results, range_n_clusters)
+    generate_df_w_cluster_labels(review_df, df_file_name,clustering_results, range_n_clusters)
     
     #plot_clusters_silhouette_scores(cluster_results)
 
