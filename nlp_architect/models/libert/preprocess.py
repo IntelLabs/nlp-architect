@@ -394,10 +394,10 @@ def create_in_domain_cross_validation_sets(domains, seed, devtest_proportion = 0
 
 
 def prepare_all_datasets(seed):
-    # preprocess_laptops_and_restaurants_dai2019_cross_domain(seed=seed)
-    # preprocess_devices_wang2018_cross_domain(seed=seed)
+    preprocess_laptops_and_restaurants_dai2019_cross_domain(seed=seed)
+    preprocess_devices_wang2018_cross_domain(seed=seed)
     domains=['laptops', 'restaurants', 'device']
-    # create_cross_domain_dev_sets(domains=domains, seed=seed)
+    create_cross_domain_dev_sets(domains=domains, seed=seed)
     create_in_domain_cross_validation_sets(domains=domains, seed=seed)
 
 #%%

@@ -1,17 +1,21 @@
-#%%
+from typing import List, Dict, Tuple, Any, Union
+from argparse import ArgumentError
+from collections import defaultdict
 import csv 
 import json
 import os
 import glob
 import argparse
 from pathlib import Path
-from itertools import permutations
+from itertools import permutations, product
 from transformers import BertTokenizer
 from tqdm import tqdm
 import spacy
 from spacy.tokens import Doc
 from graph import Graph as MrpGraph
+import path_patterns 
 
+Span = Tuple[int, int]
 
 LIBERT_DIR = Path(os.path.realpath(__file__)).parent
 DATA_DIR = LIBERT_DIR / 'data'
@@ -251,10 +255,9 @@ def graph_as_head_dependent_relations(graph: MrpGraph, edge_direction="head~>dep
     return res
 
 
-def mrp_graph_to_parsed_review(mrp_graph, word_list):
-    """ Return token-list of (tok, pos_tag, sub_tok, head, head_word, rel) """
+def mrp_graph_to_parsed_review(mrp_graph: MrpGraph, word_list):
+    """ Return token-list of (tok, pos_tag, sub_tok, head, head_word, rel, pattern) """
     global bert_tokenizer
-    mrp_graph = mrp_graph._full_sentence_recovery()
     assert len(mrp_graph.input.split()) == len(mrp_graph.nodes), "assuming mrp.input is tokenized by space but found mismatch with number of nodes."
     graph_heads = graph_as_head_dependent_relations(mrp_graph)     
     node_id2index = {n.id:i for i,n in enumerate(mrp_graph.nodes)}
@@ -306,9 +309,13 @@ def convert_mrp_file(conll_file: str, parse_mrp_file: str, subdir: str):
     # Read parses (mrp files)
     mrp_graphs = []
     with open(parse_mrp_file) as fin:
-        for line in fin:
+        for line in fin.readlines():
             mrp_dict = json.loads(line.strip())
-            mrp_graphs.append(MrpGraph.decode(mrp_dict))
+            mrp_graph = MrpGraph.decode(mrp_dict)
+            # prepare graph - recover omitted nodes and set zero as the first node_id
+            mrp_graph = mrp_graph._full_sentence_recovery()
+            path_patterns.verify_0_index(mrp_graph)
+            mrp_graphs.append(mrp_graph)
     # Read ABSA BIO labels (conll files)
     with open(conll_file, encoding='utf-8') as input_f:
         space_tok_reviews = []
@@ -319,18 +326,22 @@ def convert_mrp_file(conll_file: str, parse_mrp_file: str, subdir: str):
 
     with open(out_path, 'w', encoding='utf-8') as csv_file:
         writer = csv.writer(csv_file)
-        writer.writerow(['TOKEN', 'LABEL', 'HEAD', 'HEAD_WORD', 'DEP_REL', 'POS', 'SUB_TOKENS'])
+        writer.writerow(['TOKEN', 'LABEL', 'HEAD', 'HEAD_WORD', 'DEP_REL', 'POS', 'SUB_TOKENS', 'AUX_TASK'])
         for word_list, mrp_graph, labels in zip(space_tok_reviews, mrp_graphs, reviews_tok_labels):
             parsed_review = mrp_graph_to_parsed_review(mrp_graph, word_list)
-            for (tok, pos_tag, sub_tok, head, head_word, rel), label in zip(parsed_review, labels):
-                # print([tok, label, head, head_word, rel, pos_tag, sub_tok])
-                writer.writerow([tok, label, head, head_word, rel, pos_tag, sub_tok])
+            patterns = path_patterns.get_OT2AT_patterns(mrp_graph, labels)
+            for (tok, pos_tag, sub_tok, head, head_word, rel), label, pattern in zip(parsed_review, labels, patterns):
+                # Add `pattern` data about path-pattern from OT to AT, for auxiliary multi-task learning.
+                writer.writerow([tok, label, head, head_word, rel, pos_tag, sub_tok, pattern])
             writer.writerow(['_'] * 7)
-            writer.writerow(['_'] * 7)
-
+            writer.writerow(['_'] * 7)  
 
 def prepare_from_semantic_parses(formalism: str, domains, splits=3, modes=('train', 'dev', 'test')):
     PARSES_DIR = DATA_DIR / "semantic_parses" / formalism
+    # 1. prepare PARSES_DIR - copy MRP files from analysis subdirs by datasets (iterating sentences from CONLL_DIR)  
+    prepare_parses_dir_from_analysis(PARSES_DIR, formalism, domains)
+    
+    # 2. prepare csv data from PARSES_DIR
     for domain_a, domain_b in permutations(domains, r=2):
         print('\nSetting: ' + domain_a + ' to ' + domain_b)
         for split in range(splits):
@@ -341,10 +352,10 @@ def prepare_from_semantic_parses(formalism: str, domains, splits=3, modes=('trai
                 convert_mrp_file(conll_file, parse_mrp_file, subdir=formalism)
     # in-domain files
     for domain in domains:
-        # "domains_all" file
-        conll_file = str(CONLL_DIR / f'domains_all' / f'{domain}.txt')
-        parse_mrp_file = str(PARSES_DIR / f'domains_all' / f'{domain}.mrp')
-        convert_mrp_file(conll_file, parse_mrp_file, subdir=formalism)
+        # # "domains_all" file
+        # conll_file = str(CONLL_DIR / f'domains_all' / f'{domain}.txt')
+        # parse_mrp_file = str(PARSES_DIR / f'domains_all' / f'{domain}.mrp')
+        # convert_mrp_file(conll_file, parse_mrp_file, subdir=formalism)
         # in-domain dirs with 4 different settings (cross-validation)
         setting_subdirs = [f"{domain}_in_domain_{suff}" for suff in range(1, 5)]
         for setting in setting_subdirs:
@@ -354,7 +365,54 @@ def prepare_from_semantic_parses(formalism: str, domains, splits=3, modes=('trai
                 print(f"Converting {conll_file}...")
                 convert_mrp_file(conll_file, parse_mrp_file, subdir=formalism)
 
-
+def prepare_parses_dir_from_analysis(PARSES_DIR: Path, formalism: str, domains):
+    def get_all_parses(formalism, domain):
+        ANALYSIS_DIR = LIBERT_DIR / "analysis"
+        if formalism in ("dm", "psd"):
+            parse_file = ANALYSIS_DIR / "HIT-SCIR-parses" / f"{formalism}-{domain}-output.mrp"
+        else:
+            if formalism == "spacy":
+                parse_parent_dir = ANALYSIS_DIR / "spacy-syndep-parses"
+            elif formalism == "ud": 
+                parse_parent_dir = ANALYSIS_DIR / "udpipe-syndep-parses"
+            elif formalism in ("bart", "eud", "eud_pp", "eud_pp_bart"):
+                parse_parent_dir = ANALYSIS_DIR / "ud-enhancements" / formalism
+            else:
+                raise ArgumentError("No such formalism in analysis parses directoory")
+            parse_file = parse_parent_dir / f"{domain}-syndep.mrp"
+        # read mrp file into list of json objects
+        with open(parse_file) as fin:
+            all_parses = [json.loads(line.strip()) for line in fin]
+        return all_parses
+    # Create a {sentence: MrpGraph} map (across all domains - assuming no sentence collision)
+    sentence2json = {parse['input']: parse
+                    for domain in domains
+                    for parse in get_all_parses(formalism, domain)}
+    not_found = []
+    # iterate conll dir and mimic the dataset subdirs for the outout PARSE_DIR
+    def get_subdirs(parent): return [x for x in parent.iterdir() if x.is_dir()]
+    def get_annot_subdirs(parent): return [x for x in get_subdirs(parent) if "_to_" in x.name or "_in_domain" in x.name]
+    for dataset_dir in get_annot_subdirs(CONLL_DIR):
+        dataset = dataset_dir.name
+        out_dir = PARSES_DIR / dataset
+        os.makedirs(out_dir, exist_ok=True)
+        for ds in ("train", "dev", "test"):
+            with open(dataset_dir / f"{ds}.txt") as fin: 
+                conll_str = fin.read().strip()
+            sentences = [' '.join([row.split()[0] for row in block.split("\n")]) 
+                        for block in conll_str.split("\n\n")]
+            # prepare mrp records to write in new dataset-specific parse file
+            mrp_records = [sentence2json[s] for s in sentences if s in sentence2json]
+            not_found.extend([(dataset, ds, s) for s in sentences if s not in sentence2json])
+            with open(out_dir / f"{ds}.mrp", "w") as fout:
+                fout.writelines(json.dumps(record) + "\n" for record in mrp_records)
+        # Note: from inspecting `not_found`, I find that the last sentence in each domain (test) 
+        # is missing from the syntactic formalism parses. 
+        # I guess we can live without these 3 sentences...
+        
+        assert not_found == [], f"Some sentences not found in parses - {not_found}"
+    
+    return None
 
 #%%
 if __name__ == "__main__":
