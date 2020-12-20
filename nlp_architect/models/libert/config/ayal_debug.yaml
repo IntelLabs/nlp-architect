@@ -1,21 +1,21 @@
-max_epochs: 10
-model_type: libert # bert or libert
-formalisms: ud spacy dm psd eud_pp bart # source of linguistic information - ud spacy dm psd eud eud_pp bart
-baseline: [true, false]
+max_epochs: 1
+model_type: bert # bert or libert
+formalisms: spacy # source of linguistic information - spacy, ud, dm, psd, eud, eud_pp, bart
+baseline: [false, true]
 
 auxiliary_tasks: ["pattern"]   # options: "pattern", "matched-AT"
 
-data: rl rd lr ld dr dl  # ld dl ; rl rd lr ld dr dl #  relative to nlp_architect/models/li_bert/data/preprocessed_conll
-limit_data: 1.0
-splits: 3
-seeds: [25, 26, 11] # [42, 23, 17, 7]
-tag: bert-amtl-all # optional: name this experiment version
+data: ld # relative to nlp_architect/models/li_bert/data/preprocessed_conll
+limit_data: 0.3
+splits: 1
+seeds: [17] # [42, 23, 17, 7]
+tag: tmp-debug # optional: name this experiment version
 metric: asp_f1
 #baseline_version: version_baseline
 
-num_workers: 44
+num_workers: 20
 gpus: [2]
-parallel: true
+parallel: false
 
 li_layer: #5
 li_layers: #[2]

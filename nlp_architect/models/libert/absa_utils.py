@@ -19,26 +19,33 @@
 import os
 from dataclasses import dataclass
 import csv
+import shutil
 from enum import Enum
 from collections import defaultdict
-from typing import List, Optional, Union, Tuple
+from typing import Counter, List, Optional, Union, Tuple
 from os.path import realpath
 from argparse import Namespace
 from pathlib import Path
 from datetime import datetime as dt
+import torch
 
 from torch.nn import CrossEntropyLoss
 from torch import tensor
+import torch.nn.functional as F
 from pytorch_lightning import _logger as log
 from pytorch_lightning.core.saving import load_hparams_from_yaml
 from transformers import PreTrainedTokenizer
 from seqeval.metrics.sequence_labeling import get_entities
 import numpy as np
+import pandas as pd
 
 from significance import significance_from_cfg as significance
 
 LIBERT_DIR = Path(realpath(__file__)).parent
 LOG_ROOT = LIBERT_DIR / 'logs'
+
+AUX_SEP = "###"     # internal seperator in the auxiliary label data column  
+
 
 @dataclass
 class InputExample:
@@ -58,6 +65,7 @@ class InputExample:
     head_words: Optional[List[List[str]]]
     pos_tags: Optional[List[str]]
     sub_toks: Optional[List[List[str]]]
+    aux_task_labels: Optional[List[str]]
 
 @dataclass
 class InputFeatures:
@@ -70,6 +78,10 @@ class InputFeatures:
     token_type_ids: Optional[List[int]] = None
     label_ids: Optional[List[int]] = None
     dep_heads: Optional[List[float]] = None
+    # auxiliary task data
+    op2at_opinion_mask: Optional[List[int]] = None # masks-in indices to compute loss for on auxiliary task
+    op2at_patterns: Optional[List[int]] = None # sequence of pattern label ids (length==max sequence)
+    op2at_tgt_asp_index: Optional[List[int]] = None # sequecne of absolute index of target AT token (length==max sequence)
     
 class Split(Enum):
     train = "train"
@@ -84,18 +96,19 @@ def read_examples_from_file(data_dir, mode: Union[Split, str]) -> List[InputExam
     examples = []
     empty_row = ['_'] * 7
     with open(file_path, encoding='utf-8') as f:
-        words, labels, heads, head_words, pos_tags, sub_toks = [], [], [], [], [], []
+        words, labels, heads, head_words, pos_tags, sub_toks, aux_labels = [], [], [], [], [], [], []
         reader = csv.reader(f)
         next(reader, None)
         for row in reader:
             if row == empty_row:
                 if words:
                     examples.append(InputExample(guid=f"{mode}-{guid_index}", words=words, labels=labels,
-                                                    heads=heads, head_words=head_words, pos_tags=pos_tags, sub_toks=sub_toks))
+                                                    heads=heads, head_words=head_words, pos_tags=pos_tags, 
+                                                    sub_toks=sub_toks, aux_task_labels=aux_labels))
                     guid_index += 1
-                    words, labels, heads, head_words, pos_tags, sub_toks = [], [], [], [], [], []
+                    words, labels, heads, head_words, pos_tags, sub_toks, aux_labels = [], [], [], [], [], [], []
             else:
-                word, label, head, head_word, syn_rel, pos_tag, sub_tok = row
+                word, label, head, head_word, syn_rel, pos_tag, sub_tok, aux_label = row
                 """
                 For representing bilexical graphs in our Conll-like CSVs, 
                 where a token might have 0 or >1 heads, 
@@ -109,12 +122,27 @@ def read_examples_from_file(data_dir, mode: Union[Split, str]) -> List[InputExam
                 head_words.append(head_word.split('~') if head_word is not "_" else [])
                 pos_tags.append(pos_tag)
                 sub_toks.append(sub_tok.split() if sub_tok else [word])
+                aux_labels.append(aux_label)
         if words:
             examples.append(InputExample(guid=f"{mode}-{guid_index}", words=words, labels=labels,
                                             heads=heads, head_words=head_words,
-                                            pos_tags=pos_tags, sub_toks=sub_toks))
+                                            pos_tags=pos_tags, sub_toks=sub_toks, 
+                                            aux_task_labels=aux_labels))
     return examples
 
+def idxs_to_mask(indices, seq_len=64) -> tensor:
+    """ 
+    Get a tensor/array which it's last dimension stand for lists of indices,
+    and return a tensor of shape (indices.shape(:-1) + (seq_len,)),
+    where last dimension is now a binary mask - i.e. 1 in only specified indices. 
+    """
+    if not indices:
+        return torch.zeros(seq_len)
+    if not isinstance(indices, F.Tensor): indices = tensor(indices)
+    as_one_hot_matrix = F.one_hot(indices, seq_len)
+    masks = as_one_hot_matrix.sum(dim=-2)
+    assert masks.shape == indices.shape[:-1] + (seq_len,), "masks shape error" 
+    return masks
 
 def pad_heads(a):
     target = np.zeros((64, 64), float)
@@ -173,6 +201,26 @@ def binarize_multi_hot(heads: List[List[int]]):
             vec = [1] * (len(heads) + 1)
         res.append(vec)
     return res
+
+def get_dataset_patterns(dataset_dir: Path, min_frequency = 3) -> List[str]:
+    """ Retreive the set of pattern labels for a specific dataset (e.g. spcay/laptops_to_device_1).
+        This list is used for generating the vocabulary and embedding matrix for auxiliary pattern classificaiton task."""
+    csv_df = pd.read_csv(dataset_dir / "train.csv")
+    aux_labels = csv_df.AUX_TASK[csv_df.AUX_TASK.notnull()]
+    patterns = [aux_lbl.split(AUX_SEP)[1]   # taking only OT->->AT path patterns out of all auxuliary labels   
+                for aux_lbl in aux_labels 
+                if AUX_SEP in aux_lbl]
+    # filter path patterns by frequency
+    pattern_counter = Counter(patterns)
+    frequent_patterns = [patt for patt, freq in pattern_counter.items() 
+                         if freq >= min_frequency]
+    return frequent_patterns
+
+def prepare_pattern_info_in_cfg(hparams: Namespace):
+    # prepare OT->-AT pattern output vocab 
+    all_patterns: List[str] = get_dataset_patterns(hparams.csv_dir / hparams.data_dir)
+    all_patterns = ["RARE_PATTERN"] + all_patterns
+    hparams.all_patterns = all_patterns
 
 def convert_examples_to_features(
         examples: List[InputExample],
@@ -280,6 +328,46 @@ def convert_examples_to_features(
         assert len(input_mask) == max_seq_length
         assert len(segment_ids) == max_seq_length
         assert len(label_ids) == max_seq_length
+        
+        # Auxiliary Task data 
+        """ 
+        Auxiliary task is a classification task (especially) for Opinion Term tokens - predicting the 
+        corresponding Aspect Term token, and the path pattern toward it via the linguistic graph.  
+        """
+        # read auxiliary labels for this sentence from InputExample
+        aux_AT_tok_idxs, aux_path_patterns = [], []
+        task_labels_if_path = [(idx, aux_lbl) 
+                               for idx, aux_lbl in enumerate(ex.aux_task_labels) 
+                               if AUX_SEP in aux_lbl]
+        if task_labels_if_path: # list is emplty iff no OT in sentence has a taken path to AT
+            aux_task_tokens, aux_path_pattern_data = zip(*task_labels_if_path)
+            for AT_and_patt in aux_path_pattern_data:
+                tgt_tok, patt = AT_and_patt.split(AUX_SEP) 
+                aux_AT_tok_idxs.append(int(tgt_tok))
+                aux_path_patterns.append(patt)
+            # translate patterns (strings) to ids (ints)
+            pattern_to_id = lambda patt: hparams.all_patterns.index(patt) \
+                if patt in hparams.all_patterns \
+                else hparams.all_patterns.index("RARE_PATTERN") 
+            aux_pattern_ids = [pattern_to_id(patt) for patt in aux_path_patterns]
+            # filter out instances which their OT or AT indices are beyond max_seq_length
+            instances = [
+                (op_idx, patt_id, at_idx)
+                for (op_idx, patt_id, at_idx) in zip(aux_task_tokens, aux_pattern_ids, aux_AT_tok_idxs)
+                if op_idx < max_seq_length and at_idx < max_seq_length
+            ] 
+            aux_task_tokens, aux_pattern_ids, aux_AT_tok_idxs = zip(*instances) if instances else ((), (), ())
+        else:
+            aux_task_tokens, aux_pattern_ids, aux_AT_tok_idxs = (), (), ()
+        # re-format: use masks and full-sequence length instead of num-of-targets sized lists
+        aux_task_mask = idxs_to_mask(aux_task_tokens, seq_len=max_seq_length)   # masks the non-target (=non OT) tokens 
+        aux_pattern_ids_seq = torch.full((max_seq_length,), pad_token_label_id, dtype=torch.int16)   # first pad all sequence with -100
+        # add 1 to index in sentence to account for [CLS] token which is first element in sequence
+        for idx, patt_id in zip(aux_task_tokens, aux_pattern_ids):
+            aux_pattern_ids_seq[idx+1] = patt_id    
+        aux_AT_tok_idxs_seq = torch.full((max_seq_length,), pad_token_label_id, dtype=torch.int16)   # first pad all sequence with -100
+        for idx, AT_idx in zip(aux_task_tokens, aux_AT_tok_idxs):
+            aux_AT_tok_idxs_seq[idx+1] = AT_idx   
 
         if ex_index < 5:
             log.debug("*** Example ***")
@@ -292,7 +380,10 @@ def convert_examples_to_features(
 
         input_features = InputFeatures(input_ids=input_ids, attention_mask=input_mask,
                                       token_type_ids=segment_ids, label_ids=label_ids, 
-                                      dep_heads=padded_heads)
+                                      dep_heads=padded_heads, 
+                                      op2at_opinion_mask=aux_task_mask, 
+                                      op2at_patterns=aux_pattern_ids_seq,
+                                      op2at_tgt_asp_index=aux_AT_tok_idxs_seq)
         features.append(input_features)
     return features
 
@@ -345,41 +436,56 @@ def detailed_metrics(y_true, y_pred):
                  'macro_f1': tensor(np.average(f1s, weights=s))}
     return metrics, macro_avg
 
-def load_config(name):
+def copy_config(name, dest_dir):
+    """Load an experiment configuration from a yaml file."""
+    cfg_path = Path(os.path.dirname(os.path.realpath(__file__))) / 'config' / (name + '.yaml')
+    os.makedirs(dest_dir, exist_ok=True)
+    dest = dest_dir / "config.yaml"
+    shutil.copy(cfg_path, dest)
+
+def read_config(name):
     """Load an experiment configuration from a yaml file."""
     cfg_path = Path(os.path.dirname(os.path.realpath(__file__))) / 'config' / (name + '.yaml')
     cfg = Namespace(**load_hparams_from_yaml(str(cfg_path)))
+    cfg.tag = '' if not cfg.tag else '_' + cfg.tag
+    return cfg
 
+def prepare_config(cfg):
+    """Some preliminary preprations of the config - called right after reading it from file. """
     # add `is_cross_domain(data)` function as global config method
     cfg.is_cross_domain = lambda dataset: "_to_" in dataset  # domain-adaptation setting 
     
     splits = cfg.splits
     if isinstance(splits, int):
         splits = list(range(1, splits + 1))
-    # to account for the different splits in cross- vs. in-domain settings,
-    # `cfg.splits` should be a function that map a dataset (from cfg.data) into split list
-    def data_to_splits(dataset: str) -> List[int]:
-        if cfg.is_cross_domain(dataset):
-            return splits
-        else:
-            # in-domain settings (vs. cross-domain) have 4 splits anyway (cross validation)
-            return list(range(1,5))
-    cfg.splits = data_to_splits
+        # to account for the different splits in cross- vs. in-domain settings,
+        # `cfg.splits` should be a function that map a dataset (from cfg.data) into split list
+        def data_to_splits(dataset: str) -> List[int]:
+            if cfg.is_cross_domain(dataset):
+                return splits
+            else:
+                # in-domain settings (vs. cross-domain) have 4 splits anyway (cross validation)
+                return list(range(1,5))
+        cfg.splits = data_to_splits
     
     if not hasattr(cfg, 'formalism'):   # backward compatible with older configs
         cfg.formalism = 'spacy'         # default formalism is spacy dependency parser
     cfg.csv_dir = LIBERT_DIR / 'data' / 'csv' / cfg.formalism
+    # for relation labels
     with open(cfg.csv_dir / "dep_relations.txt", encoding='utf-8') as deprel_f:
         dep_relations = [l.strip() for l in deprel_f.read().splitlines()]
         cfg.DEP_REL_MAP = {rel: i + 1 for i, rel in enumerate(dep_relations)}
         # determine number of dep-relation labels by dep_relations.txt
         cfg.NUM_REL_LABELS = len(dep_relations) + 1
-
-    # for relation labels
-
-    cfg.tag = '' if cfg.tag is None else '_' + cfg.tag
+    
     ds = {'l': 'laptops', 'r': 'restaurants', 'd': 'device'}
-    cfg.data = [f'{ds[d[0]]}_to_{ds[d[1]]}' if len(d) < 3 else d for d in cfg.data.split()]
+    if isinstance(cfg.data, str):
+        cfg.data = [f'{ds[d[0]]}_to_{ds[d[1]]}' if len(d) < 3 else d for d in cfg.data.split()]
+
+def load_config(name):
+    """Load an experiment configuration from a yaml file."""
+    cfg = read_config(name)
+    prepare_config(cfg)
     return cfg
 
 def tabular(dic: dict, title: str) -> str:
@@ -406,11 +512,10 @@ def set_as_latest(log_dir):
         pass
     os.symlink(log_dir, link, target_is_directory=True)
 
-def write_summary_tables(cfg, exp_id, sig_result):
-    _, _, all_alphas_scores = sig_result
+def write_summary_tables(cfg, exp_id, log_dir, sig_result):
 
     filename = f'{exp_id}'
-    with open(LOG_ROOT / exp_id / f'{filename}.csv', 'w', newline='', encoding='utf-8') as csv_file:
+    with open(log_dir / f'{filename}.csv', 'w', newline='', encoding='utf-8') as csv_file:
         csv_writer = csv.writer(csv_file)
         header = ['']
         sub_header = ['Seeds Average']
@@ -441,9 +546,9 @@ def write_summary_tables(cfg, exp_id, sig_result):
         def compute_baseline_and_model_agg_rows_on_datasets(datasets: List[str]):
             baseline_row, baseline_std_row, model_row, model_std_row = [], [], [], []
             for dataset in datasets:
-                dataset_dir = LOG_ROOT / exp_id / dataset
-                baseline_dir = dataset_dir / 'libert_baseline_AGGREGATED_baseline_test' / 'csv'
-                model_dir = dataset_dir / f'libert_AGGREGATED_{exp_id}_test' / 'csv'
+                dataset_dir = log_dir / dataset
+                baseline_dir = dataset_dir / f'{cfg.model_type}_baseline_AGGREGATED_{cfg.model_type}_baseline_test' / 'csv'
+                model_dir = dataset_dir / f'{cfg.model_type}_AGGREGATED_{cfg.model_type}_test' / 'csv'
 
                 baseline_mean_asp, baseline_std_asp = get_score_from_csv_agg(baseline_dir, 'asp_f1')
                 baseline_mean_op, baseline_std_op = get_score_from_csv_agg(baseline_dir, 'op_f1')
@@ -456,8 +561,8 @@ def write_summary_tables(cfg, exp_id, sig_result):
                 model_std_row.extend([model_std_asp, model_std_op])
             # Compute Means across datasets, and append to row
             for row in baseline_row, model_row:
-                asp_mean = np.mean([row[i] for i in range(0, len(row), 2)])
-                op_mean = np.mean([row[i] for i in range(1, len(row), 2)])
+                asp_mean = np.mean([row[i] for i in range(0, len(row), 2)] or -100)
+                op_mean = np.mean([row[i] for i in range(1, len(row), 2)] or -100)
                 row.extend([asp_mean, op_mean])
             return baseline_row, baseline_std_row, model_row, model_std_row
         
@@ -490,11 +595,11 @@ def write_summary_tables(cfg, exp_id, sig_result):
             for dataset in datasets:
                 base_asp, model_asp, base_op, model_op = [], [], [], []
                 for split in cfg.splits(dataset):
-                    dataset_dir = LOG_ROOT / exp_id / dataset
-                    baseline_csv = dataset_dir / f'libert_baseline_seed_{seed}_split_{split}_test'\
-                        / 'version_baseline' / 'metrics.csv'
-                    model_csv = dataset_dir / f'libert_seed_{seed}_split_{split}_test'\
-                        / f'version_{exp_id}' / 'metrics.csv'
+                    dataset_dir = log_dir / dataset
+                    baseline_csv = dataset_dir / f'{cfg.model_type}_baseline_seed_{seed}_split_{split}_test'\
+                        / f'version_{cfg.model_type}_baseline' / 'metrics.csv'
+                    model_csv = dataset_dir / f'{cfg.model_type}_seed_{seed}_split_{split}_test'\
+                        / f'version_{cfg.model_type}' / 'metrics.csv'
 
                     base_asp.append(get_score_from_csv(baseline_csv, 'asp_f1'))
                     base_op.append(get_score_from_csv(baseline_csv, 'op_f1'))
@@ -507,14 +612,21 @@ def write_summary_tables(cfg, exp_id, sig_result):
                 model_std_row.extend([np.array(model_asp).std(), np.array(model_op).std()])
             # Compute Means
             for row in baseline_row, model_row:
-                asp_mean = np.mean([row[i] for i in range(0, len(row), 2)])
-                op_mean = np.mean([row[i] for i in range(1, len(row), 2)])
+                asp_mean = np.mean([row[i] for i in range(0, len(row), 2)] or -100)
+                op_mean = np.mean([row[i] for i in range(1, len(row), 2)] or -100)
                 row.extend([asp_mean, op_mean])
             return baseline_row, baseline_std_row, model_row, model_std_row
 
+        # prepare significance test results (only for cross-domain)
+        if cross_datasets:
+            _, _, all_alphas_scores = sig_result
+
         for i, seed in enumerate(cfg.seeds):
-            alpha_001_sig = all_alphas_scores[1][i]
-            alpha_005_sig = all_alphas_scores[2][i]
+            if cross_datasets:
+                alpha_001_sig = all_alphas_scores[1][i]
+                alpha_005_sig = all_alphas_scores[2][i]
+                sig_str = [f'{v:.2f}' for v in [alpha_001_sig, alpha_005_sig]]
+
             csv_writer.writerow([''] * len(header))
 
             # Write Seed header 
@@ -534,7 +646,6 @@ def write_summary_tables(cfg, exp_id, sig_result):
             cd_deltas_row = np.array(cd_model_row) - np.array(cd_baseline_row)
             id_deltas_row = np.array(id_model_row) - np.array(id_baseline_row)
             # prepare full baseline\model\delta rows - including cross-domain and in-domain 
-            sig_str = [f'{v:.2f}' for v in [alpha_001_sig, alpha_005_sig]]
             baseline_row = ['baseline'] + (format_list(cd_baseline_row[:-2], cd_baseline_std_row) + cd_baseline_row[-2:] + ['',''] if cross_datasets else [])
             model_row = ['model'] + (format_list(cd_model_row[:-2], cd_model_std_row) + cd_model_row[-2:] + sig_str if cross_datasets else [])
             deltas_row = ['delta'] + ([f'{d:.2f}' for d in cd_deltas_row] + ['',''] if cross_datasets else [])

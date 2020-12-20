@@ -33,12 +33,12 @@ torch.multiprocessing.set_sharing_strategy('file_system')
 from seqeval.metrics import (precision_score, recall_score, f1_score, accuracy_score,
                              performance_measure)
 from transformers import (
-    BertForTokenClassification,
     BertConfig,
     BertTokenizer,
     get_linear_schedule_with_warmup,
     AdamW
 )
+from bert_with_amtl import BertWithAMTLForToken
 import absa_utils
 from libert_model import LiBertForToken, LiBertConfig
 #from libert_model_14heads import LiBertForToken, LiBertConfig
@@ -46,7 +46,7 @@ from libert_model import LiBertForToken, LiBertConfig
 LIBERT_DIR = Path(realpath(__file__)).parent
 
 MODEL_CONFIG = {
-    'bert': (BertForTokenClassification, BertConfig, BertTokenizer),
+    'bert': (BertWithAMTLForToken, LiBertConfig, BertTokenizer),
     'libert': (LiBertForToken, LiBertConfig, BertTokenizer)
 }
 
@@ -136,11 +136,16 @@ class BertForToken(pl.LightningModule):
 
         tensors = [all_input_ids, all_attention_mask, all_token_type_ids, all_label_ids]
 
+        #### Attach pattern-classification (i.e. auxiliary task) info 
+        op2at_opinion_masks = torch.tensor([f.op2at_opinion_mask.numpy() for f in features], dtype=torch.long)
+        op2at_patterns = torch.tensor([f.op2at_patterns.numpy() for f in features], dtype=torch.long)
+        tensors.extend([op2at_opinion_masks, op2at_patterns])              
+
         if self.model_type is LiBertForToken:
             #### Attatch syntactic info ###
             dep_heads = torch.tensor([f.dep_heads for f in features], dtype=torch.float)
             tensors.append(dep_heads)
-
+        
         shuffle = mode == 'train'
         return DataLoader(TensorDataset(*tensors), batch_size=batch_size, shuffle=shuffle,
                           num_workers=self.hparams.num_workers, pin_memory=True)
@@ -148,17 +153,26 @@ class BertForToken(pl.LightningModule):
     @staticmethod
     def map_to_inputs(batch):
         inputs = {"input_ids": batch[0], "attention_mask": batch[1], "token_type_ids": batch[2],
-                  "labels": batch[3]}
-        if len(batch) >= 5:
-            inputs["parse"] = batch[4]
+                  "labels": batch[3],
+                  # add here auxiliary task data
+                  "opinion_mask": batch[4], "patterns": batch[5]}
+        if len(batch) >= 7:
+            inputs["parse"] = batch[6]
+
         return inputs
 
     def training_step(self, batch, _):
         "Compute loss and log."
         inputs = self.map_to_inputs(batch)
         outputs = self(**inputs)
-        loss = outputs[0]
+        loss = outputs["loss"]
         tensorboard_logs = {'train_loss_step': loss, 'lr': self.lr_scheduler.get_last_lr()[-1]}
+         # Combine loss summed up from auxialry task classifiers
+        if not self.config.baseline and "total_aux_loss" in outputs:  
+            aux_loss = outputs["total_aux_loss"]
+            tensorboard_logs.update(aux_train_loss_step=aux_loss)
+            # add aux_loss to returned loss - this determines optimization!
+            loss = loss + aux_loss
         return {'loss': loss, 'log': tensorboard_logs}
 
     def training_epoch_end(self, outputs):
@@ -170,10 +184,17 @@ class BertForToken(pl.LightningModule):
         "Compute validation."
         inputs = self.map_to_inputs(batch)
         outputs = self(**inputs)
-        tmp_eval_loss, logits = outputs[:2]
+        tmp_eval_loss, logits = outputs["loss"], outputs["logits"]
         preds = logits.detach().cpu()#.numpy()
         target = inputs["labels"].detach().cpu()#.numpy()
-        return {"val_loss_step": tmp_eval_loss.detach().cpu(), "pred": preds, "target": target}
+        ret = {"val_loss_step": tmp_eval_loss.detach().cpu(), "pred": preds, "target": target}
+
+        if "patt_aux_logits" in outputs and "patterns" in inputs:
+            patt_aux_logits = outputs["patt_aux_logits"]
+            patt_aux_preds = patt_aux_logits.detach().cpu()#.numpy()
+            patt_aux_target = inputs["patterns"].detach().cpu()#.numpy()
+            ret.update(patt_aux_preds=patt_aux_preds, patt_aux_target=patt_aux_target)
+        return ret
 
     def validation_epoch_end(self, outputs):
         ret, _, _ = self._eval_end(outputs)
@@ -291,7 +312,7 @@ class BertForToken(pl.LightningModule):
 
     def get_str(self) -> str:
         model_str = f'{self.hparams.model_type}'
-        if self.hparams.model_type == 'libert' and self.hparams.baseline:
+        if self.hparams.baseline:
             model_str += '_baseline'
         return model_str
 

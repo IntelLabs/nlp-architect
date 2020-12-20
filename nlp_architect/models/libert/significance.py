@@ -113,9 +113,10 @@ def replicability(alpha, pvals):
 def significance_from_cfg(cfg, log_dir, exp_id):
     """ apply significant test (on cross-domain settings only). """
     cross_datasets = [data for data in cfg.data if cfg.is_cross_domain(data)]
+    assert cross_datasets, "Not supporting post-processing with no cross-domain datasets"
     if cross_datasets:
-        significance_report(cross_datasets, exp_id, cfg.seeds, cfg.splits(cross_datasets[0]), log_dir,
-                            cfg.baseline_str, cfg.baseline_version, cfg.model_type)
+        return significance_report(cross_datasets, exp_id, cfg.seeds, cfg.splits(cross_datasets[0]), log_dir,
+                            f'{cfg.model_type}_baseline', cfg.model_type)
 
 def significance_report(
         datasets: list,
@@ -124,7 +125,6 @@ def significance_report(
         splits: list,
         log_root: Path,
         baseline: str,
-        baseline_ver: str,
         model: str,
         alphas: tuple = (.001, .01, .05, .1, .15, .2, .25)):
 
@@ -132,9 +132,9 @@ def significance_report(
     seed_pvals = defaultdict(list)
     for data, seed, split in product(datasets, seeds, splits):
         baseline_sent_f1 = log_root / data / f'{baseline}_seed_{seed}_split_{split}_test'\
-            / baseline_ver / 'tf' / 'sent_f1.txt'
+            / f'version_{model}_baseline' / 'tf' / 'sent_f1.txt'
         model_sent_f1 = log_root / data / f'{model}_seed_{seed}_split_{split}_test'\
-            / ('version_' + exp_id) / 'tf' / 'sent_f1.txt'
+            / f'version_{model}' / 'tf' / 'sent_f1.txt'
 
         p_val = t_test(baseline_sent_f1, model_sent_f1)
         sample_str = f'{data} seed_{seed} split_{split}: {p_val}'
