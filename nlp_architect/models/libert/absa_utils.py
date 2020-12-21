@@ -134,15 +134,23 @@ def idxs_to_mask(indices, seq_len=64) -> tensor:
     """ 
     Get a tensor/array which it's last dimension stand for lists of indices,
     and return a tensor of shape (indices.shape(:-1) + (seq_len,)),
-    where last dimension is now a binary mask - i.e. 1 in only specified indices. 
+    where last dimension is now a binary mask - i.e. 1 in only specified indices 
+    (considering 1-offset for special [CLS] token). 
     """
     if not indices:
         return torch.zeros(seq_len)
     if not isinstance(indices, F.Tensor): indices = tensor(indices)
-    as_one_hot_matrix = F.one_hot(indices, seq_len)
+    as_one_hot_matrix = F.one_hot(indices, seq_len-1)
     masks = as_one_hot_matrix.sum(dim=-2)
+    # preppend zeros on last dimension of output mask, correspinding to [CLS] token
+    def preppend_zeros(x: tensor):
+        return torch.cat((torch.zeros(x.shape[:-1], dtype=x.dtype).unsqueeze(-1), x), -1)
+    masks = preppend_zeros(masks)
     assert masks.shape == indices.shape[:-1] + (seq_len,), "masks shape error" 
     return masks
+
+def mask_to_idxs(mask: tensor, seq_len=64) -> List[int]:
+    pass #TODO
 
 def pad_heads(a):
     target = np.zeros((64, 64), float)
@@ -244,22 +252,39 @@ def convert_examples_to_features(
         if ex_index % 1_000 == 0:
             log.debug("Writing example %d of %d", ex_index, len(examples))
         tokens, label_ids, heads, sub_toks = [], [], [], []
+        aux_task_labels = []
+        # generate an indexing map - from original word sequence (as sequences in InputFeatures) 
+        # into new, longer sequence corresponding to BERT's BPE subwords.  
+        # Mapping is from (index of) a word to (index of) its first subword. 
+        orig_index2subtok_index, word_i, subword_i = {0:0}, 0, 0  
 
-        for word, label, head, _, sub_tok in zip(ex.words, ex.labels, ex.heads, ex.pos_tags, ex.sub_toks):
+        for word, label, head, _, sub_tok, aux_task_label in zip(ex.words, ex.labels, ex.heads, ex.pos_tags, ex.sub_toks, ex.aux_task_labels):
+            
             heads.append(head)
             sub_toks.append(sub_tok)
+            aux_task_labels.append(aux_task_label)
             word_tokens = tokenizer.tokenize(word)
-
+            
             # bert-base-multilingual-cased sometimes output "nothing ([])
             # when calling tokenize with just a space.
             if len(word_tokens) > 0:
+                # align `label_ids` and `aux_task_labels` sequences with sub-word tokenization - add elements for splitted sub_tokens
                 tokens.extend(word_tokens)
                 # Use the real label id for the first token of the word,
                 # and padding ids for the remaining tokens
                 label_ids.extend([label_map[label]] + [pad_token_label_id] * (len(word_tokens) - 1))
+                # Same strategy for auxiliary labels - pad further sub-tokens with 'O'
+                aux_task_labels.extend(['O'] * (len(word_tokens) - 1))
+            
+                # for next element in sequence
+                word_i += 1; 
+                subword_i += len(word_tokens)  
+                orig_index2subtok_index[word_i] = subword_i        
+
 
         ######### Add syntactic information #################
-        binary_heads = apply_heads_to_subtokens(binarize_multi_hot(heads), sub_toks)
+        binary_heads_orig = binarize_multi_hot(heads) 
+        binary_heads = apply_heads_to_subtokens(binary_heads_orig, sub_toks)
 
         ####################### DEBUG ############################
         # if binary_heads.shape[1] != len(tokens) + 1:
@@ -337,13 +362,15 @@ def convert_examples_to_features(
         # read auxiliary labels for this sentence from InputExample
         aux_AT_tok_idxs, aux_path_patterns = [], []
         task_labels_if_path = [(idx, aux_lbl) 
-                               for idx, aux_lbl in enumerate(ex.aux_task_labels) 
+                               for idx, aux_lbl in enumerate(aux_task_labels) 
                                if AUX_SEP in aux_lbl]
         if task_labels_if_path: # list is emplty iff no OT in sentence has a taken path to AT
             aux_task_tokens, aux_path_pattern_data = zip(*task_labels_if_path)
             for AT_and_patt in aux_path_pattern_data:
                 tgt_tok, patt = AT_and_patt.split(AUX_SEP) 
-                aux_AT_tok_idxs.append(int(tgt_tok))
+                # "translate" tgt_tok - given as word-level index - into subword indexation 
+                tgt_tok = orig_index2subtok_index[int(tgt_tok)]
+                aux_AT_tok_idxs.append(tgt_tok)
                 aux_path_patterns.append(patt)
             # translate patterns (strings) to ids (ints)
             pattern_to_id = lambda patt: hparams.all_patterns.index(patt) \
@@ -367,7 +394,7 @@ def convert_examples_to_features(
             aux_pattern_ids_seq[idx+1] = patt_id    
         aux_AT_tok_idxs_seq = torch.full((max_seq_length,), pad_token_label_id, dtype=torch.int16)   # first pad all sequence with -100
         for idx, AT_idx in zip(aux_task_tokens, aux_AT_tok_idxs):
-            aux_AT_tok_idxs_seq[idx+1] = AT_idx   
+            aux_AT_tok_idxs_seq[idx+1] = AT_idx+1   # also add 1 to AT_idx itself to account for [CLS] preliminary token   
 
         if ex_index < 5:
             log.debug("*** Example ***")
@@ -377,6 +404,8 @@ def convert_examples_to_features(
             log.debug("input_mask: %s", " ".join([str(x) for x in input_mask]))
             log.debug("segment_ids: %s", " ".join([str(x) for x in segment_ids]))
             log.debug("label_ids: %s", " ".join([str(x) for x in label_ids]))
+            log.debug("(aux) pattern_ids: %s", " ".join([str(x) for x in aux_pattern_ids_seq]))
+            log.debug("(aux) AT-tok_idxs: %s", " ".join([str(x) for x in aux_AT_tok_idxs_seq]))
 
         input_features = InputFeatures(input_ids=input_ids, attention_mask=input_mask,
                                       token_type_ids=segment_ids, label_ids=label_ids, 
