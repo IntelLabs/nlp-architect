@@ -40,7 +40,7 @@ def most_common_word_train(x_train, y_train, x_valid, y_valid):
         y_valid: x data for validation
 
     Returns:
-        str: reslts, predicted values by the model
+        str: results, predicted values by the model
 
     """
 
@@ -67,9 +67,9 @@ def most_common_word_train(x_train, y_train, x_valid, y_valid):
     error_rate = mlp_model.eval(valid_set)
     logger.info("Mis-classification error on validation set= %0.1f", error_rate * 100)
 
-    reslts = mlp_model.get_outputs(valid_set["X"])
+    results = mlp_model.get_outputs(valid_set["X"])
 
-    return reslts
+    return results
 
 
 if __name__ == "__main__":
