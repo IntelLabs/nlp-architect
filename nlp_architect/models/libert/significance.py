@@ -113,10 +113,11 @@ def replicability(alpha, pvals):
 def significance_from_cfg(cfg, log_dir, exp_id):
     """ apply significant test (on cross-domain settings only). """
     cross_datasets = [data for data in cfg.data if cfg.is_cross_domain(data)]
-    assert cross_datasets, "Not supporting post-processing with no cross-domain datasets"
-    if cross_datasets:
+    if cross_datasets and len(cfg.baseline)==2:
         return significance_report(cross_datasets, exp_id, cfg.seeds, cfg.splits(cross_datasets[0]), log_dir,
                             f'{cfg.model_type}_baseline', cfg.model_type)
+    else:
+        return None
 
 def significance_report(
         datasets: list,

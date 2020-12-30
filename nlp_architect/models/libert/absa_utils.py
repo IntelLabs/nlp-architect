@@ -476,7 +476,7 @@ def read_config(name):
     """Load an experiment configuration from a yaml file."""
     cfg_path = Path(os.path.dirname(os.path.realpath(__file__))) / 'config' / (name + '.yaml')
     cfg = Namespace(**load_hparams_from_yaml(str(cfg_path)))
-    cfg.tag = '' if not cfg.tag else '_' + cfg.tag
+    cfg.tag = '' if not cfg.tag else cfg.tag + '_'
     return cfg
 
 def prepare_config(cfg):
@@ -510,6 +510,7 @@ def prepare_config(cfg):
     ds = {'l': 'laptops', 'r': 'restaurants', 'd': 'device'}
     if isinstance(cfg.data, str):
         cfg.data = [f'{ds[d[0]]}_to_{ds[d[1]]}' if len(d) < 3 else d for d in cfg.data.split()]
+    
 
 def load_config(name):
     """Load an experiment configuration from a yaml file."""
@@ -552,13 +553,19 @@ def write_summary_tables(cfg, exp_id, log_dir, sig_result):
         cross_datasets = [data for data in cfg.data if cfg.is_cross_domain(data)]
         indomain_datasets = [data for data in cfg.data if not cfg.is_cross_domain(data)]
         
+        is_baseline = True in cfg.baseline
+        is_model = False in cfg.baseline
+        # reporting significant test (model vs. baseline) only for cross domains
+        is_sig = bool(cross_datasets) and is_baseline and is_model
+        
         # set header and subheader 
         if cross_datasets:
             for dataset in cross_datasets:
                 ds_split = dataset.split('_')
                 ds_str = f"{ds_split[0][0]}-->{ds_split[2][0]}".upper()
                 header.extend([ds_str, f'{ds_str} '])
-            header.extend(['Cross-Domain', 'Cross-Domain']*2)
+            header.extend(['Cross-Domain', 'Cross-Domain'])
+            header.extend(['Cross-Domain', 'Cross-Domain'] if is_sig else ['', ''])
             sub_header += ['AS', 'OP'] * len(cross_datasets) + ['ASP_MEAN', 'OP_MEAN'] + ['', '']
         if indomain_datasets:
             header += ['|']
@@ -572,86 +579,88 @@ def write_summary_tables(cfg, exp_id, log_dir, sig_result):
         csv_writer.writerow(sub_header)
 
         # Seeds Average rows - baseline, model, delta
-        def compute_baseline_and_model_agg_rows_on_datasets(datasets: List[str]):
-            baseline_row, baseline_std_row, model_row, model_std_row = [], [], [], []
+        def compute_model_agg_rows_on_datasets(datasets: List[str], model_name):
+            model_row, model_std_row = [], []
             for dataset in datasets:
                 dataset_dir = log_dir / dataset
-                baseline_dir = dataset_dir / f'{cfg.model_type}_baseline_AGGREGATED_{cfg.model_type}_baseline_test' / 'csv'
-                model_dir = dataset_dir / f'{cfg.model_type}_AGGREGATED_{cfg.model_type}_test' / 'csv'
+                model_dir = dataset_dir / f'{model_name}_AGGREGATED_{model_name}_test' / 'csv'
 
-                baseline_mean_asp, baseline_std_asp = get_score_from_csv_agg(baseline_dir, 'asp_f1')
-                baseline_mean_op, baseline_std_op = get_score_from_csv_agg(baseline_dir, 'op_f1')
                 model_mean_asp, model_std_asp = get_score_from_csv_agg(model_dir, 'asp_f1')
                 model_mean_op, model_std_op = get_score_from_csv_agg(model_dir, 'op_f1')
 
-                baseline_row.extend([baseline_mean_asp, baseline_mean_op])
                 model_row.extend([model_mean_asp, model_mean_op])
-                baseline_std_row.extend([baseline_std_asp, baseline_std_op])
                 model_std_row.extend([model_std_asp, model_std_op])
             # Compute Means across datasets, and append to row
-            for row in baseline_row, model_row:
-                asp_mean = np.mean([row[i] for i in range(0, len(row), 2)] or -100)
-                op_mean = np.mean([row[i] for i in range(1, len(row), 2)] or -100)
-                row.extend([asp_mean, op_mean])
-            return baseline_row, baseline_std_row, model_row, model_std_row
+            asp_mean = np.mean([model_row[i] for i in range(0, len(model_row), 2)] or -100)
+            op_mean = np.mean([model_row[i] for i in range(1, len(model_row), 2)] or -100)
+            model_row.extend([asp_mean, op_mean])
+            return model_row, model_std_row
         
         # `cd` for cross-domain, `id` for in-domain 
-        cd_baseline_row, cd_baseline_std_row, cd_model_row, cd_model_std_row = \
-            compute_baseline_and_model_agg_rows_on_datasets(cross_datasets) 
-        id_baseline_row, id_baseline_std_row, id_model_row, id_model_std_row = \
-            compute_baseline_and_model_agg_rows_on_datasets(indomain_datasets) 
+        if is_baseline:
+            cd_baseline_row, cd_baseline_std_row = \
+                compute_model_agg_rows_on_datasets(cross_datasets, f'{cfg.model_type}_baseline') 
+            id_baseline_row, id_baseline_std_row = \
+                compute_model_agg_rows_on_datasets(indomain_datasets, f'{cfg.model_type}_baseline') 
+        if is_model:
+            cd_model_row, cd_model_std_row = \
+                compute_model_agg_rows_on_datasets(cross_datasets, f'{cfg.model_type}') 
+            id_model_row, id_model_std_row = \
+                compute_model_agg_rows_on_datasets(indomain_datasets, f'{cfg.model_type}') 
 
-        # compute Delta 
-        cd_deltas_row = np.array(cd_model_row) - np.array(cd_baseline_row)
-        id_deltas_row = np.array(id_model_row) - np.array(id_baseline_row)
+
         format_list = lambda means, stds: [f'{m:.2f} ({s:.2f})' for m, s in zip(means, stds)]
         # prepare full baseline\model\delta rows - including cross-domain and in-domain 
-        baseline_row = ['baseline'] + (format_list(cd_baseline_row[:-2], cd_baseline_std_row) + cd_baseline_row[-2:] + ['', ''] if cross_datasets else [])
-        model_row = ['model'] + (format_list(cd_model_row[:-2], cd_model_std_row) + cd_model_row[-2:] + ['', ''] if cross_datasets else [])
-        deltas_row = ['delta'] + ([f'{d:.2f}' for d in cd_deltas_row] + ['', ''] if cross_datasets else [])
-        if indomain_datasets:
-            baseline_row += ['|'] + format_list(id_baseline_row[:-2], id_baseline_std_row) + id_baseline_row[-2:]
-            model_row += ['|'] + format_list(id_model_row[:-2], id_model_std_row) + id_model_row[-2:]
-            deltas_row += ['|'] + [f'{d:.2f}' for d in id_deltas_row]
-        csv_writer.writerow(baseline_row)
-        csv_writer.writerow(model_row)
-        csv_writer.writerow(deltas_row)
+        def write_full_row(name, cd_model_row, cd_model_std_row, id_model_row, id_model_std_row):
+            model_row = [name] + (format_list(cd_model_row[:-2], cd_model_std_row) + cd_model_row[-2:] + ['', ''] if cross_datasets else [])
+            if indomain_datasets:
+                model_row += ['|'] + format_list(id_model_row[:-2], id_model_std_row) + id_model_row[-2:]
+            csv_writer.writerow(model_row)
+        
+        if is_baseline:
+            write_full_row("baseline", cd_baseline_row, cd_baseline_std_row, id_baseline_row, id_baseline_std_row)
+        if is_model:
+            write_full_row("model", cd_model_row, cd_model_std_row, id_model_row, id_model_std_row)
+               
+        # compute Delta 
+        if is_baseline and is_model:
+            cd_deltas_row = np.array(cd_model_row) - np.array(cd_baseline_row)
+            id_deltas_row = np.array(id_model_row) - np.array(id_baseline_row)
+            deltas_row = ['delta'] + ([f'{d:.2f}' for d in cd_deltas_row] + ['', ''] if cross_datasets else [])
+            if indomain_datasets:
+                deltas_row += ['|'] + [f'{d:.2f}' for d in id_deltas_row]
+            csv_writer.writerow(deltas_row)
 
         # Compute and write per-seed results
         
-        def compute_baseline_and_model_seed_rows_on_datasets(seed: int, datasets: List[str]):            
-            baseline_row, baseline_std_row, model_row, model_std_row = [], [], [], []
+        def compute_model_seed_rows_on_datasets(seed: int, datasets: List[str], baseline: bool):
+            model_name = f'{cfg.model_type}_baseline' if baseline else cfg.model_type            
+            model_row, model_std_row = [], []
             for dataset in datasets:
-                base_asp, model_asp, base_op, model_op = [], [], [], []
+                model_asp, model_op = [], []
                 for split in cfg.splits(dataset):
                     dataset_dir = log_dir / dataset
-                    baseline_csv = dataset_dir / f'{cfg.model_type}_baseline_seed_{seed}_split_{split}_test'\
-                        / f'version_{cfg.model_type}_baseline' / 'metrics.csv'
-                    model_csv = dataset_dir / f'{cfg.model_type}_seed_{seed}_split_{split}_test'\
-                        / f'version_{cfg.model_type}' / 'metrics.csv'
+                    model_csv = dataset_dir / f'{model_name}_seed_{seed}_split_{split}_test'\
+                        / f'version_{model_name}' / 'metrics.csv'
 
-                    base_asp.append(get_score_from_csv(baseline_csv, 'asp_f1'))
-                    base_op.append(get_score_from_csv(baseline_csv, 'op_f1'))
                     model_asp.append(get_score_from_csv(model_csv, 'asp_f1'))
                     model_op.append(get_score_from_csv(model_csv, 'op_f1'))
 
-                baseline_row.extend([np.array(base_asp).mean(), np.array(base_op).mean()])
                 model_row.extend([np.array(model_asp).mean(), np.array(model_op).mean()])
-                baseline_std_row.extend([np.array(base_asp).std(), np.array(base_op).std()])
                 model_std_row.extend([np.array(model_asp).std(), np.array(model_op).std()])
             # Compute Means
-            for row in baseline_row, model_row:
-                asp_mean = np.mean([row[i] for i in range(0, len(row), 2)] or -100)
-                op_mean = np.mean([row[i] for i in range(1, len(row), 2)] or -100)
-                row.extend([asp_mean, op_mean])
-            return baseline_row, baseline_std_row, model_row, model_std_row
+            asp_mean = np.mean([model_row[i] for i in range(0, len(model_row), 2)] or -100)
+            op_mean = np.mean([model_row[i] for i in range(1, len(model_row), 2)] or -100)
+            model_row.extend([asp_mean, op_mean])
+            return model_row, model_std_row
 
         # prepare significance test results (only for cross-domain)
-        if cross_datasets:
+
+        if is_sig:
             _, _, all_alphas_scores = sig_result
 
         for i, seed in enumerate(cfg.seeds):
-            if cross_datasets:
+            if is_sig:
                 alpha_001_sig = all_alphas_scores[1][i]
                 alpha_005_sig = all_alphas_scores[2][i]
                 sig_str = [f'{v:.2f}' for v in [alpha_001_sig, alpha_005_sig]]
@@ -659,32 +668,46 @@ def write_summary_tables(cfg, exp_id, log_dir, sig_result):
             csv_writer.writerow([''] * len(header))
 
             # Write Seed header 
-            seed_header = [f'Seed {seed}'] + (['AS', 'OP'] * len(cross_datasets) \
-                + ['ASP_MEAN', 'OP_MEAN', 'SIGNIFICANCE @ p=0.01', 'SIGNIFICANCE @ p=0.05'] \
+            seed_header = [f'Seed {seed}'] + (['AS', 'OP'] * len(cross_datasets) + ['ASP_MEAN', 'OP_MEAN'] \
+                 + (['SIGNIFICANCE @ p=0.01', 'SIGNIFICANCE @ p=0.05'] if is_sig else ['', '']) \
                     if cross_datasets else [])
             if indomain_datasets:
                 seed_header += ['|'] + ['AS', 'OP'] * len(indomain_datasets) + ['ASP_MEAN', 'OP_MEAN']
             csv_writer.writerow(seed_header)
             
-            # Compute per-seed results - `cd` for cross-domain, `id` for in-domain 
-            cd_baseline_row, cd_baseline_std_row, cd_model_row, cd_model_std_row = \
-                compute_baseline_and_model_seed_rows_on_datasets(seed, cross_datasets) 
-            id_baseline_row, id_baseline_std_row, id_model_row, id_model_std_row = \
-                compute_baseline_and_model_seed_rows_on_datasets(seed, indomain_datasets) 
+            def write_full_row(model_name, cd_model_row, cd_model_std_row, id_model_row, id_model_std_row):
+                # prepare full nodel/baseline row - including cross-domain and in-domain 
+                model_row = [model_name] + (format_list(cd_model_row[:-2], cd_model_std_row) + cd_model_row[-2:] + (sig_str if is_sig else ['', '']))
+                if indomain_datasets:
+                    model_row += ['|'] + format_list(id_model_row[:-2], id_model_std_row) + id_model_row[-2:]
+                csv_writer.writerow(model_row)
 
-            cd_deltas_row = np.array(cd_model_row) - np.array(cd_baseline_row)
-            id_deltas_row = np.array(id_model_row) - np.array(id_baseline_row)
-            # prepare full baseline\model\delta rows - including cross-domain and in-domain 
-            baseline_row = ['baseline'] + (format_list(cd_baseline_row[:-2], cd_baseline_std_row) + cd_baseline_row[-2:] + ['',''] if cross_datasets else [])
-            model_row = ['model'] + (format_list(cd_model_row[:-2], cd_model_std_row) + cd_model_row[-2:] + sig_str if cross_datasets else [])
-            deltas_row = ['delta'] + ([f'{d:.2f}' for d in cd_deltas_row] + ['',''] if cross_datasets else [])
-            if indomain_datasets:
-                baseline_row += ['|'] + format_list(id_baseline_row[:-2], id_baseline_std_row) + id_baseline_row[-2:]
-                model_row += ['|'] + format_list(id_model_row[:-2], id_model_std_row) + id_model_row[-2:]
-                deltas_row += ['|'] + [f'{d:.2f}' for d in id_deltas_row]
-            csv_writer.writerow(baseline_row)
-            csv_writer.writerow(model_row)
-            csv_writer.writerow(deltas_row)
+            # Compute per-seed results - `cd` for cross-domain, `id` for in-domain
+            
+            if is_baseline: 
+                cd_baseline_row, cd_baseline_std_row = \
+                    compute_model_seed_rows_on_datasets(seed, cross_datasets, baseline=True) 
+                id_baseline_row, id_baseline_std_row = \
+                    compute_model_seed_rows_on_datasets(seed, indomain_datasets, baseline=True)
+                write_full_row("baseline", cd_baseline_row, cd_baseline_std_row, id_baseline_row, id_baseline_std_row)
+
+            if is_model: 
+                cd_model_row, cd_model_std_row = \
+                    compute_model_seed_rows_on_datasets(seed, cross_datasets, baseline=False) 
+                id_model_row, id_model_std_row = \
+                    compute_model_seed_rows_on_datasets(seed, indomain_datasets, baseline=False)
+                write_full_row("model", cd_model_row, cd_model_std_row, id_model_row, id_model_std_row)
+            
+            # Compute delta
+            if is_baseline and is_model:
+                cd_deltas_row = np.array(cd_model_row) - np.array(cd_baseline_row)
+                id_deltas_row = np.array(id_model_row) - np.array(id_baseline_row)
+                # prepare full delta row - including cross-domain and in-domain 
+                deltas_row = ['delta'] + (([f'{d:.2f}' for d in cd_deltas_row] + ['', '']) if cross_datasets else [])
+                if indomain_datasets:
+                    deltas_row += ['|'] + [f'{d:.2f}' for d in id_deltas_row]
+                csv_writer.writerow(deltas_row)
+
 
 def get_score_from_csv(csv_file, metric):
     with open(csv_file, encoding='utf-8') as csv_file:

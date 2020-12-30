@@ -26,7 +26,7 @@ logging.getLogger("transformers").setLevel('ERROR')
 logging.getLogger("pytorch_lightning").setLevel('WARNING')
 LIBERT_DIR = Path(realpath(__file__)).parent
 
-def log_model_and_version(trainer, cfg, versions, save=True):
+def log_model_and_version(trainer: pl.Trainer, cfg, versions, save=True):
     logger = trainer.logger
     logger.log_hyperparams(cfg)
     if save:

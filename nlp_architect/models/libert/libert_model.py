@@ -28,6 +28,8 @@ from transformers.modeling_bert import BertEncoder, BertLayer, \
 from transformers import BertForTokenClassification, BertModel
 from pytorch_lightning import _logger as log
 from pathlib import Path
+from path_patterns import PatternPredictor, AspectMatcher
+from shared_bert_module import InhouseBertForABSA
 
 
 LIBERT_DIR = Path(realpath(__file__)).parent
@@ -50,87 +52,24 @@ class LiBertConfig(BertConfig):
         self.auxiliary_tasks = hparams.auxiliary_tasks
         # pattern-prediction auxiliary task info
         self.all_patterns = hparams.all_patterns
+        
+        # set hidden states of which layers to use in auxliary prediction 
+        if not hparams.auxiliary_layers:
+            self.auxiliary_layers = [self.num_hidden_layers]
+        elif hparams.auxiliary_layers is "all":
+            self.auxiliary_layers = list(range(1,self.num_hidden_layers+1))
+        else:
+            self.auxiliary_layers = hparams.auxiliary_layers
 
-class LiBertForToken(BertForTokenClassification):
+class LiBertForToken(InhouseBertForABSA):
     def __init__(self, config):
         super(LiBertForToken, self).__init__(config)
+        # only deviation from InhouseBertForABSA is in underlyig BERT model (LiBertModel instead of BertModel)
         self.bert = LiBertModel(config)
-        # add classifiers for auxliary tasks
-        self.pattern_classifier = nn.Linear(config.hidden_size, len(config.all_patterns))
-        self.target_asp_biaffine_classifier = nn.Bilinear(config.hidden_size, config.hidden_size, 1)
-        # TODO am I sure?  perhaps better to just define a weight matrix (Linear) and use it directly?
 
-
-    def forward(self, input_ids=None, attention_mask=None, token_type_ids=None, position_ids=None,
-                head_mask=None, inputs_embeds=None, labels=None, output_attentions=None,
-                output_hidden_states=None, parse=None, syn_rels=None, 
-                opinion_mask=None, patterns=None):
-        outputs = self.bert(
-            input_ids,
-            attention_mask=attention_mask,
-            token_type_ids=token_type_ids,
-            position_ids=position_ids,
-            head_mask=head_mask,
-            inputs_embeds=inputs_embeds,
-            output_attentions=output_attentions,
-            output_hidden_states=output_hidden_states,
-            parse=parse
-        )
-        # outputs == (sequence_output, pooled_output, (hidden_states), (attentions) )
-        sequence_output = outputs[0]
-
-        sequence_output = self.dropout(sequence_output)
-        logits = self.classifier(sequence_output)
-        
-        # change function output to be a dict
-        output_dict = {}
-        if len(outputs) > 2: # add hidden states and attention if they are here
-            output_dict["hidden_states"], output_dict["attentions"] = outputs[2:]
-        output_dict["logits"] = logits   
-        if labels is not None:
-            loss_fct = CrossEntropyLoss()
-            # Only keep active parts of the loss
-            if attention_mask is not None:
-                active_loss = attention_mask.view(-1) == 1
-                active_logits = logits.view(-1, self.num_labels)
-                active_labels = torch.where(
-                    active_loss, labels.view(-1),
-                    torch.tensor(loss_fct.ignore_index).type_as(labels)
-                )
-                loss = loss_fct(active_logits, active_labels)
-            else:
-                loss = loss_fct(logits.view(-1, self.num_labels), labels.view(-1))
-            output_dict["loss"] = loss
-
-            # **** Auxiliary tasks ****
-            total_aux_loss = 0.0
-            # Compute patt-aux-logits for tokens of index in `opinion_indices` 
-            if "pattern" in self.config.auxiliary_tasks:
-                assert patterns is not None, "Given labels but not patterns for auxiliary task"
-                patt_aux_logits = self.pattern_classifier(sequence_output)
-                num_pattern_classes = len(self.config.all_patterns)
-                loss_fct = CrossEntropyLoss()
-                # Only keep active parts of the loss, by opinion-term mask (masking out non-opnion-term tokens)
-                aux_active_loss = opinion_mask.view(-1) == 1
-                aux_active_logits = patt_aux_logits.view(-1, num_pattern_classes)
-                aux_active_labels = torch.where(
-                    aux_active_loss, patterns.view(-1),
-                    torch.tensor(loss_fct.ignore_index).type_as(patterns)
-                )
-                # compute aux-loss, add it to outputs
-                patt_aux_loss = loss_fct(aux_active_logits, aux_active_labels)
-                output_dict.update(patt_aux_loss=patt_aux_loss, patt_aux_logits=patt_aux_logits)
-                total_aux_loss += patt_aux_loss
-            
-            # here we can compute additional auxiliary tasks, and add their loss into `total_aux_loss`
-            #TODO Add AT-prediction auxiliary task (depending on self.config.auxiliary_tasks)
-            
-            # sum all auxiliary losses and report them:
-            if self.config.auxiliary_tasks:
-                output_dict.update(total_aux_loss=total_aux_loss)
-        
-        return output_dict  # Mandatory keys: scores ; Optional: loss, hidden_states, attentions, ...
-
+    def call_bert(self, inputs, parse=None, **kwargs): # for adding kwargs with default values
+        return self.bert(inputs, parse=parse, **kwargs)   
+    
 class LiBertModel(BertModel):
     def __init__(self, config):
         super(LiBertModel, self).__init__(config)

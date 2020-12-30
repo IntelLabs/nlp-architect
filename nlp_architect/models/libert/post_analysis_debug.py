@@ -11,5 +11,5 @@ def post_analysis_for_debug(config_yaml, exp_id):
         post_analysis(cfg, log_dir, exp_id)
     prepare_all_formalisms_summary_table(exp_id)
 
-if __name__=="__main__":
-    post_analysis_for_debug(*sys.argv[1:])
+# if __name__=="__main__":
+#     post_analysis_for_debug(*sys.argv[1:])

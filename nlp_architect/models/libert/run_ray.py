@@ -72,7 +72,7 @@ def run_data(task_idx, cfg_orig, time, baseline, data, log_dir, metric):
                     exp_id = f'{cfg.model_type}_baseline' if cfg.baseline else cfg.model_type
 
                     if cfg.do_train:
-                        trainer = get_trainer(model, data, exper_str, exp_id, log_dir, metric=metric, limit_data=cfg.limit_data)
+                        trainer: pl.Trainer = get_trainer(model, data, exper_str, exp_id, log_dir, metric=metric, limit_data=cfg.limit_data)
                         trainer.fit(model)
                         log_model_and_version(trainer, cfg, train_versions)
 
@@ -92,7 +92,7 @@ def main(config_yaml):
     # Init: config, experiment id, logging
     cfg = read_config(config_yaml)
     time_start = pretty_datetime()
-    exp_id = time_start + cfg.tag
+    exp_id = cfg.tag + time_start 
     base_log_dir = LOG_ROOT / exp_id
     print(f"\nStarting experiment - logging at 'logs/{exp_id}' \n")
     copy_config(config_yaml, base_log_dir)  # save a copy of config in log dir - for easier tracking
@@ -169,9 +169,11 @@ def post_analysis(cfg, log_dir, exp_id):
     # Run significance tests if baseline exists and last run was on model
     if cfg.do_predict and True in cfg.baseline and False in cfg.baseline:
         sig_result = significance_from_cfg(cfg=cfg, log_dir=log_dir, exp_id=exp_id)
+    else:
+        sig_result = None
 
-        # Write summary table to CSV
-        write_summary_tables(cfg, exp_id, log_dir, sig_result)
+    # Write summary table to CSV
+    write_summary_tables(cfg, exp_id, log_dir, sig_result)
 
 def prepare_all_formalisms_summary_table(exp_id: str):
     with open(LOG_ROOT / exp_id / "Full-Summary.csv", "w", encoding="utf-8") as fout:

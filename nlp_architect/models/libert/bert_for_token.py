@@ -38,7 +38,8 @@ from transformers import (
     get_linear_schedule_with_warmup,
     AdamW
 )
-from bert_with_amtl import BertWithAMTLForToken
+import path_patterns
+from shared_bert_module import InhouseBertForABSA
 import absa_utils
 from libert_model import LiBertForToken, LiBertConfig
 #from libert_model_14heads import LiBertForToken, LiBertConfig
@@ -46,7 +47,7 @@ from libert_model import LiBertForToken, LiBertConfig
 LIBERT_DIR = Path(realpath(__file__)).parent
 
 MODEL_CONFIG = {
-    'bert': (BertWithAMTLForToken, LiBertConfig, BertTokenizer),
+    'bert': (InhouseBertForABSA, LiBertConfig, BertTokenizer),
     'libert': (LiBertForToken, LiBertConfig, BertTokenizer)
 }
 
@@ -136,10 +137,12 @@ class BertForToken(pl.LightningModule):
 
         tensors = [all_input_ids, all_attention_mask, all_token_type_ids, all_label_ids]
 
-        #### Attach pattern-classification (i.e. auxiliary task) info 
+        #### Attach pattern-classification & matching-AT (i.e. auxiliary task) info 
         op2at_opinion_masks = torch.tensor([f.op2at_opinion_mask.numpy() for f in features], dtype=torch.long)
         op2at_patterns = torch.tensor([f.op2at_patterns.numpy() for f in features], dtype=torch.long)
-        tensors.extend([op2at_opinion_masks, op2at_patterns])              
+        op2at_tgt_asp_indinces = torch.tensor([f.op2at_tgt_asp_index.numpy() for f in features], dtype=torch.long)
+
+        tensors.extend([op2at_opinion_masks, op2at_patterns, op2at_tgt_asp_indinces])              
 
         if self.model_type is LiBertForToken:
             #### Attatch syntactic info ###
@@ -152,12 +155,13 @@ class BertForToken(pl.LightningModule):
 
     @staticmethod
     def map_to_inputs(batch):
+        # see order of each batch tensor in `load_dataset`
         inputs = {"input_ids": batch[0], "attention_mask": batch[1], "token_type_ids": batch[2],
                   "labels": batch[3],
                   # add here auxiliary task data
-                  "opinion_mask": batch[4], "patterns": batch[5]}
-        if len(batch) >= 7:
-            inputs["parse"] = batch[6]
+                  "opinion_mask": batch[4], "patterns": batch[5], "tgt_asp_indices": batch[6]}
+        if len(batch) >= 8:
+            inputs["parse"] = batch[7]
 
         return inputs
 
@@ -188,16 +192,23 @@ class BertForToken(pl.LightningModule):
         preds = logits.detach().cpu()#.numpy()
         target = inputs["labels"].detach().cpu()#.numpy()
         ret = {"val_loss_step": tmp_eval_loss.detach().cpu(), "pred": preds, "target": target}
+        # add input_ids to ret to allow outputing BIO predictions to file 
+        ret["input_ids"] = inputs["input_ids"]
 
         if "patt_aux_logits" in outputs and "patterns" in inputs:
             patt_aux_logits = outputs["patt_aux_logits"]
             patt_aux_preds = patt_aux_logits.detach().cpu()#.numpy()
             patt_aux_target = inputs["patterns"].detach().cpu()#.numpy()
             ret.update(patt_aux_preds=patt_aux_preds, patt_aux_target=patt_aux_target)
+        if "asp_match_aux_logits" in outputs and "tgt_asp_indices" in inputs:
+            asp_match_aux_logits = outputs["asp_match_aux_logits"]
+            asp_match_aux_preds = asp_match_aux_logits.detach().cpu()#.numpy()
+            asp_match_aux_target = outputs["asp_match_gold_labels"].detach().cpu()#.numpy() # take gold labels from outputs, stacked per OTs corresponding to logits
+            ret.update(asp_match_aux_preds=asp_match_aux_preds, asp_match_aux_target=asp_match_aux_target)
         return ret
 
     def validation_epoch_end(self, outputs):
-        ret, _, _ = self._eval_end(outputs)
+        ret, _, _, _ = self._eval_end(outputs)
         logs = ret["log"]
         logs['step'] = self.current_epoch
         return {"val_loss": logs["val_loss"], "log": logs}
@@ -206,28 +217,50 @@ class BertForToken(pl.LightningModule):
         return self.validation_step(batch, batch_nb)
 
     def test_epoch_end(self, outputs):
-        ret, _, _ = self._eval_end(outputs)
+        ret, pred, target, inp_words = self._eval_end(outputs)
         logs = ret["log"]
         logs['step'] = self.current_epoch
+        
+        self._write_predictions(pred, target, inp_words)
         # `val_loss` is the key returned by `self._eval_end()` but actually refers to `test_loss`
         return {"test_loss": logs["val_loss"], "log": logs}
 
+    def _write_predictions(self, predictions, gold_labels, words):
+        out_fn = self.logger.save_dir / "prediction-test.txt"
+        with open(out_fn, "w", encoding="utf-8") as fout:
+            for s_preds, s_golds, s_words in zip(predictions, gold_labels, words): # iterate over sentences
+                assert len(s_words) == len(s_preds) == len(s_golds)
+                for word, pred_lbl, gold_lbl in zip(s_words, s_preds, s_golds):
+                    fout.write(f"{word}\t{pred_lbl}\t{gold_lbl}\n")
+                fout.write("\n")  
+    
+        
     def _eval_end(self, outputs):
         "Evaluation called for both Val and Test"
         val_loss_mean = torch.stack([x["val_loss_step"] for x in outputs]).mean()
         preds = np.concatenate([x["pred"] for x in outputs], axis=0)
         preds = np.argmax(preds, axis=2)
         out_label_ids = np.concatenate([x["target"] for x in outputs], axis=0)
+        input_ids = np.concatenate([x["input_ids"].cpu() for x in outputs], axis=0)
 
         label_map = dict(enumerate(self.labels))
         target = [[] for _ in range(out_label_ids.shape[0])]
         pred = [[] for _ in range(out_label_ids.shape[0])]
+        inp_words = [[] for _ in range(out_label_ids.shape[0])]
+        
 
         for i in range(out_label_ids.shape[0]):
             for j in range(out_label_ids.shape[1]):
                 if out_label_ids[i, j] != self.pad_token_label_id:
                     target[i].append(label_map[out_label_ids[i][j]])
                     pred[i].append(label_map[preds[i][j]])
+                    word = self.tokenizer.convert_ids_to_tokens(int(input_ids[i][j]))
+                    # complement word with its corresponding subtokens
+                    next_j = j+1; next_subtok = self.tokenizer.convert_ids_to_tokens(int(input_ids[i][next_j]))
+                    while out_label_ids[i, next_j] == self.pad_token_label_id and next_subtok != '[SEP]':
+                        word += next_subtok.lstrip('##')
+                        next_j += 1; next_subtok = self.tokenizer.convert_ids_to_tokens(int(input_ids[i][next_j]))
+                    inp_words[i].append(word)
 
         calc = lambda f: torch.tensor(f(target, pred))
         results = OrderedDict({
@@ -250,9 +283,19 @@ class BertForToken(pl.LightningModule):
             "f1": per_sentence(f1_score),
             "accuracy": per_sentence(accuracy_score)
         }
+        
+        # compute & log performance also for auxiliary tasks
+        if "matched-AT" in self.config.auxiliary_tasks:
+            asp_match_results = path_patterns.asp_match_task_eval(outputs)
+            results.update(asp_match_results)
+        if "pattern" in self.config.auxiliary_tasks:
+            pattern_results = path_patterns.pattern_task_eval(outputs)
+            results.update(pattern_results)
+
         ret = results.copy()
         ret["log"] = results
-        return ret, pred, target
+        return ret, pred, target, inp_words
+    
 
     def configure_optimizers(self):
         "Prepare optimizer and schedule (linear warmup and decay)"

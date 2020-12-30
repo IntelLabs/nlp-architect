@@ -17,27 +17,26 @@
 # pylint: disable=no-member, not-callable, arguments-differ, missing-class-docstring, too-many-locals, too-many-arguments, abstract-method
 # pylint: disable=missing-module-docstring, missing-function-docstring, too-many-statements, too-many-instance-attributes
 
-import math
-from os.path import realpath
-from torch import nn
-import torch
-from torch.nn import CrossEntropyLoss
-torch.multiprocessing.set_sharing_strategy('file_system')
-from transformers.modeling_bert import BertPreTrainedModel, BertEncoder, BertLayer, \
-        BertAttention, BertSelfAttention, BertSelfOutput, BertConfig
-from transformers import BertForTokenClassification, BertModel
-from pytorch_lightning import _logger as log
-from pathlib import Path
 
-class BertWithAMTLForToken(BertForTokenClassification):
-    """ A BERT model for token classification (ABSA term extraction - BIO tagging), 
-    which encorporates auxiliary loss from an auxiliary task.  """
+import torch
+from torch import nn
+torch.multiprocessing.set_sharing_strategy('file_system')
+from transformers import BertForTokenClassification
+from path_patterns import AspectMatcher, PatternPredictor
+
+class InhouseBertForABSA(BertForTokenClassification):
+    """ A BERT model for our token classification task - ABSA term extraction (BIO tagging). 
+    This in-house model can share features and functionalities between the pipelines of both `model_type=bert` and `model_type=libert`,
+    e.g., encorporating auxiliary loss from an auxiliary task.  """
     def __init__(self, config):
         super().__init__(config)
         # add classifiers for auxliary tasks
-        self.pattern_classifier = nn.Linear(config.hidden_size, len(config.all_patterns))
-        self.asp_matcher = nn.Linear(config.hidden_size, config.hidden_size)
+        self.pattern_classifiers = nn.ModuleList([PatternPredictor(config) for _ in self.config.auxiliary_layers])
+        self.asp_matchers = nn.ModuleList([AspectMatcher(config) for _ in self.config.auxiliary_layers])
 
+    def call_bert(self, inputs, **kwargs):
+        return self.bert(inputs, **kwargs) 
+       
     def forward(
         self,
         input_ids=None,
@@ -47,10 +46,12 @@ class BertWithAMTLForToken(BertForTokenClassification):
         head_mask=None,
         inputs_embeds=None,
         labels=None,
-        output_attentions=None,
-        output_hidden_states=None,
+        output_attentions=True,
+        output_hidden_states=True,
         opinion_mask=None,
-        patterns=None
+        patterns=None,
+        tgt_asp_indices=None,
+        **kwargs
     ):
         r"""
         labels (:obj:`torch.LongTensor` of shape :obj:`(batch_size, sequence_length)`, `optional`, defaults to :obj:`None`):
@@ -76,7 +77,7 @@ class BertWithAMTLForToken(BertForTokenClassification):
             heads.
         """
 
-        outputs = self.bert(
+        outputs = self.call_bert(
             input_ids,
             attention_mask=attention_mask,
             token_type_ids=token_type_ids,
@@ -85,6 +86,7 @@ class BertWithAMTLForToken(BertForTokenClassification):
             inputs_embeds=inputs_embeds,
             output_attentions=output_attentions,
             output_hidden_states=output_hidden_states,
+            **kwargs
         )
 
         sequence_output = outputs[0]
@@ -99,7 +101,7 @@ class BertWithAMTLForToken(BertForTokenClassification):
         output_dict["logits"] = logits 
         
         if labels is not None:
-            loss_fct = CrossEntropyLoss()
+            loss_fct = nn.CrossEntropyLoss()
             # Only keep active parts of the loss
             if attention_mask is not None:
                 active_loss = attention_mask.view(-1) == 1
@@ -114,26 +116,30 @@ class BertWithAMTLForToken(BertForTokenClassification):
 
             # **** Auxiliary tasks ****
             total_aux_loss = 0.0
-            # Compute patt-aux-logits for tokens of index in `opinion_indices`
             if "pattern" in self.config.auxiliary_tasks:
                 assert patterns is not None, "Given labels but not patterns for auxiliary task"
-
-                patt_aux_logits = self.pattern_classifier(sequence_output)
-                num_pattern_classes = len(self.config.all_patterns)
-                loss_fct = CrossEntropyLoss()
-                # Only keep active parts of the loss, by opinion-term mask (masking out non-opnion-term tokens)
-                aux_active_loss = opinion_mask.view(-1) == 1
-                aux_active_logits = patt_aux_logits.view(-1, num_pattern_classes)
-                aux_active_labels = torch.where(
-                    aux_active_loss, patterns.view(-1),
-                    torch.tensor(loss_fct.ignore_index).type_as(patterns)
-                )
-                # compute aux-loss, add it to outputs
-                patt_aux_loss = loss_fct(aux_active_logits, aux_active_labels)
-                output_dict.update(patt_aux_loss=patt_aux_loss, patt_aux_logits=patt_aux_logits)
-                total_aux_loss += patt_aux_loss
-
-            # sum all auxiliary losses and report them:
+                patt_aux_loss_cumm = 0.0
+                for layer, pattern_classifier in zip(self.config.auxiliary_layers, self.pattern_classifiers):
+                    hidden_states = output_dict["hidden_states"][layer]
+                    pattern_predictor_outputs = pattern_classifier(hidden_states,
+                                                                   patterns=patterns,
+                                                                   opinion_mask=opinion_mask)
+                    output_dict.update(**pattern_predictor_outputs)
+                    patt_aux_loss_cumm += pattern_predictor_outputs["patt_aux_loss"] if "patt_aux_loss" in pattern_predictor_outputs else 0.0
+                total_aux_loss += patt_aux_loss_cumm
+            
+            if "matched-AT" in self.config.auxiliary_tasks:
+                asp_match_aux_loss_cumm = 0.0
+                for layer, asp_matcher in zip(self.config.auxiliary_layers, self.asp_matchers):
+                    hidden_states = output_dict["hidden_states"][layer]
+                    asp_matcher_outputs = asp_matcher(hidden_states, 
+                                                      opinion_mask=opinion_mask,
+                                                      tgt_asp_indices=tgt_asp_indices) 
+                    output_dict.update(**asp_matcher_outputs)       # in case of many layers, override all logits but last layer; while accumulating the loss for all layers
+                    asp_match_aux_loss_cumm += asp_matcher_outputs["asp_match_aux_loss"] if "asp_match_aux_loss" in asp_matcher_outputs else 0.0
+                total_aux_loss += asp_match_aux_loss_cumm
+ 
+            # Report sum of all auxiliary losses:
             if self.config.auxiliary_tasks:
                 output_dict.update(total_aux_loss=total_aux_loss) 
                        
