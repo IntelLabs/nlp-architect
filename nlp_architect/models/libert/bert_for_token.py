@@ -198,8 +198,8 @@ class BertForToken(pl.LightningModule):
         if "patt_aux_logits" in outputs and "patterns" in inputs:
             patt_aux_logits = outputs["patt_aux_logits"]
             patt_aux_preds = patt_aux_logits.detach().cpu()#.numpy()
-            patt_aux_target = inputs["patterns"].detach().cpu()#.numpy()
-            ret.update(patt_aux_preds=patt_aux_preds, patt_aux_target=patt_aux_target)
+            patt_aux_labels = outputs["patt_aux_labels"].detach().cpu()#.numpy()
+            ret.update(patt_aux_preds=patt_aux_preds, patt_aux_labels=patt_aux_labels)
         if "asp_match_aux_logits" in outputs and "tgt_asp_indices" in inputs:
             asp_match_aux_logits = outputs["asp_match_aux_logits"]
             asp_match_aux_preds = asp_match_aux_logits.detach().cpu()#.numpy()
@@ -251,7 +251,7 @@ class BertForToken(pl.LightningModule):
 
         for i in range(out_label_ids.shape[0]):
             for j in range(out_label_ids.shape[1]):
-                if out_label_ids[i, j] != self.pad_token_label_id:
+                if out_label_ids[i, j] != self.pad_token_label_id:  # skips [CLS], [SEP], subtokens, and sequence padding  
                     target[i].append(label_map[out_label_ids[i][j]])
                     pred[i].append(label_map[preds[i][j]])
                     word = self.tokenizer.convert_ids_to_tokens(int(input_ids[i][j]))

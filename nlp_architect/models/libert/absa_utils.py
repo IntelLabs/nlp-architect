@@ -40,6 +40,7 @@ import numpy as np
 import pandas as pd
 
 from significance import significance_from_cfg as significance
+import path_patterns
 
 LIBERT_DIR = Path(realpath(__file__)).parent
 LOG_ROOT = LIBERT_DIR / 'logs'
@@ -210,7 +211,7 @@ def binarize_multi_hot(heads: List[List[int]]):
         res.append(vec)
     return res
 
-def get_dataset_patterns(dataset_dir: Path, min_frequency = 3) -> List[str]:
+def get_dataset_patterns(dataset_dir: Path, min_frequency = path_patterns.MIN_FREQUENCY) -> List[str]:
     """ Retreive the set of pattern labels for a specific dataset (e.g. spcay/laptops_to_device_1).
         This list is used for generating the vocabulary and embedding matrix for auxiliary pattern classificaiton task."""
     csv_df = pd.read_csv(dataset_dir / "train.csv")

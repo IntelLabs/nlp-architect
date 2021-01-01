@@ -14,10 +14,12 @@ from graph import Graph as MrpGraph
 import networkx as nx
 import torch
 from torch import nn
+from biaffine_classifier import BiaffineAttention
 
 Span = Tuple[int, int]
 
 MAX_HOPS_THRESHOLD = 2      # filtering criteria for path pattern auxilairy task data
+MIN_FREQUENCY = 10          # a frequency threshold for patterns that go into the pattern-vocab (others will be mapped to "RARE_PATTERN") 
 NO_PREDICTION = nn.CrossEntropyLoss().ignore_index
 
 """
@@ -220,6 +222,7 @@ class AspectMatcher(nn.Module):
             ('lin2', nn.Linear(config.hidden_size, config.hidden_size))
             ]))
         """
+        self.dropout = nn.Dropout(config.hidden_dropout_prob)
 
     def forward(
         self,
@@ -262,31 +265,47 @@ class PatternPredictor(nn.Module):
     def __init__(self, config):
         super().__init__()
         self.config = config
+        self.biaffine_op =  BiaffineAttention(config.hidden_size, config.hidden_size)
         self.classifier = nn.Linear(config.hidden_size, len(config.all_patterns))
+        # self.biaffine_operator = nn.Bilinear(config.hidden_size, config.hidden_size)
+        # self.classifier = nn.Linear(config.hidden_size, len(config.all_patterns))
+        self.dropout = nn.Dropout(config.hidden_dropout_prob)
 
     def forward(
         self,
         sequence_output,
         opinion_mask,
-        patterns
+        patterns,
+        tgt_asp_indices
     ):
         output_dict = {}
         loss_fct = nn.CrossEntropyLoss()
         
-        patt_aux_logits = self.classifier(sequence_output)
-        num_pattern_classes = len(self.config.all_patterns)
-        # Only keep active parts of the loss, by opinion-term mask (masking out non-opinion-term tokens)
-        aux_active_loss = opinion_mask.view(-1) == 1
-        aux_active_logits = patt_aux_logits.view(-1, num_pattern_classes)
-        aux_active_labels = torch.where(
-            aux_active_loss, patterns.view(-1),
-            torch.tensor(NO_PREDICTION).type_as(patterns)
-        )
-        # compute aux-loss, add it to outputs
-        patt_aux_loss = loss_fct(aux_active_logits, aux_active_labels)
-        output_dict.update(patt_aux_loss=patt_aux_loss, 
-                           patt_aux_logits=patt_aux_logits,
-                           patt_aux_labels=aux_active_labels)
+        #sequence_output = self.dropout(sequence_output)
+        
+        # iterate targets (i.e. opinion terms) and stack them in order to jointly-compute & sum their losses
+        patt_logits_stack, gold_pattern_id_stack = [], []
+        for batch_idx, op_idx in zip(*opinion_mask.nonzero(as_tuple=True)):
+            target_asp_idx = tgt_asp_indices[batch_idx, op_idx]
+            # predict the pattern using both opinion term and matching apsect term vectors, 
+            # as well as a bilinear transformation of them representing their interaction
+            op_vec = sequence_output[batch_idx, op_idx] # op_vec == Xi   (H,)
+            asp_vec = sequence_output[batch_idx, target_asp_idx]
+            patt_logits = self.classifier(nn.functional.relu(self.biaffine_op(op_vec, asp_vec)))
+            patt_logits_stack.append(patt_logits)
+            # save corresponding gold label
+            gold_pattern_id = patterns[batch_idx, op_idx]
+            gold_pattern_id_stack.append(gold_pattern_id)
+        if patt_logits_stack: 
+            patt_logits_stack = torch.stack(patt_logits_stack)
+            gold_pattern_id_stack = torch.stack(gold_pattern_id_stack)
+            
+            # compute aux-loss, add it to outputs
+            patt_aux_loss = loss_fct(patt_logits_stack, gold_pattern_id_stack)
+            output_dict.update(patt_aux_loss=patt_aux_loss, 
+                               patt_aux_logits=patt_logits_stack,
+                               patt_aux_labels=gold_pattern_id_stack)
+
         return output_dict
 
 """
@@ -296,7 +315,7 @@ def classification_accuracy(gold_list, pred_list) -> float:
     assert len(pred_list) == len(gold_list), "num of predictions not aligned with num of gold labels"
     n_correct = sum([1 for pred, gold in zip(pred_list, gold_list) if pred==gold])
     return n_correct / float(len(gold_list))
-        
+  
 def asp_match_task_eval(outputs) -> OrderedDict:
     "Evaluation for Matched-Aspect detection auxiliary task. Called for both Val and Test."
     predictions = [x["asp_match_aux_preds"] for x in outputs if "asp_match_aux_preds" in x]
@@ -316,7 +335,7 @@ def asp_match_task_eval(outputs) -> OrderedDict:
 def pattern_task_eval(outputs) -> OrderedDict:
     "Evaluation for Path-Pattern Classification auxiliary task. Called for both Val and Test."
     predictions = [x["patt_aux_preds"] for x in outputs if "patt_aux_preds" in x]
-    targets = [x["patt_aux_target"] for x in outputs if "patt_aux_target" in x]
+    targets = [x["patt_aux_labels"] for x in outputs if "patt_aux_labels" in x]
     # stack all instances (i.e. OP tokens with path)
     predictions = np.concatenate(predictions, axis=0)
     predictions = np.argmax(predictions, axis=-1)
@@ -324,15 +343,34 @@ def pattern_task_eval(outputs) -> OrderedDict:
     assert len(predictions) == len(targets), "num of predictions not aligned with num of gold labels"
 
     # count correct predictions out of meaningful predictions (i.e. predictions for OT token)
-    n_true, n_total = 0, 0
-    for pred, gold in zip(predictions.reshape(-1), targets.reshape(-1)):
-        if gold != NO_PREDICTION:
-            n_total += 1
-            if gold == pred:
-                n_true += 1
-    # report accuracy
-    accuracy = float(n_true) / n_total
+    # n_true, n_total = 0, 0
+    # for pred, gold in zip(predictions.reshape(-1), targets.reshape(-1)):
+    #     if gold != NO_PREDICTION:
+    #         n_total += 1
+    #         if gold == pred:
+    #             n_true += 1
+    # # report accuracy
+    # accuracy = float(n_true) / n_total
+    calc = lambda f: torch.tensor(f(targets, predictions))
     results = OrderedDict({
-        f"pattern_accuracy": torch.tensor(accuracy)
+        f"pattern_accuracy": calc(classification_accuracy)
+    })
+
+    return results
+
+# TODO prettify by replacing the above 2 methods with this one - need to align key names 
+def aux_task_eval(outputs, aux_task) -> OrderedDict:
+    "Evaluation for Matched-Aspect detection auxiliary task. Called for both Val and Test."
+    predictions = [x[f"{aux_task}_aux_preds"] for x in outputs if f"{aux_task}_aux_preds" in x]
+    targets = [x[f"{aux_task}_aux_target"] for x in outputs if f"{aux_task}_aux_target" in x]
+    # stack all instances (i.e. OP tokens with path)
+    predictions = np.concatenate(predictions, axis=0)
+    predictions = np.argmax(predictions, axis=-1)
+    targets = np.concatenate(targets, axis=0)
+    assert len(predictions) == len(targets), "num of predictions not aligned with num of gold labels"
+
+    calc = lambda f: torch.tensor(f(targets, predictions))
+    results = OrderedDict({
+        f"{aux_task}_accuracy": calc(classification_accuracy)
     })
     return results

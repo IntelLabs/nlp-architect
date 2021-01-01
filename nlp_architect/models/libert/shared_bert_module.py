@@ -123,7 +123,8 @@ class InhouseBertForABSA(BertForTokenClassification):
                     hidden_states = output_dict["hidden_states"][layer]
                     pattern_predictor_outputs = pattern_classifier(hidden_states,
                                                                    patterns=patterns,
-                                                                   opinion_mask=opinion_mask)
+                                                                   opinion_mask=opinion_mask,
+                                                                   tgt_asp_indices=tgt_asp_indices)
                     output_dict.update(**pattern_predictor_outputs)
                     patt_aux_loss_cumm += pattern_predictor_outputs["patt_aux_loss"] if "patt_aux_loss" in pattern_predictor_outputs else 0.0
                 total_aux_loss += patt_aux_loss_cumm
