@@ -62,8 +62,10 @@ class LiBertForToken(BertForTokenClassification):
         
         if self.aux_labels_type == 'syn_rels':
             aux_labels = syn_rels
-        if self.aux_labels_type == 'heads_idx':
+        elif self.aux_labels_type == 'heads_idx':
             aux_labels = heads_idx
+        elif 'heads_idx' in self.aux_labels_type and 'syn_rels' in self.aux_labels_type:
+            aux_labels = heads_idx, syn_rels
 
         outputs, aux_loss = self.bert(
             input_ids,
@@ -259,9 +261,19 @@ class LiBertLayer(BertLayer):
         self.aux_labels_type = config.aux_labels_type
 
         if self.is_aux_layer:
-            self.aux_output_size = RELATIVE_IDX_RANGE if self.aux_labels_type == 'heads_idx' else NUM_OF_RELATIONS
-            self.aux_classifier = nn.Linear(config.hidden_size, self.aux_output_size)
-            self.aux_loss_fct = CrossEntropyLoss()
+            if isinstance(self.aux_labels_type, list):
+                self.idx_output_size = RELATIVE_IDX_RANGE
+                self.idx_classifier = nn.Linear(config.hidden_size, self.idx_output_size)
+                self.idx_loss_fct = CrossEntropyLoss()
+
+                self.rel_output_size = NUM_OF_RELATIONS
+                self.rel_classifier = nn.Linear(config.hidden_size, self.rel_output_size)
+                self.rel_loss_fct = CrossEntropyLoss()
+
+            else:
+                self.aux_output_size = RELATIVE_IDX_RANGE if self.aux_labels_type == 'heads_idx' else NUM_OF_RELATIONS
+                self.aux_classifier = nn.Linear(config.hidden_size, self.aux_output_size)
+                self.aux_loss_fct = CrossEntropyLoss()
 
     def forward(self, hidden_states, attention_mask=None, head_mask=None,
                 encoder_hidden_states=None, encoder_attention_mask=None,
@@ -277,22 +289,39 @@ class LiBertLayer(BertLayer):
         layer_output = self.output(intermediate_output, attention_output)
 
         if self.is_aux_layer:
-            aux_logits = self.aux_classifier(layer_output)
+            if isinstance(self.aux_labels_type, list):
+                idx_labels, rel_labels = aux_labels
 
-            # active_loss = attention_mask.view(-1) == 1
-            active_aux_logits = aux_logits.view(-1, self.aux_output_size)
-            active_aux_labels = aux_labels.view(-1)
-            # active_aux_labels = torch.where(
-            #     active_loss, aux_labels.view(-1),
-            #     torch.tensor(HEADS_IGNORE_IDX).type_as(aux_labels)
-            # )
-            aux_loss = self.aux_loss_fct(active_aux_logits, active_aux_labels)
-            outputs = (layer_output,) + outputs
-            return outputs, aux_loss            
+                idx_logits = self.idx_classifier(layer_output)
+
+                active_idx_logits = idx_logits.view(-1, self.idx_output_size)
+                active_idx_labels = idx_labels.view(-1)
+
+                idx_loss = self.idx_loss_fct(active_idx_logits, active_idx_labels)
+
+                rel_logits = self.rel_classifier(layer_output)
+
+                active_rel_logits = rel_logits.view(-1, self.rel_output_size)
+                active_rel_labels = rel_labels.view(-1)
+
+                rel_loss = self.rel_loss_fct(active_rel_logits, active_rel_labels)
+                outputs = (layer_output,) + outputs
+
+                aux_loss = idx_loss + rel_loss
+                return outputs, aux_loss
+
+            else:
+                aux_logits = self.aux_classifier(layer_output)
+
+                active_aux_logits = aux_logits.view(-1, self.aux_output_size)
+                active_aux_labels = aux_labels.view(-1)
+
+                aux_loss = self.aux_loss_fct(active_aux_logits, active_aux_labels)
+                outputs = (layer_output,) + outputs
+                return outputs, aux_loss            
         else:
             outputs = (layer_output,) + outputs
             return outputs
-
 
 class LiBertAttention(BertAttention):
     def __init__(self, config, layer_num):

@@ -1,11 +1,11 @@
-max_epochs: 1
+max_epochs: 2
 model_type: libert # bert or libert
 baseline: [false, true]
 
-data: ld # relative to nlp_architect/models/li_bert/data/preprocessed_conll
-limit_data: 0.2
+data: ld rd # relative to nlp_architect/models/li_bert/data/preprocessed_conll
+limit_data: 0.3
 splits: 2
-seeds: [58] #, 42, 23, 17]
+seeds: [58, 42] #, 23, 17]
 tag: debug # optional: name this experiment version
 metric: asp_f1
 baseline_str: libert_baseline
@@ -15,8 +15,8 @@ num_workers: 44
 gpus: [1]
 parallel: false
 
-aux_labels_type: 'syn_rels' # ['syn_rels', 'heads_idx']
-aux_layers: [8]
+aux_labels_type: ['syn_rels', 'heads_idx']
+aux_layers: [0]
 
 li_layer: #5
 li_layers: #[2]

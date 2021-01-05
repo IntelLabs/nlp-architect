@@ -16,6 +16,7 @@ generated
 docs-source/_build/**
 !nlp_architect/solutions/set_expansion/ui/templates/*.html
 .vscode
+vscode/*
 !tests/fixtures/data/server/*.gz
 *.log
 .idea/
