@@ -432,12 +432,14 @@ class GradientReversalLayer(nn.Module):
 class ReconstructionModule(nn.Module):
     def __init__(self, config):
         super().__init__()
-        self.dense1 = nn.Linear(config.hidden_size, config.intermediate_size)
+        #self.dense1 = nn.Linear(config.hidden_size, config.intermediate_size)
+        self.dense1 = nn.Linear(config.hidden_size, 384)
         if isinstance(config.hidden_act, str):
             self.intermediate_act_fn = ACT2FN[config.hidden_act]
         else:
             self.intermediate_act_fn = config.hidden_act
-        self.dense2 = nn.Linear(config.intermediate_size, config.hidden_size)
+        #self.dense2 = nn.Linear(config.intermediate_size, config.hidden_size)
+        self.dense2 = nn.Linear(384, config.hidden_size)
         #self.LayerNorm = nn.LayerNorm(config.hidden_size, eps=config.layer_norm_eps)
         #self.dropout = nn.Dropout(config.hidden_dropout_prob)
         self.reconstruction_loss = nn.MSELoss()
