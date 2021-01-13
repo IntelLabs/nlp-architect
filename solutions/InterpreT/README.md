@@ -19,5 +19,5 @@ Below are some interesting phenomena we encourage users to explore in the live d
 ## Screencast Video Demo
 
 <p align="center">
-  <a href="https://youtu.be/ZKdPIdABmKc"><img src="https://img.youtube.com/vi/ZKdPIdABmKc/0.jpg" alt="Video Demo"/></a>
+  <a href="https://youtu.be/ZKdPIdABmKc"><img src="https://img.youtube.com/vi/ZKdPIdABmKc/hqdefault.jpg" alt="Video Demo"/></a>
 </p>
