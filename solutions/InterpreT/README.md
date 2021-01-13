@@ -6,7 +6,9 @@ With the increasingly widespread use of Transformers for NLU/NLP tasks, there is
 
 
 ## InterpreT Live Demo
-A live demo of **InterpreT** for analyzing pre-trained and fine-tuned BERT behavior on WSC can be accessed at the following link: http://interpret.intel-research.net. We highly encourage users to take a look at the screencast video demo below to get a sense of how the application works and how to navigate the application.
+A live demo of **InterpreT** for analyzing pre-trained and fine-tuned BERT behavior on WSC can be accessed at the following link: http://interpret.intel-research.net. 
+
+We highly encourage users to take a look at the screencast video demo below to get a sense of how the application works and how to navigate the application.
 
 Below are some interesting phenomena we encourage users to explore in the live demo:
 - In our own analysis we found that a fine-tuned BERT model pushes closer together the embeddings of terms it predicts to be coreferent. This behavior can be seen in the "Average t-SNE Distance Per Layer" plot in the bottom left when using the multi-select feature on the t-SNE plot. 
