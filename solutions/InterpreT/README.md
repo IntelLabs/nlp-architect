@@ -1,4 +1,4 @@
-![](./assets/interpret_title.png)
+![](./assets/interpret_title_centered.png)
 ## Part of NLP Architect by Intel® AI Lab
 
 ## Overview
