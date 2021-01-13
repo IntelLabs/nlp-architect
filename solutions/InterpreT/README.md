@@ -1,4 +1,4 @@
-# **InterpreT**: An Interactive Visualization Tool for **Interpre**ting **T**ransformers
+![](./assets/interpret_title.png)
 ## Part of NLP Architect by Intel® AI Lab
 
 ## Overview
