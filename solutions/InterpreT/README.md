@@ -1,4 +1,6 @@
-![](./assets/interpret_title_centered.png)
+<p align="center">
+  <img src="./assets/interpret_title_centered.png" alt="InterpreT: An Interactive Visualization Tool for Interpreting Transformers"/>
+</p>
 ## Part of NLP Architect by Intel® AI Lab
 
 ## Overview
@@ -16,4 +18,6 @@ Below are some interesting phenomena we encourage users to explore in the live d
 
 ## Screencast Video Demo
 
-[![Video Demo](./assets/video_demo_thumbnail.png)](https://drive.google.com/file/d/1MbESn2RI58PYsfhX4zX9jivCzQzuhtPR/view)
+<p align="center">
+  <a href="https://drive.google.com/file/d/1MbESn2RI58PYsfhX4zX9jivCzQzuhtPR/view"><img src="./assets/video_demo_thumbnail.png" alt="Video Demo"/></a>
+</p>
