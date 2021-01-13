@@ -1,15 +1,17 @@
-# InterpreT: An Interactive Visualization Tool for Interpreting Transformers
+# **InterpreT**: An Interactive Visualization Tool for **Interpre**ting **T**ransformers
 ## Part of NLP Architect by Intel® AI Lab
 
 ## Overview
-As Transformers are increasingly gaining widespread use for NLU/NLP tasks, there has been growing interest in understanding the inner workings of these models and why they are so effective at such tasks. To further this goal of explainability and comprehension, we present **InterpreT**. Our system is a general tool for facilitating understanding of the behaviors of Transformer models, and we demonstrate our system's functionality through analyzing model behavior for two disparate tasks: the Winograd Schema Challenge (WSC) and Aspect Based Sentiment Analysis (ABSA). In addition to providing various mechanisms for investigating general model behaviors, **InterpreT** enables novel, granular analysis through the layer-level probing and visualization of internal representations of Transformer models, allowing users to gain new insights into how and what their models are learning. 
+With the increasingly widespread use of Transformers for NLU/NLP tasks, there is growing interest in understanding the inner workings of these models, why they are so effective at a wide range of tasks, and how they can be further tuned and improved. To further this goal of explainability and comprehension, we present **InterpreT**, a system for facilitating the understanding of Transformer behaviors. **InterpreT** is a generally applicable tool, and its functionalities are demonstrated through an analysis of model behaviors for two disparate tasks: the Winograd Schema Challenge (WSC) and Aspect Based Sentiment Analysis (ABSA). In addition to providing various mechanisms for investigating general model behaviors, **Interpret** enables novel, granular analysis by probing and visualizing the internal representations of Transformer models at the layer level, empowering users with new insights into how and what their models are learning.
 
-## InterpreT Demo Website
-A demo of **InterpreT** on the WSC task can be accessed at the following link: http://interpret.intel-research.net/
 
-By analyzing corereference resolution through **InterpreT**, we demonstrate that a fine-tuned BERT model pushes closer together the embeddings of terms it predicts to be coreferent. The metric "finetuned_coreference_intensity" in the Head Summary plot shows that the 7th head of layer 10 often attends between coreferent mention spans. This attention head can also be visualized in **InterpreT** for various examples. 
+## InterpreT Live Demo
+A live demo of **InterpreT** for analyzing pre-trained and fine-tuned BERT behavior on WSC can be accessed at the following link: http://interpret.intel-research.net. We highly encourage users to take a look at the screencast video demo below to get a sense of how the application works and how to navigate the application.
+
+Below are some interesting phenomena we encourage users to explore in the live demo:
+- In our own analysis we found that a fine-tuned BERT model pushes closer together the embeddings of terms it predicts to be coreferent. This behavior can be seen in the "Average t-SNE Distance Per Layer" plot in the bottom left when using the multi-select feature on the t-SNE plot. 
+- The metric "finetuned_coreference_intensity" (which can also be used with the multi-select) in the Head Summary plot shows that the 7th head of layer 10 often places high attention between coreferent mention spans. This attention head can also be visualized in "Attenion Matrix/Map" plot for various examples. 
 
 ## Screencast Video Demo
 
-[![Video Demo](https://raw.githubusercontent.com/IntelLabs/nlp-architect/master/solutions/absa_solution/assets/video.png)](https://drive.google.com/file/d/1MbESn2RI58PYsfhX4zX9jivCzQzuhtPR/view)
-*Figure 1*
+[![Video Demo](./assets/video_demo_thumbnail.png)](https://drive.google.com/file/d/1MbESn2RI58PYsfhX4zX9jivCzQzuhtPR/view)
