@@ -6,13 +6,12 @@
 ### Part of NLP Architect by Intel® AI Lab
 
 ## Overview
-With the increasingly widespread use of Transformer-based models for NLU/NLP tasks, there is growing interest in understanding the inner workings of these models, why they are so effective at a wide range of tasks, and how they can be further tuned and improved. In order to contribute to enhanced model explainability and comprehension, we present **InterpreT**, an Interactive visualization tool for interpreting transformers. While **InterpreT** is a task agnostic tool, its functionalities are demonstrated through analysis of model behaviours for two disparate tasks: the Winograd Schema Challenge (WSC) and Aspect Based Sentiment Analysis (ABSA). In addition to providing various mechanisms for investigating general model behaviours, **InterpreT** enables novel, granular analysis by probing and visualizing the hidden representations of tokens at the layer level, empowering users with new insights regarding how and what their models are learning. A [live demo](http://interpret.intel-research.net) and a [screencast video](https://youtu.be/np3cT9Xt9PE) illustrate these points.
-
+With the increasingly widespread use of Transformer-based models for NLU/NLP tasks, there is growing interest in understanding the inner workings of these models, why they are so effective at a wide range of tasks, and how they can be further tuned and improved. In order to contribute to enhanced model explainability and comprehension, we present **InterpreT**, an Interactive visualization tool for interpreting transformers. While **InterpreT** is a task agnostic tool, its functionalities are demonstrated through analysis of model behaviours for two disparate tasks: the Winograd Schema Challenge (WSC) and Aspect Based Sentiment Analysis (ABSA). In addition to providing various mechanisms for investigating general model behaviours, **InterpreT** enables novel, granular analysis by probing and visualizing the hidden representations of tokens at the layer level, empowering users with new insights regarding how and what their models are learning. A [screencast video](https://youtu.be/np3cT9Xt9PE) and a [live demo](http://interpret.intel-research.net) illustrate these points.
 
 ## Screencast Video
 
 <p align="center">
-  <a href="https://youtu.be/np3cT9Xt9PE"><img src="./assets/video_demo_thumbnail.png" alt="Video Demo"/></a>
+  <a href="https://youtu.be/np3cT9Xt9PE"><img src="./assets/video_demo_thumbnail.png" alt="Video Demo" width="548" height="362.5"/></a>
 </p>
 
 
