@@ -15,7 +15,8 @@ With the increasingly widespread use of Transformer-based models for NLU/NLP tas
 
 
 ## InterpreT Live Demo
-A live demo of **InterpreT** for analyzing pre-trained and fine-tuned BERT behavior on WSC can be accessed at the following link: **http://interpret.intel-research.net**. 
+A live demo of **InterpreT** for analyzing pre-trained and fine-tuned BERT behavior on WSC can be accessed at the following link: 
+### **http://interpret.intel-research.net**. 
 
 The [live demo](http://interpret.intel-research.net) allows comparison of pre-trained BERT with BERT fine-tuned on WSC. Specifically, the user can explore how the attention heads and the contextualized embeddings change between these two models. We highly encourage users to watch the [screencast video](https://youtu.be/np3cT9Xt9PE) below to get a sense of how the application works and how to navigate the application.
 
