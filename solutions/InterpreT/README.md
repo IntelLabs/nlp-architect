@@ -15,16 +15,17 @@ With the increasingly widespread use of Transformer-based models for NLU/NLP tas
 
 
 ## InterpreT Live Demo
-A live demo of **InterpreT** for analyzing pre-trained and fine-tuned BERT behavior on WSC can be accessed at the following link: http://interpret.intel-research.net. 
+A live demo of **InterpreT** for analyzing pre-trained and fine-tuned BERT behavior on WSC can be accessed at the following link: **http://interpret.intel-research.net**. 
 
  
 
 We highly encourage users to watch the demo screencast below to get a sense of how the application works and how to navigate the application.
 
  
+The demo link above allows comparing pre-trained BERT with BERT fine-tuned on WSC. Specifically, the user can explore how the attention heads and the contextualized embeddings change between these two models.
 
 Below are some interesting phenomena we encourage users to explore in the live demo:
-- In our analysis, we found that the embeddings of tokens which are predicted to be coreferents are in closer proximity in the embedding space when BERT is fine-tuned for the coreference resolution task. This behaviour can be seen in the "Average t-SNE Distance Per Layer" plot in the bottom left when using the multi-select feature on the t-SNE plot.
+- In our analysis, we found that the embeddings of tokens which are predicted to be coreferents are in closer proximity in the embedding space, especially when BERT is fine-tuned for the coreference resolution task. This behaviour can be seen in the "Average t-SNE Distance Per Layer" plot in the bottom left when using the multi-select feature on the t-SNE plot. 
 - The metric "finetuned_coreference_intensity" (which can also be used with the multi-select) in the head summary plot shows that the 7th head of layer 10 often places high attention between coreferent mention spans. This attention head can also be visualized in the “Attention Matrix/Map" plot for various examples. 
 
  
