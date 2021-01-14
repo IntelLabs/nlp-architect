@@ -1,6 +1,7 @@
 <p align="center">
   <img src="./assets/interpret_title_centered.png" alt="InterpreT: An Interactive Visualization Tool for Interpreting Transformers"/>
 </p>
+
 ## Part of NLP Architect by Intel® AI Lab
 
 ## Overview
