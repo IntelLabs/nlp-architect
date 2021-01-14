@@ -13,11 +13,11 @@ A live demo of **InterpreT** for analyzing pre-trained and fine-tuned BERT behav
 We highly encourage users to take a look at the screencast video demo below to get a sense of how the application works and how to navigate the application.
 
 Below are some interesting phenomena we encourage users to explore in the live demo:
-- In our own analysis we found that a fine-tuned BERT model pushes closer together the embeddings of terms it predicts to be coreferent. This behavior can be seen in the "Average t-SNE Distance Per Layer" plot in the bottom left when using the multi-select feature on the t-SNE plot. 
+- In our analysis, we found that the embeddings of tokens which are predicted to be coreferents are in closer proximity in the embedding space when BERT is fine-tuned for the coreference resolution task. This behavior can be seen in the "Average t-SNE Distance Per Layer" plot in the bottom left when using the multi-select feature on the t-SNE plot.
 - The metric "finetuned_coreference_intensity" (which can also be used with the multi-select) in the Head Summary plot shows that the 7th head of layer 10 often places high attention between coreferent mention spans. This attention head can also be visualized in "Attenion Matrix/Map" plot for various examples. 
 
 ## Screencast Video Demo
 
 <p align="center">
-  <a href="https://youtu.be/ZKdPIdABmKc"><img src="https://img.youtube.com/vi/ZKdPIdABmKc/hqdefault.jpg" alt="Video Demo"/></a>
+  <a href="https://youtu.be/np3cT9Xt9PE"><img src="./assets/video_demo_thumbnail.png" alt="Video Demo"/></a>
 </p>
