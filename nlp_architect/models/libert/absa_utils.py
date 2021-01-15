@@ -209,8 +209,8 @@ def convert_examples_to_features(
         #     print(sub_toks)
         #     print()
         ############################################################
-
-        assert binary_heads.shape[0] == binary_heads.shape[1] == len(tokens) + 1 == len(syn_rels)
+        # Commenting out for Phillip's stuff and Deberta
+        #assert binary_heads.shape[0] == binary_heads.shape[1] == len(tokens) + 1 == len(syn_rels)
         padded_heads = pad_heads(binary_heads)
         padded_syn_rels = pad_syn_rels(syn_rels)
         #######################################################################################
