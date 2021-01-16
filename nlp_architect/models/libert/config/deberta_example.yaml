@@ -1,5 +1,5 @@
 max_epochs: 10
-model_type: deberta # bert or deberta
+model_type: deberta # bert, deberta, or custom_deberta
 base_init: [false]
 
 data: lr rl

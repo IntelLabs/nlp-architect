@@ -41,14 +41,16 @@ from transformers import (
 )
 import absa_utils
 from transformers import DebertaConfig, DebertaTokenizer
-from deberta_model import DebertaForTokenClassification
+from deberta_model import DebertaForTokenClassification, CustomDebertaForTokenClassification
 
 LIBERT_DIR = Path(realpath(__file__)).parent
 
 MODEL_CONFIG = {
     'bert': (BertForTokenClassification, BertConfig, BertTokenizer),
-    'deberta': (DebertaForTokenClassification, DebertaConfig, DebertaTokenizer)
+    'deberta': (DebertaForTokenClassification, DebertaConfig, DebertaTokenizer),
+    'custom_deberta': (CustomDebertaForTokenClassification, DebertaConfig, DebertaTokenizer),
 }
+
 
 class DebertaForToken(pl.LightningModule):
     """Lightning module for BERT for token classification."""
