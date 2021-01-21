@@ -42,6 +42,7 @@ from transformers import (
 import absa_utils
 from transformers import DebertaConfig, DebertaTokenizer
 from deberta_model import DebertaForTokenClassification, CustomDebertaForTokenClassification
+from bert_model import BertForTokenClassificationWithVAT
 
 LIBERT_DIR = Path(realpath(__file__)).parent
 
@@ -49,6 +50,7 @@ MODEL_CONFIG = {
     'bert': (BertForTokenClassification, BertConfig, BertTokenizer),
     'deberta': (DebertaForTokenClassification, DebertaConfig, DebertaTokenizer),
     'custom_deberta': (CustomDebertaForTokenClassification, DebertaConfig, DebertaTokenizer),
+    'bert_vat': (BertForTokenClassificationWithVAT, BertConfig, BertTokenizer),
 }
 
 
@@ -153,6 +155,8 @@ class DebertaForToken(pl.LightningModule):
     def training_step(self, batch, _):
         "Compute loss and log."
         inputs = self.map_to_inputs(batch)
+        if self.hparams.model_type == "bert_vat":
+            inputs.update({"VAT": True, "mode": "train"})  # for VAT
         outputs = self(**inputs)
         loss = outputs[0]
         tensorboard_logs = {'train_loss_step': loss, 'lr': self.lr_scheduler.get_last_lr()[-1]}
