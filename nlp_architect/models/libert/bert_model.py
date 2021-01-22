@@ -38,7 +38,7 @@ class BertModelWithVAT(BertModel):
         output_hidden_states=None,
         return_dict=None,
         VAT=False,
-        perturbation=False,  # if we want to create perturbation on forward pass 
+        perturbation=None,
         mode=None,
     ):
         r"""
@@ -100,10 +100,16 @@ class BertModelWithVAT(BertModel):
             input_ids=input_ids, position_ids=position_ids, token_type_ids=token_type_ids, inputs_embeds=inputs_embeds
         )
 
-        # VAT
+        ### VAT ###
         if VAT and mode == "train":
-            #print(perturbation)
-            embedding_output += perturbation
+            #embedding_norm = torch.linalg.norm(embedding_output, dim=2)
+            #perturbation_norm = torch.linalg.norm(perturbation, dim=2)
+            #print(f"norm of embedding: {embedding_norm}")
+            #print(f"norm of perturbation: {perturbation_norm}")
+
+            #perturbation = perturbation * (0.25 * embedding_norm / perturbation_norm).unsqueeze(2)
+            embedding_output += 0.001 * perturbation
+        ###########
 
         encoder_outputs = self.encoder(
             embedding_output,
@@ -154,8 +160,8 @@ class BertForTokenClassificationWithVAT(BertForTokenClassification):
         output_attentions=None,
         output_hidden_states=None,
         return_dict=None,
-        VAT=False,  # enable/disable VAT for train vs test
-        mode=None,
+        VAT=False,  
+        mode=None,  # enable/disable VAT for train vs test
     ):
         r"""
         labels (:obj:`torch.LongTensor` of shape :obj:`(batch_size, sequence_length)`, `optional`):
@@ -228,7 +234,9 @@ class BertForTokenClassificationWithVAT(BertForTokenClassification):
             output_attentions=output_attentions,
             output_hidden_states=output_hidden_states,
             return_dict=return_dict,
+            VAT=VAT,
             perturbation=perturbation,
+            mode=mode,
         )
 
         sequence_output = outputs[0]

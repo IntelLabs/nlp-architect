@@ -477,6 +477,9 @@ class CustomDebertaModel(DebertaModel):
         output_attentions=None,
         output_hidden_states=None,
         return_dict=None,
+        VAT=False,
+        perturbation=None,
+        mode=None,
     ):
         output_attentions = output_attentions if output_attentions is not None else self.config.output_attentions
         output_hidden_states = (
@@ -507,6 +510,11 @@ class CustomDebertaModel(DebertaModel):
             mask=attention_mask,
             inputs_embeds=inputs_embeds,
         )
+
+        ### VAT ###
+        if VAT and mode == "train":
+            embedding_output += 0.001 * perturbation
+        ###########
 
         encoder_outputs = self.encoder(
             embedding_output,
@@ -582,6 +590,8 @@ class DebertaForTokenClassification(DebertaPreTrainedModel):
         output_attentions=None,
         output_hidden_states=None,
         return_dict=None,
+        VAT=False,
+        mode=None,  # enable/disable VAT for train vs test
     ):
         r"""
         labels (:obj:`torch.LongTensor` of shape :obj:`(batch_size,)`, `optional`):
@@ -591,6 +601,60 @@ class DebertaForTokenClassification(DebertaPreTrainedModel):
         """
         return_dict = return_dict if return_dict is not None else self.config.use_return_dict
 
+        perturbation = 0  # overwrite if we are using VAT 
+        if VAT and mode == "train":
+            # Creating random perturbation
+            B_ASP_LABEL = 1
+            I_ASP_LABEL = 2
+            aspect_idx_mask = (labels == B_ASP_LABEL).to(dtype=torch.float32) + (labels == I_ASP_LABEL).to(dtype=torch.float32)
+            aspect_idx_mask = torch.unsqueeze(aspect_idx_mask, 2)
+            aspect_idx_mask = aspect_idx_mask.repeat(1, 1, self.config.hidden_size)
+            r_adv = torch.rand(aspect_idx_mask.size(), dtype=torch.float32, requires_grad=True).to(aspect_idx_mask)
+            r_adv_masked = r_adv * aspect_idx_mask  # masked to only perturb aspects
+            r_adv_masked.retain_grad()
+
+            # VAT - FIRST PASS (computing r_adv)
+            outputs = self.deberta(
+                input_ids,
+                token_type_ids=token_type_ids,
+                attention_mask=attention_mask,
+                position_ids=position_ids,
+                inputs_embeds=inputs_embeds,
+                output_attentions=output_attentions,
+                output_hidden_states=output_hidden_states,
+                return_dict=return_dict,
+                VAT=VAT,
+                perturbation=r_adv_masked,
+                mode=mode,
+            )
+
+            sequence_output = outputs[0]
+
+            sequence_output = self.dropout(sequence_output) # add/concatenate syn_rels here
+            logits = self.classifier(sequence_output)
+
+            outputs = (logits,) + outputs[2:]  # add hidden states and attention if they are here
+            if labels is not None:
+                loss_fct = CrossEntropyLoss()
+                # Only keep active parts of the loss
+                if attention_mask is not None:
+                    active_loss = attention_mask.view(-1) == 1
+                    active_logits = logits.view(-1, self.num_labels)
+                    active_labels = torch.where(
+                        active_loss, labels.view(-1),
+                        torch.tensor(loss_fct.ignore_index).type_as(labels)
+                    )
+                    loss = loss_fct(active_logits, active_labels)
+                else:
+                    loss = loss_fct(logits.view(-1, self.num_labels), labels.view(-1))
+
+            # Compute new perturbation using gradient            
+            loss.backward()
+            with torch.no_grad():
+                perturbation = aspect_idx_mask * (r_adv_masked + r_adv_masked.grad)
+            self.zero_grad()
+
+        # Normal pass, or for VAT - SECOND PASS (computing loss with x + r_adv)
         outputs = self.deberta(
             input_ids,
             token_type_ids=token_type_ids,
@@ -600,6 +664,9 @@ class DebertaForTokenClassification(DebertaPreTrainedModel):
             output_attentions=output_attentions,
             output_hidden_states=output_hidden_states,
             return_dict=return_dict,
+            VAT=VAT,
+            perturbation=perturbation,
+            mode=mode,
         )
 
         sequence_output = outputs[0]
