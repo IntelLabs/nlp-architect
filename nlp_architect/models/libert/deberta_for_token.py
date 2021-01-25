@@ -41,16 +41,20 @@ from transformers import (
 )
 import absa_utils
 from transformers import DebertaConfig, DebertaTokenizer
-from deberta_model import DebertaForTokenClassification, CustomDebertaForTokenClassification
-from bert_model import BertForTokenClassificationWithVAT
+from deberta_model import DebertaForTokenClassification, CustomDebertaForTokenClassification, CustomDebertaConfig
+from bert_model import BertForTokenClassificationWithVAT, BertWithVATConfig
 
 LIBERT_DIR = Path(realpath(__file__)).parent
 
 MODEL_CONFIG = {
     'bert': (BertForTokenClassification, BertConfig, BertTokenizer),
     'deberta': (DebertaForTokenClassification, DebertaConfig, DebertaTokenizer),
-    'custom_deberta': (CustomDebertaForTokenClassification, DebertaConfig, DebertaTokenizer),
-    'bert_vat': (BertForTokenClassificationWithVAT, BertConfig, BertTokenizer),
+    #'custom_deberta': (CustomDebertaForTokenClassification, DebertaConfig, DebertaTokenizer),
+    #'bert_vat': (BertForTokenClassificationWithVAT, BertConfig, BertTokenizer),
+    #'deberta_vat': (CustomDebertaForTokenClassification, DebertaConfig, DebertaTokenizer),
+    'custom_deberta': (CustomDebertaForTokenClassification, CustomDebertaConfig, DebertaTokenizer),
+    'bert_vat': (BertForTokenClassificationWithVAT, BertWithVATConfig, BertTokenizer),
+    'deberta_vat': (CustomDebertaForTokenClassification, CustomDebertaConfig, DebertaTokenizer),
 }
 
 
@@ -155,7 +159,7 @@ class DebertaForToken(pl.LightningModule):
     def training_step(self, batch, _):
         "Compute loss and log."
         inputs = self.map_to_inputs(batch)
-        if self.hparams.model_type == "bert_vat":
+        if self.hparams.model_type == "bert_vat" or self.hparams.model_type == "deberta_vat":
             inputs.update({"VAT": True, "mode": "train"})  # for VAT
         outputs = self(**inputs)
         loss = outputs[0]

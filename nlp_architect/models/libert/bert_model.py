@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 from torch.nn import CrossEntropyLoss
 from transformers.models.bert.modeling_bert import (
+    BertConfig,
     BertModel,
     BertForTokenClassification,
 )
@@ -9,6 +10,15 @@ from transformers.modeling_outputs import (
     BaseModelOutputWithPoolingAndCrossAttentions,
     TokenClassifierOutput,
 )
+
+class BertWithVATConfig(BertConfig):
+    def __init__(self, **kwargs):
+        super().__init__()
+
+    def add_extra_args(self, hparams):
+        # pylint: disable=attribute-defined-outside-init
+        self.gamma = hparams.gamma
+        self.lr_adv = hparams.lr_adv
 
 class BertModelWithVAT(BertModel):
     """
@@ -108,7 +118,8 @@ class BertModelWithVAT(BertModel):
             #print(f"norm of perturbation: {perturbation_norm}")
 
             #perturbation = perturbation * (0.25 * embedding_norm / perturbation_norm).unsqueeze(2)
-            embedding_output += 0.001 * perturbation
+            #embedding_output += 0.001 * perturbation  # 0.01+ degrades performance
+            embedding_output += self.config.gamma * perturbation  # 0.1+ degrades performance
         ###########
 
         encoder_outputs = self.encoder(
@@ -180,7 +191,7 @@ class BertForTokenClassificationWithVAT(BertForTokenClassification):
             aspect_idx_mask = aspect_idx_mask.repeat(1, 1, self.config.hidden_size)
             r_adv = torch.rand(aspect_idx_mask.size(), dtype=torch.float32, requires_grad=True).to(aspect_idx_mask)
             r_adv_masked = r_adv * aspect_idx_mask  # masked to only perturb aspects
-            r_adv_masked.retain_grad()
+            r_adv_masked.retain_grad()  # (batch_size, seq_length, hidden_size)
 
             # VAT - FIRST PASS (computing r_adv)
             outputs = self.bert(
@@ -220,7 +231,7 @@ class BertForTokenClassificationWithVAT(BertForTokenClassification):
             # Compute new perturbation using gradient            
             loss.backward()
             with torch.no_grad():
-                perturbation = aspect_idx_mask * (r_adv_masked + r_adv_masked.grad)
+                perturbation = aspect_idx_mask * (r_adv_masked + self.config.lr_adv*r_adv_masked.grad)
             self.zero_grad()
 
         # Normal pass, or for VAT - SECOND PASS (computing loss with x + r_adv)
