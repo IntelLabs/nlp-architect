@@ -255,6 +255,7 @@ class CustomDisentangledSelfAttention(DisentangledSelfAttention):
         scale = math.sqrt(query_layer.size(-1) * scale_factor)
         query_layer = query_layer / scale
         attention_scores = torch.matmul(query_layer, key_layer.transpose(-1, -2))
+        c2c = attention_scores.detach().clone()  # for return_att
         if self.relative_attention:
             rel_embeddings = self.pos_dropout(rel_embeddings)
             pivot_phrase_embeddings = self.pos_dropout(pivot_phrase_embeddings)
@@ -277,7 +278,8 @@ class CustomDisentangledSelfAttention(DisentangledSelfAttention):
         new_context_layer_shape = context_layer.size()[:-2] + (-1,)
         context_layer = context_layer.view(*new_context_layer_shape)
         if return_att:
-            return (context_layer, attention_probs)
+            #return (context_layer, attention_probs)
+            return (context_layer, {"attention_probs":attention_probs, "c2c":c2c, "p2c":p2c_att, "c2p":c2p_att})  # for each type
         else:
             return context_layer
 
