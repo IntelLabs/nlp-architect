@@ -18,7 +18,7 @@ lr_adv: 100
 keep_original: False # train with unperturbed examples + perturbed examples
 
 # Deberta with Pivot Phrase Embeddings
-pp_embeddings: True
+pivot_phrase_embeddings: True
 ########################
 
 num_workers: 44
