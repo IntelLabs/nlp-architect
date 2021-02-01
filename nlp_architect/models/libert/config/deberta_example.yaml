@@ -11,6 +11,16 @@ metric: asp_f1
 baseline_str: deberta_rnd_init
 baseline_version: version_baseline
 
+### Hyperparameters ###
+# VAT
+gamma: 0.0001
+lr_adv: 100
+keep_original: False # train with unperturbed examples + perturbed examples
+
+# Deberta with Pivot Phrase Embeddings
+pp_embeddings: True
+########################
+
 num_workers: 44
 gpus: [0]
 parallel: True

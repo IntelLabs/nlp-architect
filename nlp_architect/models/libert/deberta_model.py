@@ -48,12 +48,15 @@ from transformers.modeling_outputs import BaseModelOutput
 from pytorch_lightning import _logger as log
 
 class CustomDebertaConfig(DebertaConfig):
-    def __init__(self, **kwargs):
-        super().__init__()
+    # For some reason this overwrites the MSFT config from pretrained
+    #def __init__(self, **kwargs):
+    #    super().__init__()
 
     def add_extra_args(self, hparams):
         # pylint: disable=attribute-defined-outside-init
         self.gamma = hparams.gamma
+        self.lr_adv = hparams.lr_adv
+        self.pivot_phrase_embeddings = hparams.pivot_phrase_embeddings
 
 class CustomDebertaAttention(DebertaAttention):
     def __init__(self, config):
@@ -70,6 +73,8 @@ class CustomDebertaAttention(DebertaAttention):
         query_states=None,
         relative_pos=None,
         rel_embeddings=None,
+        pivot_phrase_embeddings=None,  # for pivot phrase scheme
+        pivot_phrase_marks=None,       # for pivot phrase scheme
     ):
         self_output = self.self(
             hidden_states,
@@ -78,6 +83,8 @@ class CustomDebertaAttention(DebertaAttention):
             query_states=query_states,
             relative_pos=relative_pos,
             rel_embeddings=rel_embeddings,
+            pivot_phrase_embeddings=pivot_phrase_embeddings,
+            pivot_phrase_marks=pivot_phrase_marks,
         )
         if return_att:
             self_output, att_matrix = self_output
@@ -105,6 +112,8 @@ class CustomDebertaLayer(DebertaLayer):
         query_states=None,
         relative_pos=None,
         rel_embeddings=None,
+        pivot_phrase_embeddings=None,  # for pivot phrase scheme
+        pivot_phrase_marks=None,       # for pivot phrase scheme
     ):
         attention_output = self.attention(
             hidden_states,
@@ -113,6 +122,8 @@ class CustomDebertaLayer(DebertaLayer):
             query_states=query_states,
             relative_pos=relative_pos,
             rel_embeddings=rel_embeddings,
+            pivot_phrase_embeddings=pivot_phrase_embeddings,
+            pivot_phrase_marks=pivot_phrase_marks,
         )
         if return_att:
             attention_output, att_matrix = attention_output
@@ -184,6 +195,8 @@ class CustomDisentangledSelfAttention(DisentangledSelfAttention):
         query_states=None,
         relative_pos=None,
         rel_embeddings=None,
+        pivot_phrase_embeddings=None,  # for pivot phrase scheme
+        pivot_phrase_marks=None,       # for pivot phrase scheme
     ):
         """
         Call the module
@@ -244,7 +257,8 @@ class CustomDisentangledSelfAttention(DisentangledSelfAttention):
         attention_scores = torch.matmul(query_layer, key_layer.transpose(-1, -2))
         if self.relative_attention:
             rel_embeddings = self.pos_dropout(rel_embeddings)
-            rel_att = self.disentangled_att_bias(query_layer, key_layer, relative_pos, rel_embeddings, scale_factor)
+            pivot_phrase_embeddings = self.pos_dropout(pivot_phrase_embeddings)
+            rel_att = self.disentangled_att_bias(query_layer, key_layer, relative_pos, rel_embeddings, scale_factor, pivot_phrase_embeddings, pivot_phrase_marks)
 
         if rel_att is not None:
             attention_scores = attention_scores + rel_att
@@ -267,14 +281,14 @@ class CustomDisentangledSelfAttention(DisentangledSelfAttention):
         else:
             return context_layer
 
-    def disentangled_att_bias(self, query_layer, key_layer, relative_pos, rel_embeddings, scale_factor):
+    def disentangled_att_bias(self, query_layer, key_layer, relative_pos, rel_embeddings, scale_factor, pivot_phrase_embeddings=None, pivot_phrase_marks=None):
         if relative_pos is None:
             q = query_layer.size(-2)
             relative_pos = build_relative_position(q, key_layer.size(-2), query_layer.device)
         if relative_pos.dim() == 2:
             relative_pos = relative_pos.unsqueeze(0).unsqueeze(0)
         elif relative_pos.dim() == 3:
-            relative_pos = relative_pos.unsqueeze(1)
+            relative_pos = relative_pos.unsqueeze(1)  # !!!
         # bxhxqxk
         elif relative_pos.dim() != 4:
             raise ValueError(f"Relative position ids must be of dim 2 or 3 or 4. {relative_pos.dim()}")
@@ -283,14 +297,24 @@ class CustomDisentangledSelfAttention(DisentangledSelfAttention):
         relative_pos = relative_pos.long().to(query_layer.device)
         rel_embeddings = rel_embeddings[
             self.max_relative_positions - att_span : self.max_relative_positions + att_span, :
-        ].unsqueeze(0)
+        ].unsqueeze(0)  # 1 x 2*seq_len x hidden_size
+        pivot_phrase_embeddings = pivot_phrase_embeddings[
+            self.max_relative_positions - att_span : self.max_relative_positions + att_span, :
+        ].unsqueeze(0)  # 1 x 2*seq_len x hidden_size
+
         if "c2p" in self.pos_att_type or "p2p" in self.pos_att_type:
             pos_key_layer = self.pos_proj(rel_embeddings)
             pos_key_layer = self.transpose_for_scores(pos_key_layer)
+            if pivot_phrase_embeddings is not None and pivot_phrase_marks is not None:
+                pp_key_layer = self.pos_proj(pivot_phrase_embeddings)
+                pp_key_layer = self.transpose_for_scores(pp_key_layer)
 
         if "p2c" in self.pos_att_type or "p2p" in self.pos_att_type:
             pos_query_layer = self.pos_q_proj(rel_embeddings)
             pos_query_layer = self.transpose_for_scores(pos_query_layer)
+            if pivot_phrase_embeddings is not None and pivot_phrase_marks is not None:
+                pp_query_layer = self.pos_q_proj(pivot_phrase_embeddings)
+                pp_query_layer = self.transpose_for_scores(pp_query_layer)
 
         score = 0
         # content->position
@@ -298,6 +322,21 @@ class CustomDisentangledSelfAttention(DisentangledSelfAttention):
             c2p_att = torch.matmul(query_layer, pos_key_layer.transpose(-1, -2))
             c2p_pos = torch.clamp(relative_pos + att_span, 0, att_span * 2 - 1)
             c2p_att = torch.gather(c2p_att, dim=-1, index=c2p_dynamic_expand(c2p_pos, query_layer, relative_pos))
+            if pivot_phrase_embeddings is not None and pivot_phrase_marks is not None:
+                #pivot_phrase_marks = torch.unsqueeze(torch.unsqueeze(pivot_phrase_marks, 1), 1)  # for torch.where broadcasting
+                c2p_pivot_phrase_marks = torch.reshape(pivot_phrase_marks, (pivot_phrase_marks.size()[0], 1, 1, pivot_phrase_marks.size()[1]))  # for torch.where broadcasting
+                c2p_att_pp = torch.matmul(query_layer, pp_key_layer.transpose(-1, -2))
+                c2p_att_pp = torch.gather(c2p_att_pp, dim=-1, index=c2p_dynamic_expand(c2p_pos, query_layer, relative_pos))
+                # c2p_att and c2p_att_pp are 8 x 12 x 64 x 64, pivot_phrase_marks are 8 x 1 x 1 x 64
+                #c2p_att_pp = torch.zeros(c2p_att_pp.size()).to('cuda')  # for debug
+                c2p_att = torch.where(c2p_pivot_phrase_marks == 1, c2p_att_pp, c2p_att)  # Using broadcasting
+                # Debug torch.where() broadcasting
+                log.debug(f"\npp_marks, ex 1, {c2p_pivot_phrase_marks[0][0][0]}")
+                log.debug(f"c2p_att, ex 1, head 1 {c2p_att[0][0]}")
+                log.debug(f"c2p_att, ex 1, head 2 {c2p_att[0][0]}\n")
+                log.debug(f"pp_marks, ex 2, {c2p_pivot_phrase_marks[1][0][0]}")
+                log.debug(f"c2p_att, ex 2, head 1 {c2p_att[1][0]}")
+                log.debug(f"c2p_att, ex 2, head 2 {c2p_att[1][0]}\n")
             score += c2p_att
 
         # position->content
@@ -318,6 +357,26 @@ class CustomDisentangledSelfAttention(DisentangledSelfAttention):
             ).transpose(-1, -2)
             if query_layer.size(-2) != key_layer.size(-2):
                 p2c_att = torch.gather(p2c_att, dim=-2, index=pos_dynamic_expand(pos_index, p2c_att, key_layer))
+            log.debug("BEFORE:")
+            log.debug(f"p2c_att, ex 1, head 1 {p2c_att[0][0]}")
+            log.debug(f"p2c_att, ex 1, head 2 {p2c_att[0][0]}\n")
+            log.debug(f"p2c_att, ex 2, head 1 {p2c_att[1][0]}")
+            log.debug(f"p2c_att, ex 2, head 2 {p2c_att[1][0]}\n")
+            if pivot_phrase_embeddings is not None and pivot_phrase_marks is not None:
+                #pivot_phrase_marks = torch.unsqueeze(torch.unsqueeze(pivot_phrase_marks, 1), 1)  # for torch.where broadcasting
+                p2c_pivot_phrase_marks = torch.reshape(pivot_phrase_marks, (pivot_phrase_marks.size()[0], 1, pivot_phrase_marks.size()[1], 1))  # for torch.where broadcasting
+                p2c_att_pp = torch.matmul(key_layer, pp_query_layer.transpose(-1, -2))
+                p2c_att_pp = torch.gather(p2c_att_pp, dim=-1, index=p2c_dynamic_expand(p2c_pos, query_layer, key_layer))
+                # c2p_att and c2p_att_pp are 8 x 12 x 64 x 64, pivot_phrase_marks are 8 x 1 x 1 x 64
+                #p2c_att_pp = torch.zeros(p2c_att_pp.size()).to('cuda')  # for debug
+                p2c_att = torch.where(p2c_pivot_phrase_marks == 1, p2c_att_pp, p2c_att)  # Using broadcasting
+                # Debug torch.where() broadcasting
+                log.debug(f"\nAFTER\npp_marks, ex 1, {p2c_pivot_phrase_marks[0][0].squeeze()}")
+                log.debug(f"p2c_att, ex 1, head 1 {p2c_att[0][0]}")
+                log.debug(f"p2c_att, ex 1, head 2 {p2c_att[0][0]}\n")
+                log.debug(f"pp_marks, ex 2, {p2c_pivot_phrase_marks[1][0].squeeze()}")
+                log.debug(f"p2c_att, ex 2, head 1 {p2c_att[1][0]}")
+                log.debug(f"p2c_att, ex 2, head 2 {p2c_att[1][0]}\n")
             score += p2c_att
 
         return score
@@ -410,6 +469,14 @@ class CustomDebertaEncoder(DebertaEncoder):
                 self.max_relative_positions = config.max_position_embeddings
             self.rel_embeddings = nn.Embedding(self.max_relative_positions * 2, config.hidden_size)
 
+            ### FOR PIVOT PHRASE EMBEDDINGS ###
+            if config.pivot_phrase_embeddings:
+                self.pivot_phrase_embeddings = nn.Embedding(self.max_relative_positions * 2, config.hidden_size)
+    
+    def get_pivot_phrase_embedding(self):
+        pivot_phrase_embeddings = self.pivot_phrase_embeddings.weight if self.relative_attention else None
+        return pivot_phrase_embeddings
+
     def forward(
         self,
         hidden_states,
@@ -419,6 +486,7 @@ class CustomDebertaEncoder(DebertaEncoder):
         query_states=None,
         relative_pos=None,
         return_dict=True,
+        pivot_phrase_marks=None,
     ):
         attention_mask = self.get_attention_mask(attention_mask)
         relative_pos = self.get_rel_pos(hidden_states, query_states, relative_pos)
@@ -431,6 +499,16 @@ class CustomDebertaEncoder(DebertaEncoder):
         else:
             next_kv = hidden_states
         rel_embeddings = self.get_rel_embedding()
+        pivot_phrase_embeddings = self.get_pivot_phrase_embedding()
+
+        ### Combining rel embeddings and PP + rel embeddings ###
+
+        #pivot_phrase_embeddings = pivot_phrase_embeddings[
+        #    self.max_relative_positions - att_span : self.max_relative_positions + att_span, :
+        #].unsqueeze(0)  # 1 x 2*seq_len x hidden_size
+        # pp_idx = ...
+        # rel_embeddings = torch.where(pp_idx == 1, pivot_phrase_embeddings, rel_embeddings)
+        ########################################################
         for i, layer_module in enumerate(self.layer):
 
             if output_hidden_states:
@@ -443,6 +521,8 @@ class CustomDebertaEncoder(DebertaEncoder):
                 query_states=query_states,
                 relative_pos=relative_pos,
                 rel_embeddings=rel_embeddings,
+                pivot_phrase_embeddings=pivot_phrase_embeddings,
+                pivot_phrase_marks=pivot_phrase_marks,
             )
             if output_attentions:
                 hidden_states, att_m = hidden_states
@@ -489,6 +569,7 @@ class CustomDebertaModel(DebertaModel):
         VAT=False,
         perturbation=None,
         mode=None,
+        pivot_phrase_marks=None,
     ):
         output_attentions = output_attentions if output_attentions is not None else self.config.output_attentions
         output_hidden_states = (
@@ -522,8 +603,8 @@ class CustomDebertaModel(DebertaModel):
 
         ### VAT ###
         if VAT and mode == "train":
-            embedding_output += 0.001 * perturbation
-            #embedding_output += self.config.gamma * perturbation  # 0.1+ degrades performance
+            #embedding_output += 0.001 * perturbation
+            embedding_output += self.config.gamma * perturbation  # 0.01+ degrades performance
         ###########
 
         encoder_outputs = self.encoder(
@@ -532,6 +613,7 @@ class CustomDebertaModel(DebertaModel):
             output_hidden_states=True,
             output_attentions=output_attentions,
             return_dict=return_dict,
+            pivot_phrase_marks=pivot_phrase_marks,
         )
         encoded_layers = encoder_outputs[1]
 
@@ -684,6 +766,7 @@ class CustomDebertaForTokenClassification(DebertaPreTrainedModel):
         return_dict=None,
         VAT=False,
         mode=None,  # enable/disable VAT for train vs test
+        pivot_phrase_marks=None,
     ):
         r"""
         labels (:obj:`torch.LongTensor` of shape :obj:`(batch_size,)`, `optional`):
@@ -718,6 +801,7 @@ class CustomDebertaForTokenClassification(DebertaPreTrainedModel):
                 VAT=VAT,
                 perturbation=r_adv_masked,
                 mode=mode,
+                pivot_phrase_marks=pivot_phrase_marks,
             )
 
             sequence_output = outputs[0]
@@ -743,7 +827,7 @@ class CustomDebertaForTokenClassification(DebertaPreTrainedModel):
             # Compute new perturbation using gradient            
             loss.backward()
             with torch.no_grad():
-                perturbation = aspect_idx_mask * (r_adv_masked + r_adv_masked.grad)
+                perturbation = aspect_idx_mask * (r_adv_masked + self.config.lr_adv*r_adv_masked.grad)
             self.zero_grad()
 
         # Normal pass, or for VAT - SECOND PASS (computing loss with x + r_adv)
@@ -759,6 +843,7 @@ class CustomDebertaForTokenClassification(DebertaPreTrainedModel):
             VAT=VAT,
             perturbation=perturbation,
             mode=mode,
+            pivot_phrase_marks=pivot_phrase_marks,
         )
 
         sequence_output = outputs[0]

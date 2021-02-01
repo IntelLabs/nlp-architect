@@ -42,6 +42,8 @@ LOG_ROOT = LIBERT_DIR / 'logs'
 
 DEP_REL_MAP = {rel.strip(): i + 1 for i, rel in enumerate(open(LIBERT_DIR / 'dep_relations.txt', encoding='utf-8'))}
 
+PIVOT_PHRASE_WORDS = ["--------------------------------", "----------------------------------------------------------------"]
+
 @dataclass
 class InputExample:
     """
@@ -74,6 +76,7 @@ class InputFeatures:
     label_ids: Optional[List[int]] = None
     dep_heads: Optional[List[float]] = None
     syn_rels: Optional[List[int]] = None
+    pivot_phrase_marks: Optional[List[int]] = None
     
 class Split(Enum):
     train = "train"
@@ -176,18 +179,26 @@ def convert_examples_to_features(
         if ex_index % 1_000 == 0:
             log.debug("Writing example %d of %d", ex_index, len(examples))
         tokens, label_ids, heads, sub_toks, syn_rels = [], [], [], [], []
-
+        pivot_phrase_marks = []   # for pivot phrase scheme
+        prev_word = None
+        prev_word_token_len = 0  # for pivot phrase scheme
         for word, label, head, syn_rel, _, sub_tok in zip(ex.words, ex.labels, ex.heads, ex.syn_rels, ex.pos_tags, ex.sub_toks):
+            if word in PIVOT_PHRASE_WORDS:
+                pivot_phrase_marks[-prev_word_token_len:] = [1] * prev_word_token_len
+                continue
+
             syn_rels.append(DEP_REL_MAP[syn_rel.lower()])
 
             heads.append(head)
             sub_toks.append(sub_tok)
             word_tokens = tokenizer.tokenize(word)
-
+            prev_word_token_len = len(word_tokens)  # for pivot phrase scheme
+            prev_word = word
             # bert-base-multilingual-cased sometimes output "nothing ([])
             # when calling tokenize with just a space.
             if len(word_tokens) > 0:
                 tokens.extend(word_tokens)
+                pivot_phrase_marks.extend([0] * len(word_tokens))  # for pivot phrase scheme
                 # Use the real label id for the first token of the word,
                 # and padding ids for the remaining tokens
                 label_ids.extend([label_map[label]] + [pad_token_label_id] * (len(word_tokens) - 1))
@@ -220,6 +231,7 @@ def convert_examples_to_features(
         if len(tokens) > max_seq_length - special_tokens_count:
             tokens = tokens[: (max_seq_length - special_tokens_count)]
             label_ids = label_ids[: (max_seq_length - special_tokens_count)]
+            pivot_phrase_marks = pivot_phrase_marks[: (max_seq_length - special_tokens_count)]
 
         # The convention in BERT is:
         # (a) For sequence pairs:
@@ -242,10 +254,12 @@ def convert_examples_to_features(
         tokens += [sep_token]
         label_ids += [pad_token_label_id]
         segment_ids = [cls_token_segment_id] * len(tokens)
+        pivot_phrase_marks += [0]
 
         tokens = [cls_token] + tokens
         label_ids = [pad_token_label_id] + label_ids
         segment_ids = [cls_token_segment_id] + segment_ids
+        pivot_phrase_marks = [0] + pivot_phrase_marks
 
         input_ids = tokenizer.convert_tokens_to_ids(tokens)
 
@@ -259,11 +273,13 @@ def convert_examples_to_features(
         input_mask += [0] * padding_length
         segment_ids += [pad_token_segment_id] * padding_length
         label_ids += [pad_token_label_id] * padding_length
+        pivot_phrase_marks += [0] * padding_length
 
         assert len(input_ids) == max_seq_length
         assert len(input_mask) == max_seq_length
         assert len(segment_ids) == max_seq_length
         assert len(label_ids) == max_seq_length
+        assert len(pivot_phrase_marks) == max_seq_length
 
         if ex_index < 5:
             log.debug("*** Example ***")
@@ -273,10 +289,12 @@ def convert_examples_to_features(
             log.debug("input_mask: %s", " ".join([str(x) for x in input_mask]))
             log.debug("segment_ids: %s", " ".join([str(x) for x in segment_ids]))
             log.debug("label_ids: %s", " ".join([str(x) for x in label_ids]))
+            log.debug("pivot_phrase_marks: %s\n", " ".join([str(x) for x in pivot_phrase_marks]))
 
         input_features = InputFeatures(input_ids=input_ids, attention_mask=input_mask,
                                       token_type_ids=segment_ids, label_ids=label_ids, 
-                                      dep_heads=padded_heads, syn_rels=padded_syn_rels)
+                                      dep_heads=padded_heads, syn_rels=padded_syn_rels,
+                                      pivot_phrase_marks=pivot_phrase_marks,)
         features.append(input_features)
     return features
 

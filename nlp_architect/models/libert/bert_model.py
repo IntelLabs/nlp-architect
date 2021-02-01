@@ -173,6 +173,7 @@ class BertForTokenClassificationWithVAT(BertForTokenClassification):
         return_dict=None,
         VAT=False,  
         mode=None,  # enable/disable VAT for train vs test
+        keep_original=False,
     ):
         r"""
         labels (:obj:`torch.LongTensor` of shape :obj:`(batch_size, sequence_length)`, `optional`):
@@ -190,7 +191,8 @@ class BertForTokenClassificationWithVAT(BertForTokenClassification):
             aspect_idx_mask = torch.unsqueeze(aspect_idx_mask, 2)
             aspect_idx_mask = aspect_idx_mask.repeat(1, 1, self.config.hidden_size)
             r_adv = torch.rand(aspect_idx_mask.size(), dtype=torch.float32, requires_grad=True).to(aspect_idx_mask)
-            r_adv_masked = r_adv * aspect_idx_mask  # masked to only perturb aspects
+            #r_adv_masked = r_adv * aspect_idx_mask  # masked to only perturb aspects
+            r_adv_masked = r_adv
             r_adv_masked.retain_grad()  # (batch_size, seq_length, hidden_size)
 
             # VAT - FIRST PASS (computing r_adv)
@@ -231,7 +233,8 @@ class BertForTokenClassificationWithVAT(BertForTokenClassification):
             # Compute new perturbation using gradient            
             loss.backward()
             with torch.no_grad():
-                perturbation = aspect_idx_mask * (r_adv_masked + self.config.lr_adv*r_adv_masked.grad)
+                perturbation = r_adv_masked + self.config.lr_adv*r_adv_masked.grad
+                #perturbation = aspect_idx_mask * (r_adv_masked + self.config.lr_adv*r_adv_masked.grad)
             self.zero_grad()
 
         # Normal pass, or for VAT - SECOND PASS (computing loss with x + r_adv)
@@ -268,6 +271,41 @@ class BertForTokenClassificationWithVAT(BertForTokenClassification):
                 loss = loss_fct(active_logits, active_labels)
             else:
                 loss = loss_fct(logits.view(-1, self.num_labels), labels.view(-1))
+
+        if VAT and mode == 'train' and keep_original:
+            outputs = self.bert(
+                input_ids,
+                attention_mask=attention_mask,
+                token_type_ids=token_type_ids,
+                position_ids=position_ids,
+                head_mask=head_mask,
+                inputs_embeds=inputs_embeds,
+                output_attentions=output_attentions,
+                output_hidden_states=output_hidden_states,
+                return_dict=return_dict,
+                VAT=VAT,
+                perturbation=0,
+                mode=mode,
+            )
+
+            sequence_output = outputs[0]
+
+            sequence_output = self.dropout(sequence_output)
+            logits = self.classifier(sequence_output)
+
+            #loss = None
+            if labels is not None:
+                loss_fct = CrossEntropyLoss()
+                # Only keep active parts of the loss
+                if attention_mask is not None:
+                    active_loss = attention_mask.view(-1) == 1
+                    active_logits = logits.view(-1, self.num_labels)
+                    active_labels = torch.where(
+                        active_loss, labels.view(-1), torch.tensor(loss_fct.ignore_index).type_as(labels)
+                    )
+                    loss += loss_fct(active_logits, active_labels)
+                else:
+                    loss += loss_fct(logits.view(-1, self.num_labels), labels.view(-1))
 
         if not return_dict:
             output = (logits,) + outputs[2:]

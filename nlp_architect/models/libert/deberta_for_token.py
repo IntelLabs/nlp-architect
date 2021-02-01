@@ -57,7 +57,6 @@ MODEL_CONFIG = {
     'deberta_vat': (CustomDebertaForTokenClassification, CustomDebertaConfig, DebertaTokenizer),
 }
 
-
 class DebertaForToken(pl.LightningModule):
     """Lightning module for BERT for token classification."""
     def __init__(self, hparams):
@@ -99,6 +98,23 @@ class DebertaForToken(pl.LightningModule):
             from_tf=bool(".ckpt" in hparams.model_name_or_path),
             config=self.config,
             cache_dir=hparams.cache_dir)
+
+        ### FOR PIVOT PHRASE EMBEDDING ###
+        if hparams.model_type == "custom_deberta" and self.config.relative_attention and hparams.pivot_phrase_embeddings:
+        #if hparams.pivot_phrase_embeddings:
+            # Copying weights from position embeddings into PP embeddings
+            self.model.base_model.encoder.pivot_phrase_embeddings.load_state_dict(self.model.base_model.encoder.rel_embeddings.state_dict())
+            random_tensor = torch.rand(self.model.base_model.encoder.pivot_phrase_embeddings.weight.size()) 
+            log.debug(f"old pp embedding weight norm: {torch.linalg.norm(self.model.base_model.encoder.pivot_phrase_embeddings.weight)}")
+            log.debug(f"random_tensor: {random_tensor}")
+            log.debug(f"random_tensor norm: {torch.linalg.norm(random_tensor)}")
+            temp = self.model.base_model.encoder.pivot_phrase_embeddings.weight.clone()
+            new_weight = self.model.base_model.encoder.pivot_phrase_embeddings.weight + ((random_tensor / torch.linalg.norm(random_tensor)) * 0.01* torch.linalg.norm(self.model.base_model.encoder.pivot_phrase_embeddings.weight))
+            self.model.base_model.encoder.pivot_phrase_embeddings.state_dict()["weight"].copy_(new_weight)
+            log.debug(f"{self.model.base_model.encoder.pivot_phrase_embeddings.state_dict()}")
+            log.debug(f"new pp embedding weight norm: {torch.linalg.norm(self.model.base_model.encoder.pivot_phrase_embeddings.weight)}")
+            log.debug(f"delta: {self.model.base_model.encoder.pivot_phrase_embeddings.weight.clone().detach() - temp.clone().detach()}")
+         ##################################
 
         self.hparams = hparams
         self.sentence_metrics = None
@@ -144,6 +160,14 @@ class DebertaForToken(pl.LightningModule):
 
         tensors = [all_input_ids, all_attention_mask, all_token_type_ids, all_label_ids]
 
+        if self.hparams.pivot_phrase_embeddings:
+            all_pivot_phrase_marks = torch.tensor([f.pivot_phrase_marks for f in features],
+                                                  dtype=torch.long)
+            tensors += [all_pivot_phrase_marks]
+        
+        #for tensor in tensors:
+            #log.debug(f"tensor.size(0): {tensor.size(0)}")
+
         shuffle = mode == 'train'
         return DataLoader(TensorDataset(*tensors), batch_size=batch_size, shuffle=shuffle,
                           num_workers=self.hparams.num_workers, pin_memory=True)
@@ -154,6 +178,9 @@ class DebertaForToken(pl.LightningModule):
                   "labels": batch[3]}
         #if len(batch) >= 5:
         #    inputs["parse"] = batch[4]
+        if len(batch) > 4:
+            inputs["pivot_phrase_marks"] = batch[4]
+
         return inputs
 
     def training_step(self, batch, _):
@@ -161,6 +188,8 @@ class DebertaForToken(pl.LightningModule):
         inputs = self.map_to_inputs(batch)
         if self.hparams.model_type == "bert_vat" or self.hparams.model_type == "deberta_vat":
             inputs.update({"VAT": True, "mode": "train"})  # for VAT
+        if self.hparams.keep_original:  # keeps original unperturbed exampels for VAT
+            inputs.update({"keep_original": True})
         outputs = self(**inputs)
         loss = outputs[0]
         tensorboard_logs = {'train_loss_step': loss, 'lr': self.lr_scheduler.get_last_lr()[-1]}
