@@ -17,8 +17,12 @@ gamma: 0.0001
 lr_adv: 100
 keep_original: False # train with unperturbed examples + perturbed examples
 
-# Deberta with Pivot Phrase Embeddings
+# DeBERTa with Pivot Phrase Embeddings
 pivot_phrase_embeddings: True
+negative_embeddings: False   # new embeddings are negated copy of rel_embeddings
+perturbed_embeddings: False  # new embeddings are copy of rel_embeddings slightly perturbed (randomly)
+c2p_att_pp: True             # enable/disable c2p_att_pp component
+p2c_att_pp: True             # enable/disable p2c_att_pp component
 ########################
 
 num_workers: 44
