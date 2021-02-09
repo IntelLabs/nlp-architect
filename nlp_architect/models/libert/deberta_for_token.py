@@ -111,6 +111,21 @@ class DebertaForToken(pl.LightningModule):
                 self.model.base_model.encoder.pivot_phrase_embeddings.state_dict()["weight"].copy_(new_weight)
         ##################################
 
+        ### FOR MARK EMBEDDINGS ###
+        # Copying content projections as starting point for mark projections
+        if getattr(hparams, "mark_projection_initialization", "random") == "content":
+            for layer_no, layer in enumerate(self.model.base_model.encoder.layer):
+                q_weight, k_weight, v_weight = layer.attention.self.in_proj.weight.detach().chunk(3, dim=0)
+                layer.attention.self.mark_q_proj.state_dict()["weight"].copy_(q_weight)
+                layer.attention.self.mark_proj.state_dict()["weight"].copy_(k_weight)
+
+                log.debug(f"\n******************************")
+                log.debug(f"LAYER NUMBER {layer_no}")
+                log.debug(f"q_weight == mark_q_weight: {torch.equal(q_weight, layer.attention.self.mark_q_proj.weight)}")
+                log.debug(f"k_weight == mark_weight: {torch.equal(k_weight, layer.attention.self.mark_proj.weight)}")
+                log.debug(f"******************************")
+            ###########################
+
         self.hparams = hparams
         self.sentence_metrics = None
 

@@ -593,16 +593,7 @@ class CustomDebertaEncoder(DebertaEncoder):
             mark_embeddings = torch.where(torch.unsqueeze(marks,-1) == 0, mark_embedding_zero, mark_embedding_one)
             # TODO FIX THIS, currently weights get reinitialized (not 0/1)
 
-        ### Combining rel embeddings and PP + rel embeddings ###
-
-        #pivot_phrase_embeddings = pivot_phrase_embeddings[
-        #    self.max_relative_positions - att_span : self.max_relative_positions + att_span, :
-        #].unsqueeze(0)  # 1 x 2*seq_len x hidden_size
-        # pp_idx = ...
-        # rel_embeddings = torch.where(pp_idx == 1, pivot_phrase_embeddings, rel_embeddings)
-        ########################################################
         for i, layer_module in enumerate(self.layer):
-
             if output_hidden_states:
                 all_hidden_states = all_hidden_states + (hidden_states,)
 
