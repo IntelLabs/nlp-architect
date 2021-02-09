@@ -101,24 +101,15 @@ class DebertaForToken(pl.LightningModule):
 
         ### FOR PIVOT PHRASE EMBEDDING ###
         if hparams.model_type == "custom_deberta" and self.config.relative_attention and hparams.pivot_phrase_embeddings:
-        #if hparams.pivot_phrase_embeddings:
-            # Copying weights from position embeddings into PP embeddings
             self.model.base_model.encoder.pivot_phrase_embeddings.load_state_dict(self.model.base_model.encoder.rel_embeddings.state_dict())
-            if hparams.negative_embeddings == True:
+            if getattr(hparams, "negative_embeddings", False):
                 new_weight = -self.model.base_model.encoder.pivot_phrase_embeddings.weight
                 self.model.base_model.encoder.pivot_phrase_embeddings.state_dict()["weight"].copy_(new_weight)
-            elif hparams.perturbed_embeddings == True:
+            elif getattr(hparams, "perturbed_embeddings", False):
                 random_tensor = torch.rand(self.model.base_model.encoder.pivot_phrase_embeddings.weight.size()) 
-                #log.debug(f"old pp embedding weight norm: {torch.linalg.norm(self.model.base_model.encoder.pivot_phrase_embeddings.weight)}")
-                #log.debug(f"random_tensor: {random_tensor}")
-                #log.debug(f"random_tensor norm: {torch.linalg.norm(random_tensor)}")
-                #temp = self.model.base_model.encoder.pivot_phrase_embeddings.weight.clone()
                 new_weight = self.model.base_model.encoder.pivot_phrase_embeddings.weight + ((random_tensor / torch.linalg.norm(random_tensor)) * 0.01* torch.linalg.norm(self.model.base_model.encoder.pivot_phrase_embeddings.weight))
                 self.model.base_model.encoder.pivot_phrase_embeddings.state_dict()["weight"].copy_(new_weight)
-                #log.debug(f"{self.model.base_model.encoder.pivot_phrase_embeddings.state_dict()}")
-                #log.debug(f"new pp embedding weight norm: {torch.linalg.norm(self.model.base_model.encoder.pivot_phrase_embeddings.weight)}")
-                #log.debug(f"delta: {self.model.base_model.encoder.pivot_phrase_embeddings.weight.clone().detach() - temp.clone().detach()}")
-         ##################################
+        ##################################
 
         self.hparams = hparams
         self.sentence_metrics = None
@@ -183,7 +174,7 @@ class DebertaForToken(pl.LightningModule):
         #if len(batch) >= 5:
         #    inputs["parse"] = batch[4]
         if len(batch) > 4:
-            inputs["pivot_phrase_marks"] = batch[4]
+            inputs["marks"] = batch[4]
 
         return inputs
 

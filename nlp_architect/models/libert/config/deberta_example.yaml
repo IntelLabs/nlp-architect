@@ -18,11 +18,16 @@ lr_adv: 100
 keep_original: False # train with unperturbed examples + perturbed examples
 
 # DeBERTa with Pivot Phrase Embeddings
-pivot_phrase_embeddings: True
+pivot_phrase_embeddings: False
 negative_embeddings: False   # new embeddings are negated copy of rel_embeddings
 perturbed_embeddings: False  # new embeddings are copy of rel_embeddings slightly perturbed (randomly)
-c2p_att_pp: True             # enable/disable c2p_att_pp component
-p2c_att_pp: True             # enable/disable p2c_att_pp component
+c2p_att_pp: False             # enable/disable c2p_att_pp component
+p2c_att_pp: False             # enable/disable p2c_att_pp component
+
+# DeBERTa with marked attention components
+mark_embeddings: random      # random or one-hot
+c2m: True
+m2c: True
 ########################
 
 num_workers: 44
