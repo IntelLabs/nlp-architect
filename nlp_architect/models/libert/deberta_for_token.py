@@ -124,6 +124,18 @@ class DebertaForToken(pl.LightningModule):
                 log.debug(f"q_weight == mark_q_weight: {torch.equal(q_weight, layer.attention.self.mark_q_proj.weight)}")
                 log.debug(f"k_weight == mark_weight: {torch.equal(k_weight, layer.attention.self.mark_proj.weight)}")
                 log.debug(f"******************************")
+        elif getattr(hparams, "mark_projection_initialization", "random") == "position":
+            for layer_no, layer in enumerate(self.model.base_model.encoder.layer):
+                pos_proj_weight = layer.attention.self.pos_proj.weight.detach()
+                pos_q_proj_weight = layer.attention.self.pos_q_proj.weight.detach()
+                layer.attention.self.mark_q_proj.state_dict()["weight"].copy_(pos_q_proj_weight)
+                layer.attention.self.mark_proj.state_dict()["weight"].copy_(pos_proj_weight)
+
+                log.debug(f"\n******************************")
+                log.debug(f"LAYER NUMBER {layer_no}")
+                log.debug(f"pos_q_proj_weight == mark_q_proj_weight: {torch.equal(pos_q_proj_weight, layer.attention.self.mark_q_proj.weight)}")
+                log.debug(f"pos_proj_weight == mark_proj_weight: {torch.equal(pos_proj_weight, layer.attention.self.mark_proj.weight)}")
+                log.debug(f"******************************")
             ###########################
 
         self.hparams = hparams
