@@ -258,9 +258,19 @@ def convert_examples_to_features(
         # into new, longer sequence corresponding to BERT's BPE subwords.  
         # Mapping is from (index of) a word to (index of) its first subword. 
         orig_index2subtok_index, word_i, subword_i = {0:0}, 0, 0  
+        
+        aspect_tokens_in_pairs = set([int(aux_label.split(AUX_SEP)[0]) for aux_label in ex.aux_task_labels if AUX_SEP in aux_label])
 
-        for word, label, head, _, sub_tok, aux_task_label in zip(ex.words, ex.labels, ex.heads, ex.pos_tags, ex.sub_toks, ex.aux_task_labels):
+        for word, label, head, _, sub_tok, aux_task_label, orig_index in zip(ex.words, ex.labels, ex.heads, ex.pos_tags, ex.sub_toks, ex.aux_task_labels, range(len(ex.words))):
             
+            # depending on hparams.evaluate_on_pairs_only , consider only aspect_tokens_in_pairs as aspect terms for absa task 
+            if hparams.evaluate_on_pairs_only: 
+                if "ASP" in label and orig_index not in aspect_tokens_in_pairs:
+                    if label == "B-ASP" and orig_index+1 < len(ex.labels) and ex.labels[orig_index+1]=="I-ASP":
+                        ex.labels[orig_index+1] = "B-ASP"
+                    label = 'O'
+                     
+                    
             heads.append(head)
             sub_toks.append(sub_tok)
             aux_task_labels.append(aux_task_label)
@@ -360,6 +370,7 @@ def convert_examples_to_features(
         Auxiliary task is a classification task (especially) for Opinion Term tokens - predicting the 
         corresponding Aspect Term token, and the path pattern toward it via the linguistic graph.  
         """
+        
         # read auxiliary labels for this sentence from InputExample
         aux_AT_tok_idxs, aux_path_patterns = [], []
         task_labels_if_path = [(idx, aux_lbl) 

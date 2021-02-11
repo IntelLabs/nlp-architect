@@ -199,17 +199,17 @@ class BertForToken(pl.LightningModule):
             patt_aux_logits = outputs["patt_aux_logits"]
             patt_aux_preds = patt_aux_logits.detach().cpu()#.numpy()
             patt_aux_labels = outputs["patt_aux_labels"].detach().cpu()#.numpy()
-            ret.update(patt_aux_preds=patt_aux_preds, patt_aux_labels=patt_aux_labels)
+            ret.update(patt_aux_preds=patt_aux_preds, patt_aux_labels=patt_aux_labels, aux_op_locations=outputs["aux_op_locations"])
         if "asp_match_aux_logits" in outputs and "tgt_asp_indices" in inputs:
             asp_match_aux_logits = outputs["asp_match_aux_logits"]
             asp_match_aux_preds = asp_match_aux_logits.detach().cpu()#.numpy()
-            asp_match_aux_target = outputs["asp_match_gold_labels"].detach().cpu()#.numpy() # take gold labels from outputs, stacked per OTs corresponding to logits
-            ret.update(asp_match_aux_preds=asp_match_aux_preds, asp_match_aux_target=asp_match_aux_target)
+            asp_match_aux_labels = outputs["asp_match_gold_labels"].detach().cpu()#.numpy() # take gold labels from outputs, stacked per OTs corresponding to logits
+            ret.update(asp_match_aux_preds=asp_match_aux_preds, asp_match_aux_labels=asp_match_aux_labels, aux_op_locations=outputs["aux_op_locations"])
         return ret
 
     def validation_epoch_end(self, outputs):
-        ret, _, _, _ = self._eval_end(outputs)
-        logs = ret["log"]
+        eval_info, _, = self._eval_end(outputs)
+        logs = eval_info["log"]
         logs['step'] = self.current_epoch
         return {"val_loss": logs["val_loss"], "log": logs}
 
@@ -217,43 +217,90 @@ class BertForToken(pl.LightningModule):
         return self.validation_step(batch, batch_nb)
 
     def test_epoch_end(self, outputs):
-        ret, pred, target, inp_words = self._eval_end(outputs)
-        logs = ret["log"]
+        eval_info, prediction_info = self._eval_end(outputs)
+        logs = eval_info["log"]
         logs['step'] = self.current_epoch
         
-        self._write_predictions(pred, target, inp_words)
+        self._write_predictions(**prediction_info)
         # `val_loss` is the key returned by `self._eval_end()` but actually refers to `test_loss`
         return {"test_loss": logs["val_loss"], "log": logs}
 
-    def _write_predictions(self, predictions, gold_labels, words):
-        out_fn = self.logger.save_dir / "prediction-test.txt"
+    def _write_predictions(self, predictions, gold_labels, inp_words, 
+                           asp_match_predictions=None, asp_match_gold=None,
+                           patt_predictions=None, patt_gold=None):
+        out_fn = self.logger.save_dir / self.logger._name / f"epoch-{self.current_epoch}-predictions.txt"
+        # if auxilary prediction data doesn't exists, prepare its data-structures with s
         with open(out_fn, "w", encoding="utf-8") as fout:
-            for s_preds, s_golds, s_words in zip(predictions, gold_labels, words): # iterate over sentences
+            for si, (s_preds, s_golds, s_words) in enumerate(zip(predictions, gold_labels, inp_words)): # iterate over sentences
                 assert len(s_words) == len(s_preds) == len(s_golds)
-                for word, pred_lbl, gold_lbl in zip(s_words, s_preds, s_golds):
-                    fout.write(f"{word}\t{pred_lbl}\t{gold_lbl}\n")
+                for wi, (word, pred_lbl, gold_lbl) in enumerate(zip(s_words, s_preds, s_golds)):
+                    line = f"{word}\t{pred_lbl}\t{gold_lbl}"
+                    # columns 4/5 are for AT-match prediction/gold
+                    if asp_match_predictions and asp_match_gold:
+                        line += f"\t{asp_match_predictions[si][wi]}\t{asp_match_gold[si][wi]}"
+                    else:
+                        line += "\tO\tO"
+                    # columns 6/7 are for pattern prediction/gold
+                    if patt_predictions and patt_gold:
+                        line += f"\t{patt_predictions[si][wi]}\t{patt_gold[si][wi]}"
+                    else:
+                        line += "\tO\tO"
+                    fout.write(line+"\n")
                 fout.write("\n")  
     
         
     def _eval_end(self, outputs):
         "Evaluation called for both Val and Test"
+        prediction_info = {}
+        aux_results = {}
+        # compute & log performance also for auxiliary tasks
+        asp_match_predictions, pattern_predictions = None, None
+        if "matched-AT" in self.config.auxiliary_tasks:
+            asp_match_results, asp_match_predictions = path_patterns.aux_task_eval(outputs, aux_task="asp_match")
+            prediction_info.update(asp_match_predictions)
+            aux_results.update(asp_match_results)
+        if "pattern" in self.config.auxiliary_tasks:
+            pattern_results, pattern_predictions = path_patterns.aux_task_eval(outputs, aux_task="patt")
+            prediction_info.update(pattern_predictions)
+            aux_results.update(pattern_results)  
+            
+
         val_loss_mean = torch.stack([x["val_loss_step"] for x in outputs]).mean()
         preds = np.concatenate([x["pred"] for x in outputs], axis=0)
-        preds = np.argmax(preds, axis=2)
+        preds = np.argmax(preds, axis=-1)
         out_label_ids = np.concatenate([x["target"] for x in outputs], axis=0)
-        input_ids = np.concatenate([x["input_ids"].cpu() for x in outputs], axis=0)
-
         label_map = dict(enumerate(self.labels))
-        target = [[] for _ in range(out_label_ids.shape[0])]
-        pred = [[] for _ in range(out_label_ids.shape[0])]
-        inp_words = [[] for _ in range(out_label_ids.shape[0])]
         
-
+        def refactor_seq_to_sentence_length(full_seq_batch, translation_func):
+            ret = [[] for _ in range(full_seq_batch.shape[0])]
+            for i in range(full_seq_batch.shape[0]):
+                for j in range(full_seq_batch.shape[1]):
+                    if out_label_ids[i, j] != self.pad_token_label_id:  # skips [CLS], [SEP], subtokens, and sequence padding  
+                        ret[i].append(translation_func(full_seq_batch[i][j]))
+            return ret
+            
+        target = refactor_seq_to_sentence_length(out_label_ids, label_map.get)
+        pred = refactor_seq_to_sentence_length(preds, label_map.get)
+        # apply the same refactoring for aux task predictions and gold, for preparing the prediction output file
+        if "matched-AT" in self.config.auxiliary_tasks:
+            
+            prediction_info["asp_match_predictions"] = refactor_seq_to_sentence_length(
+                np.concatenate(prediction_info["asp_match_predictions"], axis=0), lambda x:'O' if x==-1 else x)
+            prediction_info["asp_match_gold"] = refactor_seq_to_sentence_length(
+                np.concatenate(prediction_info["asp_match_gold"],axis=0), lambda x:'O' if x==-1 else x)
+        if "pattern" in self.config.auxiliary_tasks:
+            patt_label_map = dict(enumerate(self.hparams.all_patterns))
+            patt_label_map[-1] = 'O'
+            prediction_info["patt_predictions"] = refactor_seq_to_sentence_length(
+                np.concatenate(prediction_info["patt_predictions"] ,axis=0), patt_label_map.get)
+            prediction_info["patt_gold"] = refactor_seq_to_sentence_length(
+                np.concatenate(prediction_info["patt_gold"], axis=0), patt_label_map.get)
+        
+        input_ids = np.concatenate([x["input_ids"].cpu() for x in outputs], axis=0)
+        inp_words = [[] for _ in range(out_label_ids.shape[0])]
         for i in range(out_label_ids.shape[0]):
             for j in range(out_label_ids.shape[1]):
                 if out_label_ids[i, j] != self.pad_token_label_id:  # skips [CLS], [SEP], subtokens, and sequence padding  
-                    target[i].append(label_map[out_label_ids[i][j]])
-                    pred[i].append(label_map[preds[i][j]])
                     word = self.tokenizer.convert_ids_to_tokens(int(input_ids[i][j]))
                     # complement word with its corresponding subtokens
                     next_j = j+1; next_subtok = self.tokenizer.convert_ids_to_tokens(int(input_ids[i][next_j]))
@@ -283,18 +330,13 @@ class BertForToken(pl.LightningModule):
             "f1": per_sentence(f1_score),
             "accuracy": per_sentence(accuracy_score)
         }
-        
-        # compute & log performance also for auxiliary tasks
-        if "matched-AT" in self.config.auxiliary_tasks:
-            asp_match_results = path_patterns.asp_match_task_eval(outputs)
-            results.update(asp_match_results)
-        if "pattern" in self.config.auxiliary_tasks:
-            pattern_results = path_patterns.pattern_task_eval(outputs)
-            results.update(pattern_results)
+        # collect ABSA prediction info to returned dict
+        prediction_info.update(predictions=pred, gold_labels=target, inp_words=inp_words)
 
+        results.update(aux_results)
         ret = results.copy()
         ret["log"] = results
-        return ret, pred, target, inp_words
+        return ret, prediction_info
     
 
     def configure_optimizers(self):

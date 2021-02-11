@@ -1,19 +1,21 @@
 max_epochs: 10
-model_type: bert # bert or libert
-formalisms: dm spacy ud  # source of linguistic information - ud spacy dm psd eud eud_pp bart
+model_type: libert # bert or libert
+formalisms: eud_pp # source of linguistic information - ud spacy dm psd eud eud_pp bart
 baseline: [false]
 
-auxiliary_tasks: ["pattern"]   # options: "pattern", "matched-AT"
+auxiliary_tasks: []   # options: "pattern", "matched-AT"
 auxiliary_layers: []   # layers in which to inject the auxiliary loss. set `None` to claissify over full (Li)BERT (at `(Li)BertForToken`)
 
-data: rl rd lr ld dr dl # ld dl ; rl rd lr ld dr dl ; device restaurants laptops 
+evaluate_on_pairs_only: false
+
+data:  rl rd lr ld dr dl # ld dl ; rl rd lr ld dr dl ; device restaurants laptops 
 limit_data: 1.0
 splits: 3
 seeds: [25, 26, 11] # [25, 26, 11] [42, 23, 17, 7]
-tag: bert-patt # optional: name this experiment version
+tag: li-vanila-with-predictions-eudpp-10E # optional: name this experiment version
 metric: asp_f1
 num_workers: 44
-gpus: [0,1]
+gpus: [2]
 parallel: true
 
 li_layer: #5

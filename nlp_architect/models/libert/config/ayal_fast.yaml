@@ -1,19 +1,21 @@
-max_epochs: 7
-model_type: bert # bert or libert
+max_epochs: 1
+model_type: libert # bert or libert
 formalisms: ud # source of linguistic information - ud spacy dm psd eud eud_pp bart
 baseline: [false]
 
-auxiliary_tasks: ["matched-AT"]   # options: "pattern", "matched-AT"
-auxiliary_layers: [10,11,12]
+auxiliary_tasks: ["pattern"]   # options: "pattern", "matched-AT"
+auxiliary_layers: []
 
-data: rl lr  # ld dl ; rl rd lr ld dr dl ; device restaurants laptops 
+evaluate_on_pairs_only: true
+
+data: rl # ld dl ; rl rd lr ld dr dl ; device restaurants laptops 
 limit_data: 1.0
 splits: 1
 seeds: [25] # [25, 26, 11] [42, 23, 17, 7]
-tag: fast-bert-AT-aux-layers-10_11_12 # optional: name this experiment version
+tag: fast-stability-test1 # optional: name this experiment version
 metric: asp_f1
 num_workers: 44
-gpus: [3]
+gpus: [2,3]
 parallel: true
 
 li_layer: #5

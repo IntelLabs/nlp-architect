@@ -1,17 +1,19 @@
-max_epochs: 1
+max_epochs: 3
 model_type: libert # bert or libert
 formalisms: ud # source of linguistic information - spacy, ud, dm, psd, eud, eud_pp, bart
-baseline: [true]
+baseline: [false]
 
-auxiliary_tasks: []   # options: "pattern", "matched-AT"
+auxiliary_tasks: ["pattern", "matched-AT"]   # options: "pattern", "matched-AT"
 auxiliary_layers: [12]   # layers in which to inject the auxiliary loss (0-12). 
                          # set `None` or [12] to claissify over full (Li)BERT (at `(Li)BertForToken`)
 
-data: lr # relative to nlp_architect/models/li_bert/data/preprocessed_conll
-limit_data: 0.1
-splits: 1
+evaluate_on_pairs_only: true
+
+data: rl rd lr ld dr dl # relative to nlp_architect/models/li_bert/data/preprocessed_conll
+limit_data: 1.0
+splits: 2
 seeds: [42] # [42, 23, 17, 7]
-tag: debug-summaries # optional: name this experiment version
+tag: debug-evaluate_on_pairs_only # optional: name this experiment version
 metric: asp_f1
 #baseline_version: version_baseline
 
