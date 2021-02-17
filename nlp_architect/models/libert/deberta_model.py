@@ -62,6 +62,9 @@ class CustomDebertaConfig(DebertaConfig):
         self.mark_embeddings = getattr(hparams, "mark_embeddings", None)
         self.c2m = getattr(hparams, "c2m", False)
         self.m2c = getattr(hparams, "m2c", False)
+        self.c2m_scalar = getattr(hparams, "c2m_scalar", 1)
+        self.m2c_scalar = getattr(hparams, "m2c_scalar", 1)
+        self.mark_enhanced_classifier = getattr(hparams, "mark_enhanced_classifier", False)
 
         assert not ((self.c2m or self.m2c) and (self.c2p_att_pp_enabled or self.p2c_att_pp_enabled)), "Can't have both marks and pivot phrase enabled."
 
@@ -187,6 +190,9 @@ class CustomDisentangledSelfAttention(DisentangledSelfAttention):
             if "m2c" not in self.pos_att_type:
                 self.pos_att_type += ["m2c"]
             self.mark_q_proj = torch.nn.Linear(config.hidden_size, self.all_head_size)
+
+        self.c2m_scalar = getattr(config, "c2m_scalar", 1)
+        self.m2c_scalar = getattr(config, "m2c_scalar", 1)
 
         if self.talking_head:
             self.head_logits_proj = torch.nn.Linear(config.num_attention_heads, config.num_attention_heads, bias=False)
@@ -438,11 +444,13 @@ class CustomDisentangledSelfAttention(DisentangledSelfAttention):
         c2m_att = None
         if "c2m" in self.pos_att_type:
             c2m_att = torch.matmul(query_layer, mark_key_layer.transpose(-1, -2))
+            c2m_att *= self.c2m_scalar
             score += c2m_att
         # mark->content
         m2c_att = None
         if "m2c" in self.pos_att_type:
             m2c_att = torch.matmul(mark_query_layer, key_layer.transpose(-1, -2))
+            m2c_att *= self.m2c_scalar
             score += m2c_att
 
         output = (score, c2p_att_orig, p2c_att_orig)
@@ -544,14 +552,17 @@ class CustomDebertaEncoder(DebertaEncoder):
             if getattr(config, "pivot_phrase_embeddings", False):
                 self.pivot_phrase_embeddings = nn.Embedding(self.max_relative_positions * 2, config.hidden_size)
 
+            #if hasattr(config, "mark_embeddings"):
+            #    if config.mark_embeddings == "random":
+            #        self.mark_embeddings = nn.Embedding(2, config.hidden_size)
+            #    elif config.mark_embeddings == "binary":
+            #        zeros = torch.zeros(config.hidden_size, dtype=torch.float)
+            #        ones = torch.ones(config.hidden_size, dtype=torch.float)
+            #        self.mark_embeddings = nn.Embedding(2, config.hidden_size)
+            #        self.mark_embeddings.state_dict()["weight"].copy_(torch.stack((zeros,ones)))
+
             if hasattr(config, "mark_embeddings"):
-                if config.mark_embeddings == "random":
-                    self.mark_embeddings = nn.Embedding(2, config.hidden_size)
-                elif config.mark_embeddings == "one-hot":
-                    zeros = torch.zeros(config.hidden_size, dtype=torch.float)
-                    ones = torch.ones(config.hidden_size, dtype=torch.float)
-                    self.mark_embeddings = nn.Embedding(2, config.hidden_size)
-                    self.mark_embeddings.state_dict()["weight"].copy_(torch.stack((zeros,ones)))
+                self.mark_embeddings = nn.Embedding(2, config.hidden_size)
     
     def get_pivot_phrase_embedding(self):
         pivot_phrase_embeddings = self.pivot_phrase_embeddings.weight if self.relative_attention else None
@@ -591,7 +602,6 @@ class CustomDebertaEncoder(DebertaEncoder):
             mark_embedding_zero = torch.reshape(mark_embedding_zero, (1,1,-1))
             mark_embedding_one = torch.reshape(mark_embedding_one, (1,1,-1))
             mark_embeddings = torch.where(torch.unsqueeze(marks,-1) == 0, mark_embedding_zero, mark_embedding_one)
-            # TODO FIX THIS, currently weights get reinitialized (not 0/1)
 
         for i, layer_module in enumerate(self.layer):
             if output_hidden_states:
@@ -827,6 +837,10 @@ class CustomDebertaForTokenClassification(DebertaPreTrainedModel):
         drop_out = self.config.hidden_dropout_prob if drop_out is None else drop_out
         self.dropout = StableDropout(drop_out)
 
+        # Adding in mark information
+        if getattr(config, "mark_enhanced_classifier", False):
+            self.mark_enhanced_classifier = torch.nn.Linear(output_dim + 1, num_labels)
+
         self.init_weights()
 
     def get_input_embeddings(self):
@@ -932,7 +946,12 @@ class CustomDebertaForTokenClassification(DebertaPreTrainedModel):
         sequence_output = outputs[0]
 
         sequence_output = self.dropout(sequence_output) # add/concatenate syn_rels here
-        logits = self.classifier(sequence_output)
+        #logits = self.classifier(sequence_output)
+        if hasattr(self, "mark_enhanced_classifier"):
+            sequence_output = torch.cat((sequence_output, marks.unsqueeze(-1)), dim=-1)
+            logits = self.mark_enhanced_classifier(sequence_output)
+        else:
+            logits = self.classifier(sequence_output)
 
         outputs = (logits,) + outputs[1:]  # add hidden states and attention if they are here
         if labels is not None:

@@ -137,6 +137,21 @@ class DebertaForToken(pl.LightningModule):
                 log.debug(f"pos_proj_weight == mark_proj_weight: {torch.equal(pos_proj_weight, layer.attention.self.mark_proj.weight)}")
                 log.debug(f"******************************")
             ###########################
+        
+        if getattr(hparams, "mark_embeddings", "random") == "binary":
+            zeros = torch.zeros(self.config.hidden_size, dtype=torch.float)
+            ones = torch.ones(self.config.hidden_size, dtype=torch.float)
+            self.model.base_model.encoder.mark_embeddings.state_dict()["weight"].copy_(torch.stack((zeros,ones))) 
+        elif getattr(hparams, "mark_embeddings", "random") == "orthogonal":
+            u1, v2 = self.model.base_model.encoder.mark_embeddings.weight.detach()
+            u1 = u1 / torch.linalg.norm(u1)
+            u2 = v2 - (torch.dot(v2,u1) * u1)
+            u2 = u2 / torch.linalg.norm(u2)
+            assert torch.isclose(torch.dot(u1,u2), torch.tensor(0.0), rtol=1e-05, atol=1e-05), "Gram-Schmidt Implementation Bug"
+            self.model.base_model.encoder.mark_embeddings.state_dict()["weight"].copy_(torch.stack((u1,u2))) 
+
+        if getattr(hparams, "mark_embeddings_fixed", False) == True:
+            self.model.base_model.encoder.mark_embeddings.weight.requires_grad = False
 
         self.hparams = hparams
         self.sentence_metrics = None

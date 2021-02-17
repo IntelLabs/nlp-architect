@@ -184,7 +184,8 @@ def convert_examples_to_features(
         prev_word_token_len = 0  # for pivot phrase scheme
         for word, label, head, syn_rel, _, sub_tok in zip(ex.words, ex.labels, ex.heads, ex.syn_rels, ex.pos_tags, ex.sub_toks):
             if word in PIVOT_PHRASE_WORDS:
-                pivot_phrase_marks[-prev_word_token_len:] = [1] * prev_word_token_len
+                #pivot_phrase_marks[-prev_word_token_len:] = [1] * prev_word_token_len
+                pivot_phrase_marks[-prev_word_token_len:] = [1] + [0] * (prev_word_token_len-1)
                 continue
 
             syn_rels.append(DEP_REL_MAP[syn_rel.lower()])

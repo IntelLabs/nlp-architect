@@ -25,10 +25,12 @@ c2p_att_pp: False              # enable/disable c2p_att_pp component
 p2c_att_pp: False              # enable/disable p2c_att_pp component
 
 # DeBERTa with marked attention components
-mark_embeddings: random                  # random or one-hot
+mark_embeddings: random                  # random or binary
 mark_projection_initialization: content  # random, content, or position
 c2m: True
 m2c: True
+c2m_scalar: 1
+m2c_scalar: 1
 ########################
 
 num_workers: 44
