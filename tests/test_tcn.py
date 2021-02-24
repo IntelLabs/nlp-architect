@@ -48,4 +48,4 @@ def test_tcn_adding():
         adding_dataset, num_iterations=num_iterations, log_interval=1e6, result_dir=results_dir
     )
 
-    assert training_loss < 1e-3
+    assert training_loss < 1e-2
