@@ -1,0 +1,9 @@
+dash==1.17.0
+plotly==4.13.0
+matplotlib==3.3.3
+termcolor==1.1.0
+pandas==1.0.3
+torch==1.5.0
+tqdm==4.46.0
+scipy==1.4.1
+numpy==1.18.4

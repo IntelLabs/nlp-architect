@@ -26,3 +26,32 @@ The [live demo](http://interpret.intel-research.net) allows comparison of pre-tr
 Below are some interesting phenomena we encourage users to explore in the [live demo](http://interpret.intel-research.net):
 - In our analysis, we found that the embeddings of tokens which are predicted to be coreferents are in closer proximity in the embedding space, especially when BERT is fine-tuned for the coreference resolution task. This behaviour can be seen in the "Average t-SNE Distance Per Layer" plot in the bottom left when using the multi-select feature on the t-SNE plot. 
 - The metric "finetuned_coreference_intensity" (which can also be used with the multi-select) in the head summary plot shows that the 7th head of layer 10 often places high attention between coreferent mention spans. This attention head can also be visualized in the “Attention Matrix/Map" plot for various examples. 
+
+## Example of Additional Application - DeBERTa : 
+
+With minor changes, we extended InterpreT for another use case: [DeBERTA (
+Decoding-enhanced BERT with Disentangled Attention)](https://arxiv.org/abs/2006.03654). 
+In this example, we finetuned DeBERTa on WSC and looked at some attention heads through InterpreT.
+The following snapshots show some behaviors that InterpreT helped to easily identify.
+We can see how the information is broken down into the different disentangled attention matrices. 
+
+### Attention to previous token 
+Here we can see that the c2c attention matrix contains information that is spread out, while the attention matrices relative to position (p2c and c2p) encapsulate the "attention to previous" behavior
+
+<img width="200"  src="./assets/deberta_previous_all.png">
+<img width="200"  src="./assets/deberta_previous_c2c.png">
+<img width="200"  src="./assets/deberta_previous_c2p.png">
+<img width="200"  src="./assets/deberta_previous_p2c.png">
+
+### Attention to coreferents
+In this head (10, 3), we can see how in the aggregated attention matrix, the focus of the attention is on the [SEP] token.
+Behavior that we find also in the position-related attention matrices (c2p and p2c). 
+If we look at the c2c matrix, we find a new behavior, invisible in the aggregated matrix: high attention between coreferents
+
+<img width="200"  src="./assets/10_3deberta_all.png">
+<img width="200"  src="./assets/10_3deberta_c2c.png">
+<img width="200"  src="./assets/10_3deberta_c2p.png">
+<img width="200"  src="./assets/10_3deberta_p2c.png">
+
+## System Details
+Please see the README file included in the application folder.
