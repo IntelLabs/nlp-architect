@@ -43,6 +43,8 @@ LOG_ROOT = LIBERT_DIR / 'logs'
 DEP_REL_MAP = {rel.strip(): i + 1 for i, rel in enumerate(open(LIBERT_DIR / 'dep_relations.txt', encoding='utf-8'))}
 
 PIVOT_PHRASE_WORDS = ["--------------------------------", "----------------------------------------------------------------"]
+global GOLD_LABELS
+GOLD_LABELS = True  # For testing "pure" knowledge source
 
 @dataclass
 class InputExample:
@@ -199,7 +201,13 @@ def convert_examples_to_features(
             # when calling tokenize with just a space.
             if len(word_tokens) > 0:
                 tokens.extend(word_tokens)
-                pivot_phrase_marks.extend([0] * len(word_tokens))  # for pivot phrase scheme
+                if 'GOLD_LABELS' in globals():
+                    if label == "B-ASP" or label == "I-ASP":
+                        pivot_phrase_marks.extend([1] + [0] * (len(word_tokens) - 1))  # for pivot phrase scheme
+                    else:
+                        pivot_phrase_marks.extend([0] * len(word_tokens))  # for pivot phrase scheme
+                else:
+                    pivot_phrase_marks.extend([0] * len(word_tokens))  # for pivot phrase scheme
                 # Use the real label id for the first token of the word,
                 # and padding ids for the remaining tokens
                 label_ids.extend([label_map[label]] + [pad_token_label_id] * (len(word_tokens) - 1))

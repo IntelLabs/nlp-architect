@@ -839,7 +839,13 @@ class CustomDebertaForTokenClassification(DebertaPreTrainedModel):
 
         # Adding in mark information
         if getattr(config, "mark_enhanced_classifier", False):
-            self.mark_enhanced_classifier = torch.nn.Linear(output_dim + 1, num_labels)
+            self.mark_enhanced_classifier = torch.nn.Linear(output_dim + 1, output_dim)
+            self.mark_enhanced_classifier = torch.nn.Sequential(
+                torch.nn.Linear(output_dim + 1, output_dim),
+                torch.nn.GELU(),
+                torch.nn.Linear(output_dim, num_labels)
+            )
+
 
         self.init_weights()
 

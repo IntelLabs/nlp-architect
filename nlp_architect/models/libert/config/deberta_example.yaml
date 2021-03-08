@@ -34,7 +34,7 @@ m2c_scalar: 1
 ########################
 
 num_workers: 44
-gpus: [0]
+gpus: [0, 1]
 parallel: True
 
 do_train: true
