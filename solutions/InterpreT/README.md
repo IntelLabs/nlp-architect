@@ -36,16 +36,16 @@ The following snapshots show some behaviors that InterpreT helped to easily iden
 We can see how the information is broken down into the different disentangled attention matrices. 
 
 ### Attention to previous token 
-Here we can see that the c2c attention matrix contains information that is spread out, while the attention matrices relative to position (p2c and c2p) encapsulate the "attention to previous" behavior
+In the below figure, the leftmost plot shows the full attention and the plots on the right show its 3 disentangled constituent terms, c2c, c2p, and p2c. Here we can see that the c2c attention matrix contains information that is spread out, while the attention matrices relative to position (p2c and c2p) encapsulate the "attention to previous" behavior.
 
 <img width="200"  src="./assets/deberta_previous_all.png"><img width="200"  src="./assets/deberta_previous_c2c.png"><img width="200"  src="./assets/deberta_previous_c2p.png"><img width="200"  src="./assets/deberta_previous_p2c.png">
 
 ### Attention to coreferents
 In this head (10, 3), we can see how in the aggregated attention matrix, the focus of the attention is on the [SEP] token.
 Behavior that we find also in the position-related attention matrices (c2p and p2c). 
-If we look at the c2c matrix, we find a new behavior, invisible in the aggregated matrix: high attention between coreferents
+If we look at the c2c matrix, we find a new behavior, invisible in the aggregated matrix: high attention between coreferents.
 
 <img width="200"  src="./assets/10_3deberta_all.png"><img width="200"  src="./assets/10_3deberta_c2c.png"><img width="200"  src="./assets/10_3deberta_c2p.png"><img width="200"  src="./assets/10_3deberta_p2c.png">
 
 ## System Details
-Please see the README file included in the application folder.
+Please see the README file included in the [application folder](https://github.com/IntelLabs/nlp-architect/tree/master/solutions/InterpreT/application).
