@@ -1,5 +1,5 @@
 # ******************************************************************************
-# Copyright 2019-2020 Intel Corporation
+# Copyright 2020-2021 Intel Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -39,6 +39,7 @@ from transformers.models.deberta.modeling_deberta import (
     DisentangledSelfAttention,
     DebertaEmbeddings,
     DebertaEncoder,
+    build_relative_position,
     c2p_dynamic_expand,
     p2c_dynamic_expand,
     pos_dynamic_expand,
