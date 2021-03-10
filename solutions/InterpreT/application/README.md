@@ -6,7 +6,7 @@ The flow of our system consists of two main parts, the offline collateral genera
 At runtime, for each model being analyzed, these two aforementioned files must be provided. For example, if we wanted to compare between pretrained and finetuned BERT on a specific task, we would have to provide four files. The file pairs for each model are deliberately made to be independent of each other, so that the user can either run the app to analyze a single model or to compare two different models. In this latter case, we link the collateral files for the two models at runtime.
 
 ## Usage Recommendation:
-If you want to use **InterpreT** for your own task, the easiest way to get it running is to create your DataFrame such that the columns match those in the provided example DataFrame for ABSA at "example_dfs/absa_df.dat" (same columns) and create the attention dictionary using the below specifications. Then you will be able to either use or copy the `ABSATask` class in `tasks.py` to run **InterpreT** with your data. See the below sections for more details.
+If you want to use **InterpreT** for your own task, the easiest way to get it running is to create your DataFrame such that the columns match those in the provided example DataFrame for ABSA at "example_dfs/absa_df.dat" (same columns) and to create the attention dictionary using the below specifications. Then you will be able to either use or copy the `ABSATask` class in `tasks.py` to run **InterpreT** with your data. See the below sections for more details.
 
 ## System Architecture
 This section will provide a brief overview of how the software components of **InterpreT** work, with the intent of helping users understand how they can modify InterpreT for their own tasks.
@@ -28,7 +28,7 @@ There are 4 main software components:
 ## How To Generate Collateral
 - Create the DataFrame (see "examples_df/absa_df" for an easy example):
     - The DataFrame should have the following columns at minimum:
-        - **id** (should be unique for each example, not necessarily row, since one examples could have multiple tokens we want to track)
+        - **id** (should be unique for each example, not necessarily row, since one example could have multiple tokens or sets of tokens we want to track)
         - **token** (can be another name, e.g. "aspect" or "span_token", and these values will be tracked/displayed in the t-SNE plot)
         - **sentence** (the sentence that the token belongs to)
         - **layer_*_tsne_x**  (where * should be 00, 01, ..., 99 depending on the number of layers in the model, one column per layer)

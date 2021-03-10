@@ -29,21 +29,21 @@ Below are some interesting phenomena we encourage users to explore in the [live 
 
 ## Example of Additional Application - DeBERTa : 
 
-With minor changes, we extended InterpreT for another use case: [DeBERTA (
-Decoding-enhanced BERT with Disentangled Attention)](https://arxiv.org/abs/2006.03654). 
-In this example, we finetuned DeBERTa on WSC and looked at some attention heads through InterpreT.
-The following snapshots show some behaviors that InterpreT helped to easily identify.
-We can see how the information is broken down into the different disentangled attention matrices. 
+With minor changes, we extended InterpreT for another use case: analyzing [DeBERTA (
+Decoding-enhanced BERT with Disentangled Attention)](https://arxiv.org/abs/2006.03654) on WSC. 
+For this example, we finetuned DeBERTa on WSC and took a closer look at its attention heads using **InterpreT**.
+More specifically, we used **InterpreT** to see how the overall attention matrix for a head is broken down into each of it disentangled attention components, and to analyze what kind of information is encapsulated by each comonent.
+The following snapshots show some of the interesting behaviors that we found.
 
 ### Attention to previous token 
-In the below figure, the leftmost plot shows the full attention and the plots on the right show its 3 disentangled constituent terms, c2c, c2p, and p2c. Here we can see that the c2c attention matrix contains information that is spread out, while the attention matrices relative to position (p2c and c2p) encapsulate the "attention to previous" behavior.
+In the below figure, the leftmost plot shows the full attention matrix and the plots on the right show its 3 disentangled constituent terms, c2c, c2p, and p2c. Here we can see that the c2c attention matrix contains information that is spread out, while the attention matrices relating to position (p2c and c2p) encapsulate the "attention to previous" behavior.
 
 <img width="200"  src="./assets/deberta_previous_all.png"><img width="200"  src="./assets/deberta_previous_c2c.png"><img width="200"  src="./assets/deberta_previous_c2p.png"><img width="200"  src="./assets/deberta_previous_p2c.png">
 
 ### Attention to coreferents
-In this head (10, 3), we can see how in the aggregated attention matrix, the focus of the attention is on the [SEP] token.
-Behavior that we find also in the position-related attention matrices (c2p and p2c). 
-If we look at the c2c matrix, we find a new behavior, invisible in the aggregated matrix: high attention between coreferents.
+In layer 10 head 3, we can see how in the full attention matrix, the focus of the attention is on the [SEP] token.
+We also see this behavior in the position-related attention matrices (c2p and p2c). 
+However, if we look at the c2c matrix, we find a new behavior that is invisible in the full attention matrix: high attention between coreferents.
 
 <img width="200"  src="./assets/10_3deberta_all.png"><img width="200"  src="./assets/10_3deberta_c2c.png"><img width="200"  src="./assets/10_3deberta_c2p.png"><img width="200"  src="./assets/10_3deberta_p2c.png">
 
