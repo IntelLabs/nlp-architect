@@ -26,3 +26,26 @@ The [live demo](http://interpret.intel-research.net) allows comparison of pre-tr
 Below are some interesting phenomena we encourage users to explore in the [live demo](http://interpret.intel-research.net):
 - In our analysis, we found that the embeddings of tokens which are predicted to be coreferents are in closer proximity in the embedding space, especially when BERT is fine-tuned for the coreference resolution task. This behaviour can be seen in the "Average t-SNE Distance Per Layer" plot in the bottom left when using the multi-select feature on the t-SNE plot. 
 - The metric "finetuned_coreference_intensity" (which can also be used with the multi-select) in the head summary plot shows that the 7th head of layer 10 often places high attention between coreferent mention spans. This attention head can also be visualized in the “Attention Matrix/Map" plot for various examples. 
+
+## Example of Additional Application - DeBERTa : 
+
+With minor changes, we extended InterpreT for another use case: analyzing [DeBERTA (
+Decoding-enhanced BERT with Disentangled Attention)](https://arxiv.org/abs/2006.03654) on WSC. 
+For this example, we finetuned DeBERTa on WSC and took a closer look at its attention heads using **InterpreT**.
+More specifically, we used **InterpreT** to see how the overall attention matrix for a head is broken down into each of it disentangled attention components, and to analyze what kind of information is encapsulated by each comonent.
+The following snapshots show some of the interesting behaviors that we found.
+
+### Attention to previous token 
+In the below figure, the leftmost plot shows the full attention matrix and the plots on the right show its 3 disentangled constituent terms, c2c, c2p, and p2c. Here we can see that the c2c attention matrix contains information that is spread out, while the attention matrices relating to position (p2c and c2p) encapsulate the "attention to previous" behavior.
+
+<img width="200"  src="./assets/deberta_previous_all.png"><img width="200"  src="./assets/deberta_previous_c2c.png"><img width="200"  src="./assets/deberta_previous_c2p.png"><img width="200"  src="./assets/deberta_previous_p2c.png">
+
+### Attention to coreferents
+In layer 10 head 3, we can see how in the full attention matrix, the focus of the attention is on the [SEP] token.
+We also see this behavior in the position-related attention matrices (c2p and p2c). 
+However, if we look at the c2c matrix, we find a new behavior that is invisible in the full attention matrix: high attention between coreferents.
+
+<img width="200"  src="./assets/10_3deberta_all.png"><img width="200"  src="./assets/10_3deberta_c2c.png"><img width="200"  src="./assets/10_3deberta_c2p.png"><img width="200"  src="./assets/10_3deberta_p2c.png">
+
+## System Details
+Please see the README file included in the [application folder](https://github.com/IntelLabs/nlp-architect/tree/master/solutions/InterpreT/application).
