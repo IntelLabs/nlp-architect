@@ -21,7 +21,7 @@ grpcio==1.32.0
 h5py==2.10.0
 idna==2.6
 importlib-metadata==2.0.0
-Jinja2==2.11.2
+Jinja2==2.11.3
 jmespath==0.10.0
 joblib==0.17.0
 Keras-Applications==1.0.8
