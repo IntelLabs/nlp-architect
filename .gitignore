@@ -24,3 +24,4 @@ src/
 tests/fixtures/data/chunker/
 pytest_unit.xml
 cache/
+datasets/absa/sample.csv

@@ -61,7 +61,7 @@ apply the dependency parser to the data:
 
 .. code:: bash
 
-    python3 examples/absa/train.py --data=TRAINING_DATASET
+    python3 examples/absa/train/train.py --data=TRAINING_DATASET
 
 
 **Arguments:**
@@ -89,7 +89,7 @@ for the first time this model will be downloaded to ``~/nlp-architect/cache/absa
 
 .. code:: bash
 
-    python3 examples/absa/train.py --parsed-data=PARSED_TRAINING_DATASET
+    python3 examples/absa/train/train.py --parsed-data=PARSED_TRAINING_DATASET
 
 **Arguments:**
 
