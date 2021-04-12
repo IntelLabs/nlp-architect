@@ -8,6 +8,7 @@ gensim
 scikit-learn==0.20.2
 scipy
 numpy==1.17
+h5py==2.10.0
 seqeval
 h5py
 tqdm==4.35.0
