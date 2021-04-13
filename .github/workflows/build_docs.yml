@@ -1,6 +1,9 @@
 name: Build documentation
 
 on:
+  push:
+    branches:
+    - master
   release:
     types: [published]
 
