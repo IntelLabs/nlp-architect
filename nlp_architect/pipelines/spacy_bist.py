@@ -167,13 +167,4 @@ def _download_pretrained_model():
             "bist-pretrained.zip",
             zip_path,
         )
-
-        # download_unlicensed_file(
-        #     "https://d2zs9tzlek599f.cloudfront.net/models/dep_parse/",
-        #     "bist-pretrained.zip",
-        #     zip_path,
-        # )
-        # print("Unzipping...")
-        # uncompress_file(zip_path, outpath=str(SpacyBISTParser.dir))
-        # remove(zip_path)
         print("Done.")
