@@ -36,7 +36,7 @@ numpy==1.17
 opt-einsum==3.3.0
 packaging==20.4
 pandas
-Pillow==8.0.0
+Pillow==9.0.0
 plac==0.9.6
 preshed==2.0.1
 protobuf==3.13.0
