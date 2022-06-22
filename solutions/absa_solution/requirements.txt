@@ -32,7 +32,7 @@ Markdown==3.3.2
 MarkupSafe==1.1.1
 murmurhash==1.0.2
 nltk==3.5
-numpy==1.17
+numpy==1.22.0
 opt-einsum==3.3.0
 packaging==20.4
 pandas
