@@ -39,7 +39,7 @@ pandas
 Pillow==8.0.0
 plac==0.9.6
 preshed==2.0.1
-protobuf==3.13.0
+protobuf==3.18.3
 pycrypto==2.6.1
 pyparsing==2.4.7
 python-dateutil==2.8.1
