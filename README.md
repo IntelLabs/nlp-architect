@@ -1,182 +1,63 @@
-<p align="center">
-    <br>
-    <img src="https://raw.githubusercontent.com/NervanaSystems/nlp-architect/master/docs-source/source/assets/nlp_architect_logo_trans.png" width="400"/>
-    <br>
-<p>
-<h2 align="center">
-A Deep Learning NLP/NLU library by <a href="https://www.intel.ai/research/">Intel® AI Lab</a>
-</h2>
-<p align="center">
-    <a href="https://github.com/NervanaSystems/nlp-architect/blob/master/LICENSE">
-        <img alt="GitHub" src="https://img.shields.io/github/license/NervanaSystems/nlp-architect.svg?color=blue&style=flat-square">
-    </a>
-    <a href="http://nlp_architect.nervanasys.com">
-        <img alt="Website" src="https://img.shields.io/website/http/nlp_architect.nervanasys.com.svg?down_color=red&down_message=offline&style=flat-square&up_message=online">
-    </a>
-    <a href="https://github.com/NervanaSystems/nlp-architect/releases">
-        <img alt="GitHub release" src="https://img.shields.io/github/release/NervanaSystems/nlp-architect.svg?style=flat-square">
-    </a>
-    <a href="https://pepy.tech/project/nlp-architect/month">
-        <img src="https://pepy.tech/badge/nlp-architect/month">
-    </a>
-</p>
+# Cross-Domain Aspect Extraction using Transformers Augmented with Knowledge Graphs
 
-<h4 align="center">
-  <a href="#overview">Overview</a> |
-  <a href="#models">Models</a> |
-  <a href="#installing-nlp-architect">Installation</a> |
-  <a href="https://github.com/NervanaSystems/nlp-architect/tree/master/examples">Examples</a> <a href="http://nlp_architect.nervanasys.com/"></a> |
-  <a href="http://nlp_architect.nervanasys.com">Documentation</a> |
-  <a href="https://github.com/NervanaSystems/nlp-architect/tree/master/tutorials">Tutorials</a> |
-  <a href="http://nlp_architect.nervanasys.com/developer_guide.html">Contributing</a>
-</h4>
+Repository for aspect extraction with knowledge-enhanced transformers as described in our CIKM 2022 paper:
 
-NLP Architect is an open source Python library for exploring state-of-the-art
-deep learning topologies and techniques for optimizing Natural Language Processing and
-Natural Language Understanding Neural Networks.
+> [Cross-Domain Aspect Extraction using Transformers Augmented with Knowledge Graphs](http://arxiv.org/abs/2210.10144).
+> Phillip Howard, Arden Ma, Vasudev Lal, Ana Paula Simoes, Daniel Korat, Oren Pereg, Moshe Wasserblat and Gadi Singer.
+> Proceedings of the 31st ACM International Conference on Information & Knowledge Management (CIKM '22).
 
-## Overview
+## Install dependencies
 
-NLP Architect is an NLP library designed to be flexible, easy to extend, allow for easy and rapid integration of NLP models in applications and to showcase optimized models.
-
-Features:
-
-* Core NLP models used in many NLP tasks and useful in many NLP applications
-* Novel NLU models showcasing novel topologies and techniques
-* Optimized NLP/NLU models showcasing different optimization algorithms on neural NLP/NLU models
-* Model-oriented design:
-  * Train and run models from command-line.
-  * API for using models for inference in python.
-  * Procedures to define custom processes for training,    inference or anything related to processing.
-  * CLI sub-system for running procedures
-* Based on optimized Deep Learning frameworks:
-
-  * [TensorFlow]
-  * [PyTorch]
-  * [Dynet]
-
-* Essential utilities for working with NLP models - Text/String pre-processing, IO, data-manipulation, metrics, embeddings.
-
-## Installing NLP Architect
-
-We recommend to install NLP Architect in a new python environment, to use python 3.6+ with up-to-date `pip`, `setuptools` and `h5py`.
-
-### Install using `pip`
-
-Install core library only
-
-```sh
-pip install nlp-architect
+Create a new virtual environment and update pip:
+```
+python3.8 -m venv venv
+source venv/bin/activate
+pip install --upgrade pip
 ```
 
-### Install from source (Github)
-
-Includes core library, examples, solutions and tutorials:
-
-```sh
-git clone https://github.com/NervanaSystems/nlp-architect.git
-cd nlp-architect
-pip install -e .  # install in developer mode
+For machines with CUDA 10:
+```
+pip install -r requirements.txt
+```
+For machines with CUDA 11:
+```
+pip install -r requirements.txt --extra-index-url=https://download.pytorch.org/whl/cu113
 ```
 
-### Running Examples and Solutions
+## Download model files
 
-To run provided examples and solutions please install the library with `[all]` flag which will install extra packages required. (requires installation from source)
-
-```sh
-pip install .[all]
+```
+wget -O nlp_architect/models/aspect_extraction_with_kg/bert-base-uncased/config.json https://s3.amazonaws.com/models.huggingface.co/bert/bert-base-uncased-config.json
+wget -O nlp_architect/models/aspect_extraction_with_kg/bert-base-uncased/pytorch_model.bin https://s3.amazonaws.com/models.huggingface.co/bert/bert-base-uncased-pytorch_model.bin
 ```
 
+## Prepare KGs and data (optional)
 
-## Models
+Our domain-specific KGs and datasets are included in this repository. If you would like to manually generate the KGs and datasets, first run ``prepare_kg.ipynb`` to prepare the domain-specific KGs. By default, this notebook is configured to query the public ConceptNet API, which is very slow. We strongly recommend that you setup your own local ConceptNet API server and then modify ``cn_url`` in ``prepare_kg.ipynb`` to point to your local API endpoint. For instructions on setting up a local ConceptNet API server, see [this page](https://www.cs.utah.edu/~tli/posts/2018/09/blog-post-3/).
 
-NLP models that provide best (or near) in class performance:
+The ``prepare_kg.ipynb`` notebook will produce a file named ``seed_dist.pkl`` which contains the domain-specific knowledge graphs. Once this file has been created, you can then run the ``inject_knowledge.ipynb`` notebook to inject knowledge into the datasets for training and inference. 
 
-* [Word chunking](http://nlp_architect.nervanasys.com/tagging/sequence_tagging.html#word-chunker)
-* [Named Entity Recognition](http://nlp_architect.nervanasys.com/tagging/sequence_tagging.html#named-entity-recognition)
-* [Dependency parsing](http://nlp_architect.nervanasys.com/bist_parser.html)
-* [Intent Extraction](http://nlp_architect.nervanasys.com/intent.html)
-* [Sentiment classification](http://nlp_architect.nervanasys.com/sentiment.html#supervised-sentiment)
-* [Language models](http://nlp_architect.nervanasys.com/lm.html#language-modeling-with-tcn)
-* [Transformers](http://nlp_architect.nervanasys.com/transformers.html) (for NLP tasks)
+## Run experiments
 
-Natural Language Understanding (NLU) models that address semantic understanding:
+Prior to running the experiments, you may want to modify the model configuration files based on the number of GPUs you wish to use. The configuration files are located in ``nlp_architect/models/aspect_extraction_with_kg/config/``. By default, the experiments will be split across 3 GPUs with device IDs speicfied by the ``gpus`` list of the config file.
 
-* [Aspect Based Sentiment Analysis (ABSA)](http://nlp_architect.nervanasys.com/absa.html)
-* [Joint intent detection and slot tagging](http://nlp_architect.nervanasys.com/intent.html)
-* [Noun phrase embedding representation (NP2Vec)](http://nlp_architect.nervanasys.com/np2vec.html)
-* [Most common word sense detection](http://nlp_architect.nervanasys.com/word_sense.html)
-* [Relation identification](http://nlp_architect.nervanasys.com/identifying_semantic_relation.html)
-* [Cross document coreference](http://nlp_architect.nervanasys.com/cross_doc_coref.html)
-* [Noun phrase semantic segmentation](http://nlp_architect.nervanasys.com/np_segmentation.html)
+To run the BERT-PT experiment:
 
-Optimizing NLP/NLU models and misc. optimization techniques:
+```
+cd nlp_architect/models/aspect_extraction_with_kg/
+python run.py bert_pt
+```
 
-* [Quantized BERT (8bit)](http://nlp_architect.nervanasys.com/quantized_bert.html)
-* [Knowledge Distillation using Transformers](http://nlp_architect.nervanasys.com/transformers_distillation.html)
-* [Sparse and Quantized Neural Machine Translation (GNMT)](http://nlp_architect.nervanasys.com/sparse_gnmt.html)
+To run the DeBERTa-PT experiment:
 
-Solutions (End-to-end applications) using one or more models:
+```
+cd nlp_architect/models/aspect_extraction_with_kg/
+python run_ray.py deberta_pt
+```
 
-* [Term Set expansion](http://nlp_architect.nervanasys.com/term_set_expansion.html) - uses the included word chunker as a noun phrase extractor and NP2Vec to create semantic term sets
-* [Topics and trend analysis](http://nlp_architect.nervanasys.com/trend_analysis.html) - analyzing trending phrases in temporal corpora
-* [Aspect Based Sentiment Analysis (ABSA)](http://nlp_architect.nervanasys.com/absa_solution.html)
+To run the DeBERTa-MA experiment:
 
-## Documentation
-
-Full library [documentation](http://nlp_architect.nervanasys.com/) of NLP models, algorithms, solutions and instructions
-on how to run each model can be found on our [website](http://nlp_architect.nervanasys.com/).
-
-## NLP Architect library design philosophy
-
-NLP Architect is a _model-oriented_ library designed to showcase novel and different neural network optimizations. The library contains NLP/NLU related models per task, different neural network topologies (which are used in models), procedures for simplifying workflows in the library, pre-defined data processors and dataset loaders and misc utilities.
-The library is designed to be a tool for model development: data pre-process, build model, train, validate, infer, save or load a model.
-
-The main design guidelines are:
-
-* Deep Learning framework agnostic
-* NLP/NLU models per task
-* Different topologies used in models
-* Showcase End-to-End applications (Solutions) utilizing one or more NLP Architect model
-* Generic dataset loaders, textual data processing utilities, and miscellaneous utilities that support NLP model development (loaders, text processors, io, metrics, etc.)
-* Procedures for defining processes for training, inference, optimization or any kind of elaborate script.
-* Pythonic API for using models for inference
-* Extensive model documentation and tutorials
-
-### Note
-
-NLP Architect is an active space of research and development; Throughout future
-releases new models, solutions, topologies and framework additions and changes
-will be made. We aim to make sure all models run with Python 3.6+. We
-encourage researchers and developers to contribute their work into the library.
-
-## Citing
-
-If you use NLP Architect in your research, please use the following citation:
-
-    @misc{izsak_peter_2018_1477518,
-      title        = {NLP Architect by Intel AI Lab},
-      month        = nov,
-      year         = 2018,
-      doi          = {10.5281/zenodo.1477518},
-      url          = {https://doi.org/10.5281/zenodo.1477518}
-    }
-
-## Disclaimer
-
-The NLP Architect is released as reference code for research purposes. It is
-not an official Intel product, and the level of quality and support may not be
-as expected from an official product. NLP Architect is intended to be used
-locally and has not been designed, developed or evaluated for production
-usage or web-deployment. Additional algorithms and environments are planned
-to be added to the framework. Feedback and contributions from the open source
-and NLP research communities are more than welcome.
-
-## Contact
-Contact the NLP Architect development team through Github issues or
-email: nlp_architect@intel.com
-
-[documentation]:http://nlp_architect.nervanasys.com
-[TensorFlow]:https://www.tensorflow.org/
-[PyTorch]:https://pytorch.org/
-[Dynet]:https://dynet.readthedocs.io/en/latest/
+```
+cd nlp_architect/models/aspect_extraction_with_kg/
+python run_ray.py deberta_ma
+```
