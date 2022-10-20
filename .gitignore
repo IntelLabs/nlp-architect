@@ -1,5 +1,4 @@
 *.pyc
-*.pkl
 *.prm
 .DS_Store
 .pkgs
@@ -27,6 +26,11 @@ cache/
 nlp_architect/models/libert/cache/*
 nlp_architect/models/libert/models/*
 nlp_architect/models/libert/logs/*
-nlp_architect/models/libert/data/*
+nlp_architect/models/aspect_extraction_with_kg/cache/*
+nlp_architect/models/aspect_extraction_with_kg/models/*
+nlp_architect/models/aspect_extraction_with_kg/logs/*
 *.npz
 cached_*
+nlp_architect/models/aspect_extraction_with_kg/bert-base-uncased/config.json
+nlp_architect/models/aspect_extraction_with_kg/bert-base-uncased/pytorch_model.bin
+*.ipynb_checkpoints*

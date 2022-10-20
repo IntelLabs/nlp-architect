@@ -1,0 +1,64 @@
+max_epochs: 10
+model_type: custom_deberta
+base_init: [false]
+
+#data: lr rl # relative to nlp_architect/models/li_bert/data/preprocessed_conll
+data: rl rd lr ld dr dl
+limit_data: 1.0
+splits: 3
+seeds: [7, 25, 26]
+tag: # optional: name this experiment version
+metric: asp_f1
+baseline_str: libert_rnd_init
+baseline_version: version_baseline
+
+############################## DeBERTa-MA Options #################################
+mark_embeddings_enabled: True   # must be true for DeBERTa-MA (c2m/m2c)
+mark_embeddings_init: random    # random, binary, or orthogonal
+mark_projection_init: random    # random, content, or position
+mark_embeddings_fixed: False    # if we want to learn the mark embeddings
+c2m: True                       # enable/disable c2m attention component
+m2c: True                       # enable/disable m2c attention component
+c2m_scalar: 1                   # arbitrarily scale the c2m attention component
+m2c_scalar: 1                   # arbitrarily scale the m2c attention component
+###################################################################################
+
+num_workers: 8
+gpus: [0, 1, 2] # split experiments across the first three GPUs
+parallel: true
+
+li_layer: #5
+li_layers: #[2]
+all_layers: true
+relation: ""
+parse_probs: false
+replace_final: false
+duplicated_rels: false
+transpose: false
+use_syntactic_rels: true
+
+do_train: true
+do_predict: true
+
+overwrite_cache: true # if false, loads features from cached file (faster)
+cache_dir: # default: nlp-architect/nlp_architect/cache
+output_dir: models/
+data_root: data/knowledge_injected/deberta/
+labels: labels.txt # relative to nlp_architect/models/libert/data
+
+model_name_or_path: microsoft/deberta-base
+train_batch_size: 8
+eval_batch_size: 8
+max_seq_length: 64
+adam_epsilon: 1.0e-08
+fast_dev_run: false
+accumulate_grad_batches: 1
+learning_rate: 5.0e-05
+gradient_clip_val: 1.0
+n_tpu_cores: 0
+resume_from_checkpoint: null
+tokenizer_name: null
+val_check_interval: 1.0
+warmup_steps: 0
+weight_decay: 0.0
+logger: true
