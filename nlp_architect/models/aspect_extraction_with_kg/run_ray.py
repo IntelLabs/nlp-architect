@@ -151,7 +151,7 @@ def post_analysis(cfg, log_dir, exp_id):
     write_summary_tables(cfg, exp_id)
 
 def summarize_results(directory):
-    folders = [f for f in os.listdir(directory) if f not in ['gpus', 'time.log']]
+    folders = [f for f in os.listdir(directory) if f not in ['gpus', 'time.log', 'tasks']]
     results = {}
     for dataset in folders:
         subfolders = os.listdir(directory / dataset)

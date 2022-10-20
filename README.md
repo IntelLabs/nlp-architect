@@ -61,3 +61,5 @@ To run the DeBERTa-MA experiment:
 cd nlp_architect/models/aspect_extraction_with_kg/
 python run_ray.py deberta_ma
 ```
+
+After running an experiment, the mean aspect F1 for each cross-domain setting will be printed. See ``nlp_architect/models/aspect_extraction_with_kg/logs/latest/results.csv`` for more detailed results.
