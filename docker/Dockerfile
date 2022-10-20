@@ -9,7 +9,7 @@ RUN python3 -m pip install --no-cache-dir --upgrade pip setuptools && \
     python3 -m pip install --no-cache-dir jupyter
 
 WORKDIR /workspace
-RUN git clone https://github.com/NervanaSystems/nlp-architect.git
+RUN git clone https://github.com/IntelLabs/nlp-architect.git
 RUN cd nlp-architect/ && \
     python3 -m pip install -e .[all,dev] && \
     python3 -m pip install -r server/requirements.txt && \

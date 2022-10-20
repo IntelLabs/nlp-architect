@@ -12,18 +12,18 @@ Producing sentiment knowledge at the aspect level (vs. sentence-level) provides 
 
 ## Video Demo
 
-[![Video Demo](https://raw.githubusercontent.com/NervanaSystems/nlp-architect/absa/nlp_architect/solutions/absa_solution/assets/video.png)](https://drive.google.com/open?id=1BLk0xkjIOqyRhNy4UQEFQpDF_KR_NMAd)
+[![Video Demo](https://raw.githubusercontent.com/IntelLabs/nlp-architect/master/solutions/absa_solution/assets/video.png)](https://drive.google.com/open?id=1BLk0xkjIOqyRhNy4UQEFQpDF_KR_NMAd)
 *Figure 1*
 
 
 ## Workflow and UI
 
-![Workflow](http://nlp_architect.nervanasys.com/_images/absa_solution_workflow.png)  
+![Workflow](https://raw.githubusercontent.com/IntelLabs/nlp-architect/master/solutions/absa_solution/assets/absa_solution_workflow.png)  
 *Figure 2*
 
 
 
-![Workflow](https://raw.githubusercontent.com/NervanaSystems/nlp-architect/absa/nlp_architect/solutions/absa_solution/assets/absa_solution_ui_3.png)
+![Workflow](https://raw.githubusercontent.com/IntelLabs/nlp-architect/master/solutions/absa_solution/assets/absa_solution_ui_3.png)
 *Figure 3*  
 
 
@@ -54,18 +54,21 @@ source absa_env/bin/activate
 - **Clone and install**:
 
 ```bash
-git clone https://github.com/NervanaSystems/nlp-architect.git
+git clone https://github.com/IntelLabs/nlp-architect.git
 pip install -U pip
 pip install -e nlp-architect
-pip install -r nlp-architect/nlp_architect/solutions/absa_solution/requirements.txt
+pip install -r nlp-architect/solutions/absa_solution/requirements.txt
+export BOKEH_ALLOW_WS_ORIGIN=127.0.0.1:5007
 ```
 
 ## Run
 
+Note: On first execution, you will be prompted to install Spacy. After installation, please re-run the solution.
+
 ### Served locally
 
 ```bash
-    python nlp-architect/nlp_architect/solutions/absa_solution/ui.py
+    absa_env/bin/python nlp-architect/solutions/absa_solution/ui.py
     open http://localhost:5006
 ```
 
@@ -75,16 +78,7 @@ Replace `USER@REMOTE_HOST` with your username and server's hostname.
 
 ```bash
     ssh USER@REMOTE_HOST -L 5006:REMOTE_HOST:5006
-    export BOKEH_ALLOW_WS_ORIGIN=127.0.0.1:5007
-    python nlp-architect/nlp_architect/solutions/absa_solution/ui.py
-```
-
-When running for the first time, close the remote session (`Ctrl-D`) and reconnect, to update the environment variable:
-
-```bash
-    ssh USER@REMOTE_HOST -L 5006:REMOTE_HOST:5006
-    source absa_env/bin/activate
-    python nlp-architect/nlp_architect/solutions/absa_solution/ui.py
+    absa_env/bin/python nlp-architect/solutions/absa_solution/ui.py
 ```
 
 Open web browser to:  

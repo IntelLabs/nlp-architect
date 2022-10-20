@@ -15,7 +15,7 @@ In this example the sentence can be divided into 4 phrases, `The quick brown fox
 ## Documentation
 
 This model is based on the paper: [Deep multi-task learning with low level tasks supervised at lower layers](http://anthology.aclweb.org/P16-2038). \
-Full documentation of this example and the neural network model can be found here: [http://nlp_architect.nervanasys.com/chunker.html](http://nlp_architect.nervanasys.com/chunker.html)
+Full documentation of this example and the neural network model can be found here: [https://intellabs.github.io/nlp-architect/chunker.html](https://intellabs.github.io/nlp-architect/chunker.html)
 
 ## Dataset
 

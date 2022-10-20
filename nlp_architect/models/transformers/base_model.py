@@ -406,11 +406,12 @@ class TransformerBase(TrainableModel):
             for d in ds:
                 logits, label_ids = self._evaluate(d)
                 f1 = self.evaluate_predictions(logits, label_ids)
-                if i == 0 and f1 > best_dev:  # dev set
-                    new_best_dev = f1
-                    set_test = True
-                    if save_path is not None:
-                        self.save_model(save_path, args=self.training_args)
+                if f1:
+                    if i == 0 and f1 > best_dev:  # dev set
+                        new_best_dev = f1
+                        set_test = True
+                        if save_path is not None:
+                            self.save_model(save_path, args=self.training_args)
                 elif set_test:
                     new_test_dev = f1
                     set_test = False

@@ -140,7 +140,7 @@ class SentimentSolution:
             for file, doc in self._iterate_docs(data_source):
                 parsed_doc = (
                     inference.parser.parse([doc])[0]
-                    if parsed
+                    if not parsed
                     else json.loads(doc, object_hook=CoreNLPDoc.decoder)
                 )
                 sentiment_doc = inference.run(parsed_doc=parsed_doc)

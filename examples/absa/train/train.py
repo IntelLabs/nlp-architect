@@ -14,6 +14,7 @@
 # limitations under the License.
 # ******************************************************************************
 import argparse
+from nlp_architect.models.absa import LEXICONS_OUT
 from os import path
 from pathlib import Path
 
@@ -60,9 +61,7 @@ def main() -> None:
     train = TrainSentiment(parse=not args.parsed_data, rerank_model=args.rerank_model)
     opinion_lex, aspect_lex = train.run(data=args.data, parsed_data=args.parsed_data)
 
-    print("Aspect Lexicon: {}\n".format(aspect_lex) + "=" * 40 + "\n")
-    print("Opinion Lexicon: {}".format(opinion_lex))
-
+    print(f"Done.\nAspect and Opinion lexicons written to {LEXICONS_OUT}.")
 
 if __name__ == "__main__":
     main()

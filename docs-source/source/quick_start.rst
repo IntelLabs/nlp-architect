@@ -35,7 +35,7 @@ From source
 
 .. code:: bash
 
-    git clone https://github.com/NervanaSystems/nlp-architect.git
+    git clone https://github.com/IntelLabs/nlp-architect.git
     cd nlp-architect
     pip install -e .  # install in development mode
 

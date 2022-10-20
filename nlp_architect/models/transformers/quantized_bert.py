@@ -44,6 +44,7 @@ from transformers.modeling_bert import (
     BertSelfOutput,
 )
 
+from nlp_architect.models.pretrained_models import S3_PREFIX
 from nlp_architect.nn.torch.quantization import (
     QuantizationConfig,
     QuantizedEmbedding,
@@ -51,13 +52,14 @@ from nlp_architect.nn.torch.quantization import (
     QuantizedLinear,
 )
 
+
 logger = logging.getLogger(__name__)
 
 QUANT_WEIGHTS_NAME = "quant_pytorch_model.bin"
 
 QUANT_BERT_PRETRAINED_CONFIG_ARCHIVE_MAP = {
-    "bert-base-uncased": "https://nlp-architect-data.s3-us-west-2.amazonaws.com/models/transformers/bert-base-uncased.json",  # noqa: E501
-    "bert-large-uncased": "https://nlp-architect-data.s3-us-west-2.amazonaws.com/models/transformers/bert-large-uncased.json",  # noqa: E501
+    "bert-base-uncased": S3_PREFIX + "/models/transformers/bert-base-uncased.json",  # noqa: E501
+    "bert-large-uncased": S3_PREFIX + "/models/transformers/bert-large-uncased.json",  # noqa: E501
 }
 
 

@@ -19,7 +19,7 @@ from nlp_architect.utils.file_cache import cached_path
 
 from nlp_architect import LIBRARY_OUT
 
-S3_PREFIX = "https://d2zs9tzlek599f.cloudfront.net/"
+S3_PREFIX = "https://d2zs9tzlek599f.cloudfront.net"
 
 
 class PretrainedModel:

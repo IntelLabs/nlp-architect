@@ -76,7 +76,7 @@ setup(
     keywords="NLP NLU deep learning natural language processing tensorflow pytorch",
     author="Intel AI Lab",
     author_email="nlp_architect@intel.com",
-    url="https://github.com/NervanaSystems/nlp-architect",
+    url="https://github.com/IntelLabs/nlp-architect",
     license="Apache 2.0",
     python_requires=">=3.6.*",
     packages=find_packages(

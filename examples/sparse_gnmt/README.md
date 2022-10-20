@@ -26,7 +26,7 @@ You can use the script [wmt16_en_de.sh](https://github.com/tensorflow/nmt/blob/m
 
 ## Results & Pre-Trained Models
 The following table presents some of our experiments and results.
-Furthermore, some of our pre-trained models are offered in the form of checkpoints in our [Model Zoo](http://nlp_architect.nervanasys.com/model_zoo.html).
+Furthermore, some of our pre-trained models are offered in the form of checkpoints in our [Model Zoo](https://intellabs.github.io/nlp-architect/model_zoo.html).
 You can use these models to [Run Inference with Pre-Trained Model](#run-inference-with-pre-trained-model) and evaluate them.
 
 | Model                      | Sparsity | BLEU| Non-Zero Parameters | Data Type |
