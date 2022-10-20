@@ -1,70 +1,35 @@
-
-
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
-  <meta charset="utf-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <title>Word Chunker &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
-  
-
-  
-  
-  
-  
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Word Chunker &mdash; NLP Architect by Intel® AI Lab 0.5.5 documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/nlp_arch_theme.css" type="text/css" />
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script type="text/javascript" src="../_static/jquery.js"></script>
         <script type="text/javascript" src="../_static/underscore.js"></script>
         <script type="text/javascript" src="../_static/doctools.js"></script>
         <script type="text/javascript" src="../_static/language_data.js"></script>
         <script type="text/javascript" src="../_static/install.js"></script>
         <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/nlp_arch_theme.css" type="text/css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
-            <a href="../index.html">
-          
-
-          
-            
-            <img src="../_static/logo.png" class="logo" alt="Logo"/>
-          
+            <a href="../index.html"><img src="../_static/logo.png" class="logo" alt="Logo"/>
           </a>
-
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -72,17 +37,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../quick_start.html">Quick start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
@@ -119,70 +74,33 @@
 <li class="toctree-l1"><a class="reference internal" href="../developer_guide.html">Developer Guide</a></li>
 </ul>
 
-            
-          
         </div>
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">NLP Architect by Intel® AI Lab</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="../index.html">Docs</a> &raquo;</li>
-        
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
       <li>Word Chunker</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-            
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <div class="section" id="word-chunker">
-<h1>Word Chunker<a class="headerlink" href="#word-chunker" title="Permalink to this headline">¶</a></h1>
+<h1>Word Chunker<a class="headerlink" href="#word-chunker" title="Permalink to this headline"></a></h1>
 <div class="section" id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline"></a></h2>
 <p>Phrase chunking is a basic NLP task that consists of tagging parts of a sentence (1 or more tokens)
 syntactically, i.e. POS tagging.</p>
 <div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">The</span> <span class="n">quick</span> <span class="n">brown</span> <span class="n">fox</span> <span class="n">jumped</span> <span class="n">over</span> <span class="n">the</span> <span class="n">fence</span>
@@ -194,7 +112,7 @@ syntactically, i.e. POS tagging.</p>
 are noun phrases, <code class="docutils literal notranslate"><span class="pre">jumped</span></code> is a verb phrase and <code class="docutils literal notranslate"><span class="pre">over</span></code> is a prepositional phrase.</p>
 </div>
 <div class="section" id="dataset">
-<h2>Dataset<a class="headerlink" href="#dataset" title="Permalink to this headline">¶</a></h2>
+<h2>Dataset<a class="headerlink" href="#dataset" title="Permalink to this headline"></a></h2>
 <p>We used the <a class="reference external" href="https://www.clips.uantwerpen.be/conll2000/chunking/">CONLL2000</a> shared task dataset in our example for training a phrase chunker. More info about the <a class="reference external" href="https://www.clips.uantwerpen.be/conll2000/chunking/">CONLL2000</a> shared task can be found here: <a class="reference external" href="https://www.clips.uantwerpen.be/conll2000/chunking/">https://www.clips.uantwerpen.be/conll2000/chunking/</a>. The terms and conditions of the data set license apply. Intel does not grant any rights to the data files. The annotation of the data has been derived from the WSJ corpus by a program written by Sabine Buchholz from Tilburg University, The Netherlands.</p>
 <p>The <a class="reference external" href="https://www.clips.uantwerpen.be/conll2000/chunking/">CONLL2000</a> dataset has a <code class="docutils literal notranslate"><span class="pre">train_set</span></code> and <code class="docutils literal notranslate"><span class="pre">test_set</span></code> sets consisting of 8926 and 2009 sentences annotated with Part-of-speech and chunking information.
 We implemented a dataset loader, <a class="reference internal" href="../generated_api/nlp_architect.data.html#nlp_architect.data.sequential_tagging.CONLL2000" title="nlp_architect.data.sequential_tagging.CONLL2000"><code class="xref py py-class docutils literal notranslate"><span class="pre">CONLL2000</span></code></a>, for loading and parsing <a class="reference internal" href="../generated_api/nlp_architect.data.html#nlp_architect.data.sequential_tagging.CONLL2000" title="nlp_architect.data.sequential_tagging.CONLL2000"><code class="xref py py-class docutils literal notranslate"><span class="pre">CONLL2000</span></code></a> data into numpy arrays ready to be used sequential tagging models. For full set of options please see <a class="reference internal" href="../generated_api/nlp_architect.data.html#nlp_architect.data.sequential_tagging.CONLL2000" title="nlp_architect.data.sequential_tagging.CONLL2000"><code class="xref py py-class docutils literal notranslate"><span class="pre">CONLL2000</span></code></a>.</p>
@@ -213,7 +131,7 @@ We implemented a dataset loader, <a class="reference internal" href="../generate
 </ol>
 </div>
 <div class="section" id="model">
-<h2>Model<a class="headerlink" href="#model" title="Permalink to this headline">¶</a></h2>
+<h2>Model<a class="headerlink" href="#model" title="Permalink to this headline"></a></h2>
 <p>The sequence chunker is a Tensorflow-keras based model and it is implemented in <a class="reference internal" href="../generated_api/nlp_architect.models.html#nlp_architect.models.chunker.SequenceChunker" title="nlp_architect.models.chunker.SequenceChunker"><code class="xref py py-class docutils literal notranslate"><span class="pre">SequenceChunker</span></code></a> and comes with several options for creating the topology depending on what input is given (tokens, external word embedding model, topology parameters).</p>
 <p>The model is based on the paper: <a class="reference external" href="http://anthology.aclweb.org/P16-2038">Deep multi-task learning with low level tasks supervised at lower layers</a> by Søgaard and Goldberg (2016), but with minor alterations.</p>
 <p>The described model in the paper consists of multiple sequential Bi-directional LSTM layers which are set to predict different tags. the Part-of-speech tags are projected onto a fully connected layer and label tagging is done after the first LSTM layer. The chunk labels are predicted similarly after the 3rd LSTM layer.</p>
@@ -225,21 +143,21 @@ We implemented a dataset loader, <a class="reference internal" href="../generate
 <p>The model’s embedding vector size and LSTM layer hidden state have equal sizes, the default training optimizer is Adam with default parameters.</p>
 </div>
 <div class="section" id="running-modalities">
-<h2>Running Modalities<a class="headerlink" href="#running-modalities" title="Permalink to this headline">¶</a></h2>
+<h2>Running Modalities<a class="headerlink" href="#running-modalities" title="Permalink to this headline"></a></h2>
 <p>We provide a simple example for training and running inference using the <a class="reference internal" href="../generated_api/nlp_architect.models.html#nlp_architect.models.chunker.SequenceChunker" title="nlp_architect.models.chunker.SequenceChunker"><code class="xref py py-class docutils literal notranslate"><span class="pre">SequenceChunker</span></code></a> model.</p>
 <p><code class="docutils literal notranslate"><span class="pre">examples/chunker/train.py</span></code> will load CONLL2000 dataset and train a model using given training parameters (batch size, epochs, external word embedding, etc.), save the model once done training and print the performance of the model on the test set. The example supports loading GloVe/Fasttext word embedding models to be used when training a model. The training method used in this example trains on both POS and Chunk labels concurrently with equal target loss weights, this is different than what is described in the <a class="reference external" href="http://anthology.aclweb.org/P16-2038">paper</a>.</p>
 <p><code class="docutils literal notranslate"><span class="pre">examples/chunker/inference.py</span></code> will load a saved model and a given text file with sentences and print the chunks found on the stdout.</p>
 <div class="section" id="training">
-<h3>Training<a class="headerlink" href="#training" title="Permalink to this headline">¶</a></h3>
+<h3>Training<a class="headerlink" href="#training" title="Permalink to this headline"></a></h3>
 <div class="section" id="quick-train">
-<h4>Quick train<a class="headerlink" href="#quick-train" title="Permalink to this headline">¶</a></h4>
+<h4>Quick train<a class="headerlink" href="#quick-train" title="Permalink to this headline"></a></h4>
 <p>Train a model with default parameters (use sentence words and default network settings):</p>
 <div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">examples</span><span class="o">/</span><span class="n">chunker</span><span class="o">/</span><span class="n">train</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">data_dir</span> <span class="o">&lt;</span><span class="n">path</span> <span class="n">to</span> <span class="n">CONLL2000</span> <span class="n">files</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="custom-training-parameters">
-<h4>Custom training parameters<a class="headerlink" href="#custom-training-parameters" title="Permalink to this headline">¶</a></h4>
+<h4>Custom training parameters<a class="headerlink" href="#custom-training-parameters" title="Permalink to this headline"></a></h4>
 <p>All customizable parameters can be obtained by running: <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">train.py</span> <span class="pre">-h</span></code></p>
 <table class="docutils option-list" frame="void" rules="none">
 <col class="option" />
@@ -306,7 +224,7 @@ We implemented a dataset loader, <a class="reference internal" href="../generate
 </div>
 </div>
 <div class="section" id="inference">
-<h3>Inference<a class="headerlink" href="#inference" title="Permalink to this headline">¶</a></h3>
+<h3>Inference<a class="headerlink" href="#inference" title="Permalink to this headline"></a></h3>
 <p>Running inference on a trained model using an input file (text based, each line is a document):</p>
 <div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">examples</span><span class="o">/</span><span class="n">chunker</span><span class="o">/</span><span class="n">inference</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">model_name</span> <span class="o">&lt;</span><span class="n">model_name</span><span class="o">&gt;</span> <span class="o">--</span><span class="nb">input</span> <span class="o">&lt;</span><span class="n">input_file</span><span class="o">&gt;.</span><span class="n">txt</span>
 </pre></div>
@@ -317,41 +235,30 @@ We implemented a dataset loader, <a class="reference internal" href="../generate
 
 
            </div>
-           
           </div>
           <footer>
-  
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-
-    </p>
+    <p></p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
-
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

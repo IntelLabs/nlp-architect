@@ -1,72 +1,37 @@
-
-
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
-  <meta charset="utf-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <title>Aspect Based Sentiment Analysis (ABSA) Solution &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
-  
-
-  
-  
-  
-  
-
-  
-  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aspect Based Sentiment Analysis (ABSA) Solution &mdash; NLP Architect by Intel® AI Lab 0.5.5 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/nlp_arch_theme.css" type="text/css" />
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
         <script type="text/javascript" src="_static/jquery.js"></script>
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
         <script type="text/javascript" src="_static/language_data.js"></script>
         <script type="text/javascript" src="_static/install.js"></script>
         <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-
-    
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/nlp_arch_theme.css" type="text/css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Set Expansion Solution" href="term_set_expansion.html" />
     <link rel="prev" title="Compression of Google Neural Machine Translation Model" href="sparse_gnmt.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
-            <a href="index.html">
-          
-
-          
-            
-            <img src="_static/logo.png" class="logo" alt="Logo"/>
-          
+            <a href="index.html"><img src="_static/logo.png" class="logo" alt="Logo"/>
           </a>
-
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -74,17 +39,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
@@ -114,8 +69,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Aspect Based Sentiment Analysis</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#solution-overview">Solution overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#solution-execution">Solution execution</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#flow">Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installing-and-running">Installing and Running</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#workflow-and-ui">Workflow and UI</a></li>
 </ul>
 </li>
@@ -128,75 +82,38 @@
 <li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
 </ul>
 
-            
-          
         </div>
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">NLP Architect by Intel® AI Lab</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="index.html">Docs</a> &raquo;</li>
-        
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
       <li>Aspect Based Sentiment Analysis (ABSA) Solution</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-            
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <div class="section" id="aspect-based-sentiment-analysis-absa-solution">
-<h1>Aspect Based Sentiment Analysis (ABSA) Solution<a class="headerlink" href="#aspect-based-sentiment-analysis-absa-solution" title="Permalink to this headline">¶</a></h1>
+<h1>Aspect Based Sentiment Analysis (ABSA) Solution<a class="headerlink" href="#aspect-based-sentiment-analysis-absa-solution" title="Permalink to this headline"></a></h1>
 <div class="section" id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline"></a></h2>
 <p>Aspect Based Sentiment Analysis is the task of co-extracting opinion terms and aspect terms
 (opinion targets) and the relations between them in a given corpus.</p>
 </div>
 <div class="section" id="solution-overview">
-<h2>Solution overview<a class="headerlink" href="#solution-overview" title="Permalink to this headline">¶</a></h2>
+<h2>Solution overview<a class="headerlink" href="#solution-overview" title="Permalink to this headline"></a></h2>
 <p>The solution flow includes three stages: first, it generates domain-specific aspect and
 opinion lexicons based on an unlabeled dataset; second, it enables the user to view and edit
 those lexicons; and finally, it enables the user to select an unlabeled target dataset from the
@@ -205,24 +122,12 @@ same domain, classify it, and generate an aspect-based sentiment report.</p>
 training, whereas for sentiment classification, the solution calls NLP Architect’s ABSA inference.
 For more details see <a class="reference internal" href="absa.html"><span class="doc">ABSA</span></a>.</p>
 </div>
-<div class="section" id="solution-execution">
-<h2>Solution execution<a class="headerlink" href="#solution-execution" title="Permalink to this headline">¶</a></h2>
-<p>All three stages of the solution are end-to-end executed by a dedicated UI.
-An example for running the UI is available at <code class="docutils literal notranslate"><span class="pre">examples/absa/solution/absa_solution.py</span></code>.</p>
-<p>Install solution extra packages:</p>
-<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">solutions</span><span class="o">/</span><span class="n">absa_solution</span><span class="o">/</span><span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
-</pre></div>
-</div>
-<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="n">examples</span><span class="o">/</span><span class="n">absa</span><span class="o">/</span><span class="n">solution</span><span class="o">/</span><span class="n">absa_solution</span><span class="o">.</span><span class="n">py</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="flow">
-<h2>Flow<a class="headerlink" href="#flow" title="Permalink to this headline">¶</a></h2>
-<img alt="_images/absa_solution_workflow.png" src="_images/absa_solution_workflow.png" />
+<div class="section" id="installing-and-running">
+<h2>Installing and Running<a class="headerlink" href="#installing-and-running" title="Permalink to this headline"></a></h2>
+<p>For instructions on running the end-to-end solution UI, see here: <a class="reference external" href="https://github.com/IntelLabs/nlp-architect/tree/master/solutions/absa_solution#setup">ABSA Solution README</a></p>
 </div>
 <div class="section" id="workflow-and-ui">
-<h2>Workflow and UI<a class="headerlink" href="#workflow-and-ui" title="Permalink to this headline">¶</a></h2>
+<h2>Workflow and UI<a class="headerlink" href="#workflow-and-ui" title="Permalink to this headline"></a></h2>
 <img alt="_images/absa_solution_ui_3.png" src="_images/absa_solution_ui_3.png" />
 <p>Figure 1: The solution’s UI.</p>
 <p>Following is a description of the 3 steps of the solution operation:</p>
@@ -263,41 +168,30 @@ blue and opinion terms are colored in green/red:</p>
 
 
            </div>
-           
           </div>
           <footer>
-  
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-
-    </p>
+    <p></p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
-
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

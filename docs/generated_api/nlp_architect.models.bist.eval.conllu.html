@@ -1,72 +1,37 @@
-
-
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
-  <meta charset="utf-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <title>nlp_architect.models.bist.eval.conllu package &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
-  
-
-  
-  
-  
-  
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>nlp_architect.models.bist.eval.conllu package &mdash; NLP Architect by Intel® AI Lab 0.5.5 documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/nlp_arch_theme.css" type="text/css" />
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script type="text/javascript" src="../_static/jquery.js"></script>
         <script type="text/javascript" src="../_static/underscore.js"></script>
         <script type="text/javascript" src="../_static/doctools.js"></script>
         <script type="text/javascript" src="../_static/language_data.js"></script>
         <script type="text/javascript" src="../_static/install.js"></script>
         <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/nlp_arch_theme.css" type="text/css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="nlp_architect.models.cross_doc_coref package" href="nlp_architect.models.cross_doc_coref.html" />
     <link rel="prev" title="nlp_architect.models.bist.eval package" href="nlp_architect.models.bist.eval.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
-            <a href="../index.html">
-          
-
-          
-            
-            <img src="../_static/logo.png" class="logo" alt="Logo"/>
-          
+            <a href="../index.html"><img src="../_static/logo.png" class="logo" alt="Logo"/>
           </a>
-
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -74,17 +39,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../quick_start.html">Quick start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
@@ -156,160 +111,108 @@
 <li class="toctree-l1"><a class="reference internal" href="../developer_guide.html">Developer Guide</a></li>
 </ul>
 
-            
-          
         </div>
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">NLP Architect by Intel® AI Lab</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="../index.html">Docs</a> &raquo;</li>
-        
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="nlp_architect_api_index.html"><code class="docutils literal notranslate"><span class="pre">nlp\_architect</span></code> package</a> &raquo;</li>
-        
           <li><a href="nlp_architect.models.html">nlp_architect.models package</a> &raquo;</li>
-        
           <li><a href="nlp_architect.models.bist.html">nlp_architect.models.bist package</a> &raquo;</li>
-        
           <li><a href="nlp_architect.models.bist.eval.html">nlp_architect.models.bist.eval package</a> &raquo;</li>
-        
       <li>nlp_architect.models.bist.eval.conllu package</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-            
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <div class="section" id="nlp-architect-models-bist-eval-conllu-package">
-<h1>nlp_architect.models.bist.eval.conllu package<a class="headerlink" href="#nlp-architect-models-bist-eval-conllu-package" title="Permalink to this headline">¶</a></h1>
+<h1>nlp_architect.models.bist.eval.conllu package<a class="headerlink" href="#nlp-architect-models-bist-eval-conllu-package" title="Permalink to this headline"></a></h1>
 <div class="section" id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
 </div>
 <div class="section" id="module-nlp_architect.models.bist.eval.conllu.conll17_ud_eval">
-<span id="nlp-architect-models-bist-eval-conllu-conll17-ud-eval-module"></span><h2>nlp_architect.models.bist.eval.conllu.conll17_ud_eval module<a class="headerlink" href="#module-nlp_architect.models.bist.eval.conllu.conll17_ud_eval" title="Permalink to this headline">¶</a></h2>
+<span id="nlp-architect-models-bist-eval-conllu-conll17-ud-eval-module"></span><h2>nlp_architect.models.bist.eval.conllu.conll17_ud_eval module<a class="headerlink" href="#module-nlp_architect.models.bist.eval.conllu.conll17_ud_eval" title="Permalink to this headline"></a></h2>
 <dl class="exception">
 <dt id="nlp_architect.models.bist.eval.conllu.conll17_ud_eval.UDError">
-<em class="property">exception </em><code class="descclassname">nlp_architect.models.bist.eval.conllu.conll17_ud_eval.</code><code class="descname">UDError</code><a class="reference internal" href="../_modules/nlp_architect/models/bist/eval/conllu/conll17_ud_eval.html#UDError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.bist.eval.conllu.conll17_ud_eval.UDError" title="Permalink to this definition">¶</a></dt>
+<em class="property">exception </em><code class="descclassname">nlp_architect.models.bist.eval.conllu.conll17_ud_eval.</code><code class="descname">UDError</code><a class="reference internal" href="../_modules/nlp_architect/models/bist/eval/conllu/conll17_ud_eval.html#UDError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.bist.eval.conllu.conll17_ud_eval.UDError" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
 </dd></dl>
 
 <dl class="function">
 <dt id="nlp_architect.models.bist.eval.conllu.conll17_ud_eval.evaluate">
-<code class="descclassname">nlp_architect.models.bist.eval.conllu.conll17_ud_eval.</code><code class="descname">evaluate</code><span class="sig-paren">(</span><em>gold_ud</em>, <em>system_ud</em>, <em>deprel_weights=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/bist/eval/conllu/conll17_ud_eval.html#evaluate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.bist.eval.conllu.conll17_ud_eval.evaluate" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nlp_architect.models.bist.eval.conllu.conll17_ud_eval.</code><code class="descname">evaluate</code><span class="sig-paren">(</span><em>gold_ud</em>, <em>system_ud</em>, <em>deprel_weights=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/bist/eval/conllu/conll17_ud_eval.html#evaluate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.bist.eval.conllu.conll17_ud_eval.evaluate" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="nlp_architect.models.bist.eval.conllu.conll17_ud_eval.evaluate_wrapper">
-<code class="descclassname">nlp_architect.models.bist.eval.conllu.conll17_ud_eval.</code><code class="descname">evaluate_wrapper</code><span class="sig-paren">(</span><em>gold_file: str</em>, <em>system_file: str</em>, <em>weights_file: str</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/bist/eval/conllu/conll17_ud_eval.html#evaluate_wrapper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.bist.eval.conllu.conll17_ud_eval.evaluate_wrapper" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nlp_architect.models.bist.eval.conllu.conll17_ud_eval.</code><code class="descname">evaluate_wrapper</code><span class="sig-paren">(</span><em>gold_file: str</em>, <em>system_file: str</em>, <em>weights_file: str</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/bist/eval/conllu/conll17_ud_eval.html#evaluate_wrapper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.bist.eval.conllu.conll17_ud_eval.evaluate_wrapper" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="nlp_architect.models.bist.eval.conllu.conll17_ud_eval.load_conllu">
-<code class="descclassname">nlp_architect.models.bist.eval.conllu.conll17_ud_eval.</code><code class="descname">load_conllu</code><span class="sig-paren">(</span><em>file</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/bist/eval/conllu/conll17_ud_eval.html#load_conllu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.bist.eval.conllu.conll17_ud_eval.load_conllu" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nlp_architect.models.bist.eval.conllu.conll17_ud_eval.</code><code class="descname">load_conllu</code><span class="sig-paren">(</span><em>file</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/bist/eval/conllu/conll17_ud_eval.html#load_conllu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.bist.eval.conllu.conll17_ud_eval.load_conllu" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="nlp_architect.models.bist.eval.conllu.conll17_ud_eval.load_conllu_file">
-<code class="descclassname">nlp_architect.models.bist.eval.conllu.conll17_ud_eval.</code><code class="descname">load_conllu_file</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/bist/eval/conllu/conll17_ud_eval.html#load_conllu_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.bist.eval.conllu.conll17_ud_eval.load_conllu_file" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nlp_architect.models.bist.eval.conllu.conll17_ud_eval.</code><code class="descname">load_conllu_file</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/bist/eval/conllu/conll17_ud_eval.html#load_conllu_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.bist.eval.conllu.conll17_ud_eval.load_conllu_file" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="nlp_architect.models.bist.eval.conllu.conll17_ud_eval.load_deprel_weights">
-<code class="descclassname">nlp_architect.models.bist.eval.conllu.conll17_ud_eval.</code><code class="descname">load_deprel_weights</code><span class="sig-paren">(</span><em>weights_file</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/bist/eval/conllu/conll17_ud_eval.html#load_deprel_weights"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.bist.eval.conllu.conll17_ud_eval.load_deprel_weights" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nlp_architect.models.bist.eval.conllu.conll17_ud_eval.</code><code class="descname">load_deprel_weights</code><span class="sig-paren">(</span><em>weights_file</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/bist/eval/conllu/conll17_ud_eval.html#load_deprel_weights"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.bist.eval.conllu.conll17_ud_eval.load_deprel_weights" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="nlp_architect.models.bist.eval.conllu.conll17_ud_eval.run_conllu_eval">
-<code class="descclassname">nlp_architect.models.bist.eval.conllu.conll17_ud_eval.</code><code class="descname">run_conllu_eval</code><span class="sig-paren">(</span><em>gold_file</em>, <em>test_file</em>, <em>weights_file='/Users/pizsak/Peter/Repositories/nlp-architect/nlp_architect/models/bist/eval/conllu/weights.clas'</em>, <em>verbose=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/bist/eval/conllu/conll17_ud_eval.html#run_conllu_eval"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.bist.eval.conllu.conll17_ud_eval.run_conllu_eval" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nlp_architect.models.bist.eval.conllu.conll17_ud_eval.</code><code class="descname">run_conllu_eval</code><span class="sig-paren">(</span><em>gold_file</em>, <em>test_file</em>, <em>weights_file='/home/runner/work/nlp-architect/nlp-architect/nlp_architect/models/bist/eval/conllu/weights.clas'</em>, <em>verbose=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/bist/eval/conllu/conll17_ud_eval.html#run_conllu_eval"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.bist.eval.conllu.conll17_ud_eval.run_conllu_eval" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </div>
 <div class="section" id="module-nlp_architect.models.bist.eval.conllu">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-nlp_architect.models.bist.eval.conllu" title="Permalink to this headline">¶</a></h2>
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-nlp_architect.models.bist.eval.conllu" title="Permalink to this headline"></a></h2>
 </div>
 </div>
 
 
            </div>
-           
           </div>
           <footer>
-  
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-
-    </p>
+    <p></p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
-
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

@@ -1,72 +1,37 @@
-
-
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
-  <meta charset="utf-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <title>nlp_architect.models.absa package &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
-  
-
-  
-  
-  
-  
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>nlp_architect.models.absa package &mdash; NLP Architect by Intel® AI Lab 0.5.5 documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/nlp_arch_theme.css" type="text/css" />
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script type="text/javascript" src="../_static/jquery.js"></script>
         <script type="text/javascript" src="../_static/underscore.js"></script>
         <script type="text/javascript" src="../_static/doctools.js"></script>
         <script type="text/javascript" src="../_static/language_data.js"></script>
         <script type="text/javascript" src="../_static/install.js"></script>
         <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/nlp_arch_theme.css" type="text/css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="nlp_architect.models.absa.inference package" href="nlp_architect.models.absa.inference.html" />
     <link rel="prev" title="nlp_architect.models package" href="nlp_architect.models.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
-            <a href="../index.html">
-          
-
-          
-            
-            <img src="../_static/logo.png" class="logo" alt="Logo"/>
-          
+            <a href="../index.html"><img src="../_static/logo.png" class="logo" alt="Logo"/>
           </a>
-
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -74,17 +39,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../quick_start.html">Quick start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
@@ -156,74 +111,35 @@
 <li class="toctree-l1"><a class="reference internal" href="../developer_guide.html">Developer Guide</a></li>
 </ul>
 
-            
-          
         </div>
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">NLP Architect by Intel® AI Lab</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="../index.html">Docs</a> &raquo;</li>
-        
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="nlp_architect_api_index.html"><code class="docutils literal notranslate"><span class="pre">nlp\_architect</span></code> package</a> &raquo;</li>
-        
           <li><a href="nlp_architect.models.html">nlp_architect.models package</a> &raquo;</li>
-        
       <li>nlp_architect.models.absa package</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-            
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <div class="section" id="nlp-architect-models-absa-package">
-<h1>nlp_architect.models.absa package<a class="headerlink" href="#nlp-architect-models-absa-package" title="Permalink to this headline">¶</a></h1>
+<h1>nlp_architect.models.absa package<a class="headerlink" href="#nlp-architect-models-absa-package" title="Permalink to this headline"></a></h1>
 <div class="section" id="subpackages">
-<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="nlp_architect.models.absa.inference.html">nlp_architect.models.absa.inference package</a><ul>
@@ -248,13 +164,18 @@
 </div>
 </div>
 <div class="section" id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
 </div>
 <div class="section" id="module-nlp_architect.models.absa.utils">
-<span id="nlp-architect-models-absa-utils-module"></span><h2>nlp_architect.models.absa.utils module<a class="headerlink" href="#module-nlp_architect.models.absa.utils" title="Permalink to this headline">¶</a></h2>
+<span id="nlp-architect-models-absa-utils-module"></span><h2>nlp_architect.models.absa.utils module<a class="headerlink" href="#module-nlp_architect.models.absa.utils" title="Permalink to this headline"></a></h2>
+<dl class="function">
+<dt id="nlp_architect.models.absa.utils.csv_line_iterator">
+<code class="descclassname">nlp_architect.models.absa.utils.</code><code class="descname">csv_line_iterator</code><span class="sig-paren">(</span><em>csv_file</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/absa/utils.html#csv_line_iterator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.absa.utils.csv_line_iterator" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
 <dl class="function">
 <dt id="nlp_architect.models.absa.utils.load_opinion_lex">
-<code class="descclassname">nlp_architect.models.absa.utils.</code><code class="descname">load_opinion_lex</code><span class="sig-paren">(</span><em>file_name: Union[str, os.PathLike]</em><span class="sig-paren">)</span> &#x2192; dict<a class="reference internal" href="../_modules/nlp_architect/models/absa/utils.html#load_opinion_lex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.absa.utils.load_opinion_lex" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nlp_architect.models.absa.utils.</code><code class="descname">load_opinion_lex</code><span class="sig-paren">(</span><em>file_name: Union[str, os.PathLike]</em><span class="sig-paren">)</span> &#x2192; dict<a class="reference internal" href="../_modules/nlp_architect/models/absa/utils.html#load_opinion_lex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.absa.utils.load_opinion_lex" title="Permalink to this definition"></a></dt>
 <dd><p>Read opinion lexicon from CSV file.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -268,7 +189,7 @@
 
 <dl class="function">
 <dt id="nlp_architect.models.absa.utils.parse_dir">
-<code class="descclassname">nlp_architect.models.absa.utils.</code><code class="descname">parse_dir</code><span class="sig-paren">(</span><em>parser, input_dir: Union[str, os.PathLike], out_dir: Union[str, os.PathLike] = None, show_tok=True, show_doc=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/absa/utils.html#parse_dir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.absa.utils.parse_dir" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nlp_architect.models.absa.utils.</code><code class="descname">parse_dir</code><span class="sig-paren">(</span><em>parser, input_dir: Union[str, os.PathLike], out_dir: Union[str, os.PathLike] = None, show_tok=True, show_doc=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/absa/utils.html#parse_dir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.absa.utils.parse_dir" title="Permalink to this definition"></a></dt>
 <dd><p>Parse a directory of raw text documents, one by one.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -292,14 +213,19 @@
 
 <dl class="function">
 <dt id="nlp_architect.models.absa.utils.parse_docs">
-<code class="descclassname">nlp_architect.models.absa.utils.</code><code class="descname">parse_docs</code><span class="sig-paren">(</span><em>parser: nlp_architect.pipelines.spacy_bist.SpacyBISTParser, docs: Union[str, os.PathLike], out_dir: Union[str, os.PathLike] = None, show_tok=True, show_doc=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/absa/utils.html#parse_docs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.absa.utils.parse_docs" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nlp_architect.models.absa.utils.</code><code class="descname">parse_docs</code><span class="sig-paren">(</span><em>parser, docs: Union[str, os.PathLike], out_dir: Union[str, os.PathLike] = None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/absa/utils.html#parse_docs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.absa.utils.parse_docs" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="nlp_architect.models.absa.utils.parse_docs_bist">
+<code class="descclassname">nlp_architect.models.absa.utils.</code><code class="descname">parse_docs_bist</code><span class="sig-paren">(</span><em>parser, docs: Union[str, os.PathLike], out_dir: Union[str, os.PathLike] = None, show_tok=True, show_doc=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/absa/utils.html#parse_docs_bist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.absa.utils.parse_docs_bist" title="Permalink to this definition"></a></dt>
 <dd><p>Parse raw documents in the form of text files in a directory or lines in a text file.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>parser</strong> (<a class="reference internal" href="nlp_architect.pipelines.html#nlp_architect.pipelines.spacy_bist.SpacyBISTParser" title="nlp_architect.pipelines.spacy_bist.SpacyBISTParser"><em>SpacyBISTParser</em></a>) – </li>
+<li><strong>parser</strong> – </li>
 <li><strong>docs</strong> (<em>str</em><em> or </em><em>PathLike</em>) – </li>
 <li><strong>out_dir</strong> (<em>str</em><em> or </em><em>PathLike</em>) – If specified, the output will also be written to this path.</li>
 <li><strong>show_tok</strong> (<em>bool</em><em>, </em><em>optional</em>) – Specifies whether to include token text in output.</li>
@@ -316,7 +242,7 @@
 
 <dl class="function">
 <dt id="nlp_architect.models.absa.utils.parse_txt">
-<code class="descclassname">nlp_architect.models.absa.utils.</code><code class="descname">parse_txt</code><span class="sig-paren">(</span><em>parser: nlp_architect.pipelines.spacy_bist.SpacyBISTParser, txt_path: Union[str, os.PathLike], out_dir: Union[str, os.PathLike] = None, show_tok=True, show_doc=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/absa/utils.html#parse_txt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.absa.utils.parse_txt" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nlp_architect.models.absa.utils.</code><code class="descname">parse_txt</code><span class="sig-paren">(</span><em>parser: nlp_architect.pipelines.spacy_bist.SpacyBISTParser, txt_path: Union[str, os.PathLike], out_dir: Union[str, os.PathLike] = None, show_tok=True, show_doc=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/absa/utils.html#parse_txt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.absa.utils.parse_txt" title="Permalink to this definition"></a></dt>
 <dd><p>Parse raw documents in the form of lines in a text file.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -340,7 +266,7 @@
 
 <dl class="function">
 <dt id="nlp_architect.models.absa.utils.read_generic_lex_from_file">
-<code class="descclassname">nlp_architect.models.absa.utils.</code><code class="descname">read_generic_lex_from_file</code><span class="sig-paren">(</span><em>file_name: Union[str, os.PathLike]</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/absa/utils.html#read_generic_lex_from_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.absa.utils.read_generic_lex_from_file" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nlp_architect.models.absa.utils.</code><code class="descname">read_generic_lex_from_file</code><span class="sig-paren">(</span><em>file_name: Union[str, os.PathLike]</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/absa/utils.html#read_generic_lex_from_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.absa.utils.read_generic_lex_from_file" title="Permalink to this definition"></a></dt>
 <dd><p>Read generic opinion lex for term acquisition.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -352,49 +278,43 @@
 </table>
 </dd></dl>
 
+<dl class="function">
+<dt id="nlp_architect.models.absa.utils.txt_line_generator">
+<code class="descclassname">nlp_architect.models.absa.utils.</code><code class="descname">txt_line_generator</code><span class="sig-paren">(</span><em>txt_file</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/models/absa/utils.html#txt_line_generator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.models.absa.utils.txt_line_generator" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
 </div>
 <div class="section" id="module-nlp_architect.models.absa">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-nlp_architect.models.absa" title="Permalink to this headline">¶</a></h2>
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-nlp_architect.models.absa" title="Permalink to this headline"></a></h2>
 </div>
 </div>
 
 
            </div>
-           
           </div>
           <footer>
-  
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-
-    </p>
+    <p></p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
-
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

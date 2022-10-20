@@ -1,72 +1,37 @@
-
-
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
-  <meta charset="utf-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <title>Intent Extraction &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
-  
-
-  
-  
-  
-  
-
-  
-  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Intent Extraction &mdash; NLP Architect by Intel® AI Lab 0.5.5 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/nlp_arch_theme.css" type="text/css" />
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
         <script type="text/javascript" src="_static/jquery.js"></script>
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
         <script type="text/javascript" src="_static/language_data.js"></script>
         <script type="text/javascript" src="_static/install.js"></script>
         <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-
-    
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/nlp_arch_theme.css" type="text/css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Language Models" href="lm.html" />
     <link rel="prev" title="BIST Dependency Parser" href="bist_parser.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
-            <a href="index.html">
-          
-
-          
-            
-            <img src="_static/logo.png" class="logo" alt="Logo"/>
-          
+            <a href="index.html"><img src="_static/logo.png" class="logo" alt="Logo"/>
           </a>
-
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -74,17 +39,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
@@ -144,70 +99,33 @@
 <li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
 </ul>
 
-            
-          
         </div>
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">NLP Architect by Intel® AI Lab</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="index.html">Docs</a> &raquo;</li>
-        
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
       <li>Intent Extraction</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-            
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <div class="section" id="intent-extraction">
-<h1>Intent Extraction<a class="headerlink" href="#intent-extraction" title="Permalink to this headline">¶</a></h1>
+<h1>Intent Extraction<a class="headerlink" href="#intent-extraction" title="Permalink to this headline"></a></h1>
 <div class="section" id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline"></a></h2>
 <p>Intent extraction is a type of Natural-Language-Understanding (NLU) task that helps to understand
 the type of action conveyed in the sentences and all its participating parts.</p>
 <p>An example of a sentence with intent could be:</p>
@@ -218,9 +136,9 @@ applies to (to whom?) and the object of the action (what?). In this case, <em>Si
 <em>speaker</em> to <em>pickup the laundry</em>.</p>
 </div>
 <div class="section" id="models">
-<h2>Models<a class="headerlink" href="#models" title="Permalink to this headline">¶</a></h2>
+<h2>Models<a class="headerlink" href="#models" title="Permalink to this headline"></a></h2>
 <div class="section" id="multi-task-intent-and-slot-tagging-model">
-<h3>Multi-task Intent and slot tagging model<a class="headerlink" href="#multi-task-intent-and-slot-tagging-model" title="Permalink to this headline">¶</a></h3>
+<h3>Multi-task Intent and slot tagging model<a class="headerlink" href="#multi-task-intent-and-slot-tagging-model" title="Permalink to this headline"></a></h3>
 <p><a class="reference internal" href="generated_api/nlp_architect.models.html#nlp_architect.models.intent_extraction.MultiTaskIntentModel" title="nlp_architect.models.intent_extraction.MultiTaskIntentModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultiTaskIntentModel</span></code></a> is a Multi-task model that is similar to the joint intent/slot tagging model. The model has 2 sources of input: 1 - words, 2 - characters of words. The model has 3 main features when compared to the other models, character information embedding acting as a feature extractor of the words, a CRF classifier for slot labels, and a cascading structure of the intent and tag classification.
 The intent classification is done by encoding the context of the sentences (words <code class="docutils literal notranslate"><span class="pre">x_1,</span> <span class="pre">..,</span> <span class="pre">x_n</span></code>), using word embeddings (denoted as <code class="docutils literal notranslate"><span class="pre">W</span></code>), by a bi-directional LSTM layer, and training a classifier on the last hidden state of the LSTM layer (using <code class="docutils literal notranslate"><span class="pre">softmax</span></code>).
 Word-character embeddings (denoted as <code class="docutils literal notranslate"><span class="pre">C</span></code>) are created using a bi-directional LSTM encoder which concatenates the last hidden states of the layers.
@@ -228,7 +146,7 @@ The encoding of the word-context, in each time step (word location in the senten
 <img alt="_images/mtl_model.png" src="_images/mtl_model.png" />
 </div>
 <div class="section" id="encoder-decoder-topology-for-slot-tagging">
-<h3>Encoder-Decoder topology for Slot Tagging<a class="headerlink" href="#encoder-decoder-topology-for-slot-tagging" title="Permalink to this headline">¶</a></h3>
+<h3>Encoder-Decoder topology for Slot Tagging<a class="headerlink" href="#encoder-decoder-topology-for-slot-tagging" title="Permalink to this headline"></a></h3>
 <p>The Encoder-Decoder LSTM topology is a well known model for sequence-to-sequence classification.
 <a class="reference internal" href="generated_api/nlp_architect.models.html#nlp_architect.models.intent_extraction.Seq2SeqIntentModel" title="nlp_architect.models.intent_extraction.Seq2SeqIntentModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">Seq2SeqIntentModel</span></code></a> is a model that is similar to the <em>Encoder-Labeler Deep LSTM(W)</em> model shown in <a class="footnote-reference" href="#id8" id="id1">[2]</a>.
 The <a class="reference internal" href="generated_api/nlp_architect.models.html#nlp_architect.models.intent_extraction.Seq2SeqIntentModel" title="nlp_architect.models.intent_extraction.Seq2SeqIntentModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">model</span></code></a> support arbitrary depths of LSTM layers in both encoder and decoder.</p>
@@ -236,16 +154,16 @@ The <a class="reference internal" href="generated_api/nlp_architect.models.html#
 </div>
 </div>
 <div class="section" id="datasets">
-<h2>Datasets<a class="headerlink" href="#datasets" title="Permalink to this headline">¶</a></h2>
+<h2>Datasets<a class="headerlink" href="#datasets" title="Permalink to this headline"></a></h2>
 <div class="section" id="snips-nlu-benchmark">
-<h3>SNIPS NLU benchmark<a class="headerlink" href="#snips-nlu-benchmark" title="Permalink to this headline">¶</a></h3>
+<h3>SNIPS NLU benchmark<a class="headerlink" href="#snips-nlu-benchmark" title="Permalink to this headline"></a></h3>
 <p>A NLU benchmark <a class="footnote-reference" href="#id11" id="id2">[5]</a> containing ~16K sentences with 7 intent types. Each intent has about 2000 sentences
 for training the model and 100 sentences for validation. <a class="reference internal" href="generated_api/nlp_architect.data.html#nlp_architect.data.intent_datasets.SNIPS" title="nlp_architect.data.intent_datasets.SNIPS"><code class="xref py py-class docutils literal notranslate"><span class="pre">SNIPS</span></code></a> is a class that loads the dataset from the repository and encodes the data into BIO format. The words are encoded with sparse int representation and word characters are extracted for character embeddings.</p>
 <p>The dataset can be downloaded from <a class="reference external" href="https://github.com/snipsco/nlu-benchmark">https://github.com/snipsco/nlu-benchmark</a>, and more info on the benchmark can be found <a class="reference external" href="https://medium.com/snips-ai/benchmarking-natural-language-understanding-systems-google-facebook-microsoft-and-snips-2b8ddcf9fb19">here</a>. The terms and conditions of the data set license apply. Intel does not grant any rights to the data files.</p>
 <p>Once the dataset is downloaded, use the following path <code class="docutils literal notranslate"><span class="pre">&lt;SNIPS</span> <span class="pre">folder&gt;/2017-06-custom-intent-engines</span></code> as the dataset path when using  <a class="reference internal" href="generated_api/nlp_architect.data.html#nlp_architect.data.intent_datasets.SNIPS" title="nlp_architect.data.intent_datasets.SNIPS"><code class="xref py py-class docutils literal notranslate"><span class="pre">SNIPS</span></code></a> data loader.</p>
 </div>
 <div class="section" id="tabularintentdataset">
-<h3>TabularIntentDataset<a class="headerlink" href="#tabularintentdataset" title="Permalink to this headline">¶</a></h3>
+<h3>TabularIntentDataset<a class="headerlink" href="#tabularintentdataset" title="Permalink to this headline"></a></h3>
 <p>We provide an additional dataset loader  <a class="reference internal" href="generated_api/nlp_architect.data.html#nlp_architect.data.intent_datasets.TabularIntentDataset" title="nlp_architect.data.intent_datasets.TabularIntentDataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">TabularIntentDataset</span></code></a> which can parse tabular data in the format of:</p>
 <ul class="simple">
 <li>each word encoded in a separate line: <code class="docutils literal notranslate"><span class="pre">&lt;token&gt;</span> <span class="pre">&lt;token_tag&gt;</span> <span class="pre">&lt;intent_type&gt;</span></code></li>
@@ -255,7 +173,7 @@ for training the model and 100 sentences for validation. <a class="reference int
 </div>
 </div>
 <div class="section" id="files">
-<h2>Files<a class="headerlink" href="#files" title="Permalink to this headline">¶</a></h2>
+<h2>Files<a class="headerlink" href="#files" title="Permalink to this headline"></a></h2>
 <ul class="simple">
 <li><strong>examples/intent_extraction/train_enc-dec_model.py</strong>: training script to train a <a class="reference internal" href="generated_api/nlp_architect.models.html#nlp_architect.models.intent_extraction.Seq2SeqIntentModel" title="nlp_architect.models.intent_extraction.Seq2SeqIntentModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">Seq2SeqIntentModel</span></code></a> model.</li>
 <li><strong>examples/intent_extraction/train_mtl_model.py</strong>: training script to train a <a class="reference internal" href="generated_api/nlp_architect.models.html#nlp_architect.models.intent_extraction.MultiTaskIntentModel" title="nlp_architect.models.intent_extraction.MultiTaskIntentModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultiTaskIntentModel</span></code></a> model.</li>
@@ -263,9 +181,9 @@ for training the model and 100 sentences for validation. <a class="reference int
 </ul>
 </div>
 <div class="section" id="running-modalities">
-<h2>Running Modalities<a class="headerlink" href="#running-modalities" title="Permalink to this headline">¶</a></h2>
+<h2>Running Modalities<a class="headerlink" href="#running-modalities" title="Permalink to this headline"></a></h2>
 <div class="section" id="training">
-<h3>Training<a class="headerlink" href="#training" title="Permalink to this headline">¶</a></h3>
+<h3>Training<a class="headerlink" href="#training" title="Permalink to this headline"></a></h3>
 <p>An example for training a multi-task model (predicts slot tags and intent type) using SNIPS dataset:</p>
 <div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">examples</span><span class="o">/</span><span class="n">intent_extraction</span><span class="o">/</span><span class="n">train_mtl_model</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">dataset_path</span> <span class="o">&lt;</span><span class="n">dataset</span> <span class="n">path</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">b</span> <span class="mi">10</span> <span class="o">-</span><span class="n">e</span> <span class="mi">10</span>
 </pre></div>
@@ -281,7 +199,7 @@ for training the model and 100 sentences for validation. <a class="reference int
 <p>To list all possible parameters: <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">train_joint_model.py/train_enc-dec_model.py</span> <span class="pre">-h</span></code></p>
 </div>
 <div class="section" id="interactive-mode">
-<h3>Interactive mode<a class="headerlink" href="#interactive-mode" title="Permalink to this headline">¶</a></h3>
+<h3>Interactive mode<a class="headerlink" href="#interactive-mode" title="Permalink to this headline"></a></h3>
 <p>Interactive mode allows to run sentences on a trained model (either of two) and get the results of the models displayed interactively.
 Example:</p>
 <div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">examples</span><span class="o">/</span><span class="n">intent_extraction</span><span class="o">/</span><span class="n">interactive</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">model_path</span> <span class="n">model</span><span class="o">.</span><span class="n">h5</span> <span class="o">--</span><span class="n">model_info_path</span> <span class="n">model_info</span><span class="o">.</span><span class="n">dat</span>
@@ -290,7 +208,7 @@ Example:</p>
 </div>
 </div>
 <div class="section" id="results">
-<h2>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
+<h2>Results<a class="headerlink" href="#results" title="Permalink to this headline"></a></h2>
 <p>Results for SNIPS NLU dataset and ATIS are published below. The reference results were taken from the originating paper.
 Minor differences might occur in final results. Each model was trained for 100 epochs with default parameters.</p>
 <p><strong>SNIPS</strong></p>
@@ -354,7 +272,7 @@ Minor differences might occur in final results. Each model was trained for 100 e
 <p class="last">We used ATIS <a class="footnote-reference" href="#id9" id="id5">[3]</a> <a class="footnote-reference" href="#id10" id="id6">[4]</a> dataset from: <a class="reference external" href="https://github.com/Microsoft/CNTK/tree/master/Examples/LanguageUnderstanding/ATIS/Data">https://github.com/Microsoft/CNTK/tree/master/Examples/LanguageUnderstanding/ATIS/Data</a>. Intel does not grant any rights to the data files.</p>
 </div>
 <div class="section" id="references">
-<h3>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h3>
+<h3>References<a class="headerlink" href="#references" title="Permalink to this headline"></a></h3>
 <table class="docutils footnote" frame="void" id="id7" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
@@ -397,41 +315,30 @@ Minor differences might occur in final results. Each model was trained for 100 e
 
 
            </div>
-           
           </div>
           <footer>
-  
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-
-    </p>
+    <p></p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
-
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

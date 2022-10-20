@@ -1,72 +1,37 @@
-
-
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
-  <meta charset="utf-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <title>nlp_architect.common.cdc package &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
-  
-
-  
-  
-  
-  
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>nlp_architect.common.cdc package &mdash; NLP Architect by Intel® AI Lab 0.5.5 documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/nlp_arch_theme.css" type="text/css" />
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script type="text/javascript" src="../_static/jquery.js"></script>
         <script type="text/javascript" src="../_static/underscore.js"></script>
         <script type="text/javascript" src="../_static/doctools.js"></script>
         <script type="text/javascript" src="../_static/language_data.js"></script>
         <script type="text/javascript" src="../_static/install.js"></script>
         <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/nlp_arch_theme.css" type="text/css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="nlp_architect.data package" href="nlp_architect.data.html" />
     <link rel="prev" title="nlp_architect.common package" href="nlp_architect.common.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
-            <a href="../index.html">
-          
-
-          
-            
-            <img src="../_static/logo.png" class="logo" alt="Logo"/>
-          
+            <a href="../index.html"><img src="../_static/logo.png" class="logo" alt="Logo"/>
           </a>
-
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -74,17 +39,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../quick_start.html">Quick start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
@@ -144,89 +99,50 @@
 <li class="toctree-l1"><a class="reference internal" href="../developer_guide.html">Developer Guide</a></li>
 </ul>
 
-            
-          
         </div>
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">NLP Architect by Intel® AI Lab</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="../index.html">Docs</a> &raquo;</li>
-        
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="nlp_architect_api_index.html"><code class="docutils literal notranslate"><span class="pre">nlp\_architect</span></code> package</a> &raquo;</li>
-        
           <li><a href="nlp_architect.common.html">nlp_architect.common package</a> &raquo;</li>
-        
       <li>nlp_architect.common.cdc package</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-            
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <div class="section" id="nlp-architect-common-cdc-package">
-<h1>nlp_architect.common.cdc package<a class="headerlink" href="#nlp-architect-common-cdc-package" title="Permalink to this headline">¶</a></h1>
+<h1>nlp_architect.common.cdc package<a class="headerlink" href="#nlp-architect-common-cdc-package" title="Permalink to this headline"></a></h1>
 <div class="section" id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
 </div>
 <div class="section" id="module-nlp_architect.common.cdc.cluster">
-<span id="nlp-architect-common-cdc-cluster-module"></span><h2>nlp_architect.common.cdc.cluster module<a class="headerlink" href="#module-nlp_architect.common.cdc.cluster" title="Permalink to this headline">¶</a></h2>
+<span id="nlp-architect-common-cdc-cluster-module"></span><h2>nlp_architect.common.cdc.cluster module<a class="headerlink" href="#module-nlp_architect.common.cdc.cluster" title="Permalink to this headline"></a></h2>
 <dl class="class">
 <dt id="nlp_architect.common.cdc.cluster.Cluster">
-<em class="property">class </em><code class="descclassname">nlp_architect.common.cdc.cluster.</code><code class="descname">Cluster</code><span class="sig-paren">(</span><em>coref_chain: int = -1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/common/cdc/cluster.html#Cluster"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.cdc.cluster.Cluster" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">nlp_architect.common.cdc.cluster.</code><code class="descname">Cluster</code><span class="sig-paren">(</span><em>coref_chain: int = -1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/common/cdc/cluster.html#Cluster"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.cdc.cluster.Cluster" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="method">
 <dt id="nlp_architect.common.cdc.cluster.Cluster.add_mention">
-<code class="descname">add_mention</code><span class="sig-paren">(</span><em>mention: nlp_architect.common.cdc.mention_data.MentionData</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="../_modules/nlp_architect/common/cdc/cluster.html#Cluster.add_mention"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.cdc.cluster.Cluster.add_mention" title="Permalink to this definition">¶</a></dt>
+<code class="descname">add_mention</code><span class="sig-paren">(</span><em>mention: nlp_architect.common.cdc.mention_data.MentionData</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="../_modules/nlp_architect/common/cdc/cluster.html#Cluster.add_mention"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.cdc.cluster.Cluster.add_mention" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="nlp_architect.common.cdc.cluster.Cluster.get_cluster_id">
-<code class="descname">get_cluster_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../_modules/nlp_architect/common/cdc/cluster.html#Cluster.get_cluster_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.cdc.cluster.Cluster.get_cluster_id" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_cluster_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../_modules/nlp_architect/common/cdc/cluster.html#Cluster.get_cluster_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.cdc.cluster.Cluster.get_cluster_id" title="Permalink to this definition"></a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -239,12 +155,12 @@
 
 <dl class="method">
 <dt id="nlp_architect.common.cdc.cluster.Cluster.get_mentions">
-<code class="descname">get_mentions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/common/cdc/cluster.html#Cluster.get_mentions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.cdc.cluster.Cluster.get_mentions" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_mentions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/common/cdc/cluster.html#Cluster.get_mentions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.cdc.cluster.Cluster.get_mentions" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="nlp_architect.common.cdc.cluster.Cluster.merge_clusters">
-<code class="descname">merge_clusters</code><span class="sig-paren">(</span><em>cluster</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="../_modules/nlp_architect/common/cdc/cluster.html#Cluster.merge_clusters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.cdc.cluster.Cluster.merge_clusters" title="Permalink to this definition">¶</a></dt>
+<code class="descname">merge_clusters</code><span class="sig-paren">(</span><em>cluster</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="../_modules/nlp_architect/common/cdc/cluster.html#Cluster.merge_clusters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.cdc.cluster.Cluster.merge_clusters" title="Permalink to this definition"></a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -259,38 +175,38 @@
 
 <dl class="class">
 <dt id="nlp_architect.common.cdc.cluster.Clusters">
-<em class="property">class </em><code class="descclassname">nlp_architect.common.cdc.cluster.</code><code class="descname">Clusters</code><span class="sig-paren">(</span><em>topic_id: str</em>, <em>mentions: List[nlp_architect.common.cdc.mention_data.MentionData] = None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/common/cdc/cluster.html#Clusters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.cdc.cluster.Clusters" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">nlp_architect.common.cdc.cluster.</code><code class="descname">Clusters</code><span class="sig-paren">(</span><em>topic_id: str</em>, <em>mentions: List[nlp_architect.common.cdc.mention_data.MentionData] = None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/common/cdc/cluster.html#Clusters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.cdc.cluster.Clusters" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="method">
 <dt id="nlp_architect.common.cdc.cluster.Clusters.add_cluster">
-<code class="descname">add_cluster</code><span class="sig-paren">(</span><em>cluster: nlp_architect.common.cdc.cluster.Cluster</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="../_modules/nlp_architect/common/cdc/cluster.html#Clusters.add_cluster"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.cdc.cluster.Clusters.add_cluster" title="Permalink to this definition">¶</a></dt>
+<code class="descname">add_cluster</code><span class="sig-paren">(</span><em>cluster: nlp_architect.common.cdc.cluster.Cluster</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="../_modules/nlp_architect/common/cdc/cluster.html#Clusters.add_cluster"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.cdc.cluster.Clusters.add_cluster" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="nlp_architect.common.cdc.cluster.Clusters.add_clusters">
-<code class="descname">add_clusters</code><span class="sig-paren">(</span><em>clusters</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="../_modules/nlp_architect/common/cdc/cluster.html#Clusters.add_clusters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.cdc.cluster.Clusters.add_clusters" title="Permalink to this definition">¶</a></dt>
+<code class="descname">add_clusters</code><span class="sig-paren">(</span><em>clusters</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="../_modules/nlp_architect/common/cdc/cluster.html#Clusters.add_clusters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.cdc.cluster.Clusters.add_clusters" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="nlp_architect.common.cdc.cluster.Clusters.clean_clusters">
-<code class="descname">clean_clusters</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="../_modules/nlp_architect/common/cdc/cluster.html#Clusters.clean_clusters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.cdc.cluster.Clusters.clean_clusters" title="Permalink to this definition">¶</a></dt>
+<code class="descname">clean_clusters</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="../_modules/nlp_architect/common/cdc/cluster.html#Clusters.clean_clusters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.cdc.cluster.Clusters.clean_clusters" title="Permalink to this definition"></a></dt>
 <dd><p>Remove all clusters that were already merged with other clusters</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="nlp_architect.common.cdc.cluster.Clusters.cluster_coref_chain">
-<code class="descname">cluster_coref_chain</code><em class="property"> = 1000</em><a class="headerlink" href="#nlp_architect.common.cdc.cluster.Clusters.cluster_coref_chain" title="Permalink to this definition">¶</a></dt>
+<code class="descname">cluster_coref_chain</code><em class="property"> = 1000</em><a class="headerlink" href="#nlp_architect.common.cdc.cluster.Clusters.cluster_coref_chain" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="nlp_architect.common.cdc.cluster.Clusters.set_coref_chain_to_mentions">
-<code class="descname">set_coref_chain_to_mentions</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="../_modules/nlp_architect/common/cdc/cluster.html#Clusters.set_coref_chain_to_mentions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.cdc.cluster.Clusters.set_coref_chain_to_mentions" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_coref_chain_to_mentions</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="../_modules/nlp_architect/common/cdc/cluster.html#Clusters.set_coref_chain_to_mentions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.cdc.cluster.Clusters.set_coref_chain_to_mentions" title="Permalink to this definition"></a></dt>
 <dd><p>Give all cluster mentions the same coref ID as cluster coref chain ID</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="nlp_architect.common.cdc.cluster.Clusters.set_initial_clusters">
-<code class="descname">set_initial_clusters</code><span class="sig-paren">(</span><em>mentions: List[nlp_architect.common.cdc.mention_data.MentionData]</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="../_modules/nlp_architect/common/cdc/cluster.html#Clusters.set_initial_clusters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.cdc.cluster.Clusters.set_initial_clusters" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_initial_clusters</code><span class="sig-paren">(</span><em>mentions: List[nlp_architect.common.cdc.mention_data.MentionData]</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="../_modules/nlp_architect/common/cdc/cluster.html#Clusters.set_initial_clusters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.cdc.cluster.Clusters.set_initial_clusters" title="Permalink to this definition"></a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -306,29 +222,29 @@ The initial mentions to create the clusters from</td>
 
 </div>
 <div class="section" id="module-nlp_architect.common.cdc.mention_data">
-<span id="nlp-architect-common-cdc-mention-data-module"></span><h2>nlp_architect.common.cdc.mention_data module<a class="headerlink" href="#module-nlp_architect.common.cdc.mention_data" title="Permalink to this headline">¶</a></h2>
+<span id="nlp-architect-common-cdc-mention-data-module"></span><h2>nlp_architect.common.cdc.mention_data module<a class="headerlink" href="#module-nlp_architect.common.cdc.mention_data" title="Permalink to this headline"></a></h2>
 <dl class="class">
 <dt id="nlp_architect.common.cdc.mention_data.MentionData">
-<em class="property">class </em><code class="descclassname">nlp_architect.common.cdc.mention_data.</code><code class="descname">MentionData</code><span class="sig-paren">(</span><em>topic_id: str, doc_id: str, sent_id: int, tokens_numbers: List[int], tokens_str: str, mention_context: List[str], mention_head: str, mention_head_lemma: str, coref_chain: str, mention_type: str = 'NA', is_continuous: bool = True, is_singleton: bool = False, score: float = -1.0, predicted_coref_chain: str = None, mention_pos: str = None, mention_ner: str = None, mention_index: int = -1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/common/cdc/mention_data.html#MentionData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.cdc.mention_data.MentionData" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">nlp_architect.common.cdc.mention_data.</code><code class="descname">MentionData</code><span class="sig-paren">(</span><em>topic_id: str, doc_id: str, sent_id: int, tokens_numbers: List[int], tokens_str: str, mention_context: List[str], mention_head: str, mention_head_lemma: str, coref_chain: str, mention_type: str = 'NA', is_continuous: bool = True, is_singleton: bool = False, score: float = -1.0, predicted_coref_chain: str = None, mention_pos: str = None, mention_ner: str = None, mention_index: int = -1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/common/cdc/mention_data.html#MentionData"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.cdc.mention_data.MentionData" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#nlp_architect.common.cdc.mention_data.MentionDataLight" title="nlp_architect.common.cdc.mention_data.MentionDataLight"><code class="xref py py-class docutils literal notranslate"><span class="pre">nlp_architect.common.cdc.mention_data.MentionDataLight</span></code></a></p>
 <dl class="method">
 <dt id="nlp_architect.common.cdc.mention_data.MentionData.gen_mention_id">
-<code class="descname">gen_mention_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../_modules/nlp_architect/common/cdc/mention_data.html#MentionData.gen_mention_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.cdc.mention_data.MentionData.gen_mention_id" title="Permalink to this definition">¶</a></dt>
+<code class="descname">gen_mention_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../_modules/nlp_architect/common/cdc/mention_data.html#MentionData.gen_mention_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.cdc.mention_data.MentionData.gen_mention_id" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="nlp_architect.common.cdc.mention_data.MentionData.get_mention_id">
-<code class="descname">get_mention_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../_modules/nlp_architect/common/cdc/mention_data.html#MentionData.get_mention_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.cdc.mention_data.MentionData.get_mention_id" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_mention_id</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../_modules/nlp_architect/common/cdc/mention_data.html#MentionData.get_mention_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.cdc.mention_data.MentionData.get_mention_id" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="nlp_architect.common.cdc.mention_data.MentionData.get_tokens">
-<code class="descname">get_tokens</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/common/cdc/mention_data.html#MentionData.get_tokens"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.cdc.mention_data.MentionData.get_tokens" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_tokens</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/common/cdc/mention_data.html#MentionData.get_tokens"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.cdc.mention_data.MentionData.get_tokens" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="staticmethod">
 <dt id="nlp_architect.common.cdc.mention_data.MentionData.read_json_mention_data_line">
-<em class="property">static </em><code class="descname">read_json_mention_data_line</code><span class="sig-paren">(</span><em>mention_line: str</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/common/cdc/mention_data.html#MentionData.read_json_mention_data_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.cdc.mention_data.MentionData.read_json_mention_data_line" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">read_json_mention_data_line</code><span class="sig-paren">(</span><em>mention_line: str</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/common/cdc/mention_data.html#MentionData.read_json_mention_data_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.cdc.mention_data.MentionData.read_json_mention_data_line" title="Permalink to this definition"></a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -343,7 +259,7 @@ The initial mentions to create the clusters from</td>
 
 <dl class="staticmethod">
 <dt id="nlp_architect.common.cdc.mention_data.MentionData.read_mentions_json_to_mentions_data_list">
-<em class="property">static </em><code class="descname">read_mentions_json_to_mentions_data_list</code><span class="sig-paren">(</span><em>mentions_json_file: str</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/common/cdc/mention_data.html#MentionData.read_mentions_json_to_mentions_data_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.cdc.mention_data.MentionData.read_mentions_json_to_mentions_data_list" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">read_mentions_json_to_mentions_data_list</code><span class="sig-paren">(</span><em>mentions_json_file: str</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/common/cdc/mention_data.html#MentionData.read_mentions_json_to_mentions_data_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.cdc.mention_data.MentionData.read_mentions_json_to_mentions_data_list" title="Permalink to this definition"></a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -358,33 +274,33 @@ The initial mentions to create the clusters from</td>
 
 <dl class="staticmethod">
 <dt id="nlp_architect.common.cdc.mention_data.MentionData.static_gen_token_unique_id">
-<em class="property">static </em><code class="descname">static_gen_token_unique_id</code><span class="sig-paren">(</span><em>doc_id: int</em>, <em>sent_id: int</em>, <em>token_id: int</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../_modules/nlp_architect/common/cdc/mention_data.html#MentionData.static_gen_token_unique_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.cdc.mention_data.MentionData.static_gen_token_unique_id" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">static_gen_token_unique_id</code><span class="sig-paren">(</span><em>doc_id: int</em>, <em>sent_id: int</em>, <em>token_id: int</em><span class="sig-paren">)</span> &#x2192; str<a class="reference internal" href="../_modules/nlp_architect/common/cdc/mention_data.html#MentionData.static_gen_token_unique_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.cdc.mention_data.MentionData.static_gen_token_unique_id" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="nlp_architect.common.cdc.mention_data.MentionDataLight">
-<em class="property">class </em><code class="descclassname">nlp_architect.common.cdc.mention_data.</code><code class="descname">MentionDataLight</code><span class="sig-paren">(</span><em>tokens_str: str</em>, <em>mention_context: str = None</em>, <em>mention_head: str = None</em>, <em>mention_head_lemma: str = None</em>, <em>mention_pos: str = None</em>, <em>mention_ner: str = None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/common/cdc/mention_data.html#MentionDataLight"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.cdc.mention_data.MentionDataLight" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">nlp_architect.common.cdc.mention_data.</code><code class="descname">MentionDataLight</code><span class="sig-paren">(</span><em>tokens_str: str</em>, <em>mention_context: str = None</em>, <em>mention_head: str = None</em>, <em>mention_head_lemma: str = None</em>, <em>mention_pos: str = None</em>, <em>mention_ner: str = None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/common/cdc/mention_data.html#MentionDataLight"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.cdc.mention_data.MentionDataLight" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 </dd></dl>
 
 </div>
 <div class="section" id="module-nlp_architect.common.cdc.topics">
-<span id="nlp-architect-common-cdc-topics-module"></span><h2>nlp_architect.common.cdc.topics module<a class="headerlink" href="#module-nlp_architect.common.cdc.topics" title="Permalink to this headline">¶</a></h2>
+<span id="nlp-architect-common-cdc-topics-module"></span><h2>nlp_architect.common.cdc.topics module<a class="headerlink" href="#module-nlp_architect.common.cdc.topics" title="Permalink to this headline"></a></h2>
 <dl class="class">
 <dt id="nlp_architect.common.cdc.topics.Topic">
-<em class="property">class </em><code class="descclassname">nlp_architect.common.cdc.topics.</code><code class="descname">Topic</code><span class="sig-paren">(</span><em>topic_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/common/cdc/topics.html#Topic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.cdc.topics.Topic" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">nlp_architect.common.cdc.topics.</code><code class="descname">Topic</code><span class="sig-paren">(</span><em>topic_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nlp_architect/common/cdc/topics.html#Topic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.cdc.topics.Topic" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 </dd></dl>
 
 <dl class="class">
 <dt id="nlp_architect.common.cdc.topics.Topics">
-<em class="property">class </em><code class="descclassname">nlp_architect.common.cdc.topics.</code><code class="descname">Topics</code><a class="reference internal" href="../_modules/nlp_architect/common/cdc/topics.html#Topics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.cdc.topics.Topics" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">nlp_architect.common.cdc.topics.</code><code class="descname">Topics</code><a class="reference internal" href="../_modules/nlp_architect/common/cdc/topics.html#Topics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.cdc.topics.Topics" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="method">
 <dt id="nlp_architect.common.cdc.topics.Topics.create_from_file">
-<code class="descname">create_from_file</code><span class="sig-paren">(</span><em>mentions_file_path: str</em>, <em>keep_order: bool = False</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="../_modules/nlp_architect/common/cdc/topics.html#Topics.create_from_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.cdc.topics.Topics.create_from_file" title="Permalink to this definition">¶</a></dt>
+<code class="descname">create_from_file</code><span class="sig-paren">(</span><em>mentions_file_path: str</em>, <em>keep_order: bool = False</em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="../_modules/nlp_architect/common/cdc/topics.html#Topics.create_from_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.cdc.topics.Topics.create_from_file" title="Permalink to this definition"></a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -401,12 +317,12 @@ The initial mentions to create the clusters from</td>
 
 <dl class="method">
 <dt id="nlp_architect.common.cdc.topics.Topics.load_mentions_from_file">
-<code class="descname">load_mentions_from_file</code><span class="sig-paren">(</span><em>mentions_file_path: str</em><span class="sig-paren">)</span> &#x2192; List[nlp_architect.common.cdc.topics.Topic]<a class="reference internal" href="../_modules/nlp_architect/common/cdc/topics.html#Topics.load_mentions_from_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.cdc.topics.Topics.load_mentions_from_file" title="Permalink to this definition">¶</a></dt>
+<code class="descname">load_mentions_from_file</code><span class="sig-paren">(</span><em>mentions_file_path: str</em><span class="sig-paren">)</span> &#x2192; List[nlp_architect.common.cdc.topics.Topic]<a class="reference internal" href="../_modules/nlp_architect/common/cdc/topics.html#Topics.load_mentions_from_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.cdc.topics.Topics.load_mentions_from_file" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="nlp_architect.common.cdc.topics.Topics.order_mentions_by_topics">
-<code class="descname">order_mentions_by_topics</code><span class="sig-paren">(</span><em>mentions: str</em><span class="sig-paren">)</span> &#x2192; List[nlp_architect.common.cdc.topics.Topic]<a class="reference internal" href="../_modules/nlp_architect/common/cdc/topics.html#Topics.order_mentions_by_topics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.cdc.topics.Topics.order_mentions_by_topics" title="Permalink to this definition">¶</a></dt>
+<code class="descname">order_mentions_by_topics</code><span class="sig-paren">(</span><em>mentions: str</em><span class="sig-paren">)</span> &#x2192; List[nlp_architect.common.cdc.topics.Topic]<a class="reference internal" href="../_modules/nlp_architect/common/cdc/topics.html#Topics.order_mentions_by_topics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nlp_architect.common.cdc.topics.Topics.order_mentions_by_topics" title="Permalink to this definition"></a></dt>
 <dd><p>Order mentions to documents topics
 :param mentions: json mentions file</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -423,47 +339,36 @@ The initial mentions to create the clusters from</td>
 
 </div>
 <div class="section" id="module-nlp_architect.common.cdc">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-nlp_architect.common.cdc" title="Permalink to this headline">¶</a></h2>
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-nlp_architect.common.cdc" title="Permalink to this headline"></a></h2>
 </div>
 </div>
 
 
            </div>
-           
           </div>
           <footer>
-  
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-
-    </p>
+    <p></p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
-
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

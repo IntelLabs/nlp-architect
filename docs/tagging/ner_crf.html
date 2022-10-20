@@ -1,70 +1,35 @@
-
-
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
-  <meta charset="utf-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <title>Named Entity Recognition &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
-  
-
-  
-  
-  
-  
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Named Entity Recognition &mdash; NLP Architect by Intel® AI Lab 0.5.5 documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/nlp_arch_theme.css" type="text/css" />
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script type="text/javascript" src="../_static/jquery.js"></script>
         <script type="text/javascript" src="../_static/underscore.js"></script>
         <script type="text/javascript" src="../_static/doctools.js"></script>
         <script type="text/javascript" src="../_static/language_data.js"></script>
         <script type="text/javascript" src="../_static/install.js"></script>
         <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/nlp_arch_theme.css" type="text/css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
-            <a href="../index.html">
-          
-
-          
-            
-            <img src="../_static/logo.png" class="logo" alt="Logo"/>
-          
+            <a href="../index.html"><img src="../_static/logo.png" class="logo" alt="Logo"/>
           </a>
-
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -72,17 +37,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../quick_start.html">Quick start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
@@ -119,71 +74,34 @@
 <li class="toctree-l1"><a class="reference internal" href="../developer_guide.html">Developer Guide</a></li>
 </ul>
 
-            
-          
         </div>
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">NLP Architect by Intel® AI Lab</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="../index.html">Docs</a> &raquo;</li>
-        
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
       <li>Named Entity Recognition</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-            
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <div class="section" id="named-entity-recognition">
-<h1>Named Entity Recognition<a class="headerlink" href="#named-entity-recognition" title="Permalink to this headline">¶</a></h1>
+<h1>Named Entity Recognition<a class="headerlink" href="#named-entity-recognition" title="Permalink to this headline"></a></h1>
 </div>
 <div class="section" id="overview">
-<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
+<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline"></a></h1>
 <p>Named Entity Recognition (NER) is a basic Information extraction task in which words (or phrases) are classified into pre-defined entity groups (or marked as non interesting). Entity groups share common characteristics of consisting words or phrases and are identifiable by the shape of the word or context in which they appear in sentences. Examples of entity groups are: names, numbers, locations, currency, dates, company names, etc.</p>
 <p>Example sentence:</p>
 <div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">John</span> <span class="ow">is</span> <span class="n">planning</span> <span class="n">a</span> <span class="n">visit</span> <span class="n">to</span> <span class="n">London</span> <span class="n">on</span> <span class="n">October</span>
@@ -194,7 +112,7 @@
 <p>In this example, a <code class="docutils literal notranslate"><span class="pre">name</span></code>, <code class="docutils literal notranslate"><span class="pre">city</span></code> and <code class="docutils literal notranslate"><span class="pre">date</span></code> entities are identified.</p>
 </div>
 <div class="section" id="datasets">
-<h1>Datasets<a class="headerlink" href="#datasets" title="Permalink to this headline">¶</a></h1>
+<h1>Datasets<a class="headerlink" href="#datasets" title="Permalink to this headline"></a></h1>
 <p>In this example we used publicly available NER datasets used in common research papers.
 The data must be divided into train and test sets, preprocessed and tokenized and tagged with a finite set of entities in <a class="reference external" href="https://en.wikipedia.org/wiki/Inside%E2%80%93outside%E2%80%93beginning_(tagging)">BIO</a> format.</p>
 <p>The dataset files must be processed into tabular format where each entry is of the following format:</p>
@@ -203,7 +121,7 @@ The data must be divided into train and test sets, preprocessed and tokenized an
 </div>
 <p>In the above format each sentence is separated by an empty line. Each line consists of a single sentence tokens with tags divided by white spaces (or any whitespace dividers).</p>
 <div class="section" id="data-loader">
-<h2>Data loader<a class="headerlink" href="#data-loader" title="Permalink to this headline">¶</a></h2>
+<h2>Data loader<a class="headerlink" href="#data-loader" title="Permalink to this headline"></a></h2>
 <p>Loading data into the model can be done using the <a class="reference internal" href="../generated_api/nlp_architect.data.html#nlp_architect.data.sequential_tagging.SequentialTaggingDataset" title="nlp_architect.data.sequential_tagging.SequentialTaggingDataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">SequentialTaggingDataset</span></code></a> data loader which can be used with the prepared train and test data sets described above.</p>
 <p>The data loader returns 2 Numpy matrices:
 1. sparse word representation of the sentence words
@@ -212,7 +130,7 @@ The data must be divided into train and test sets, preprocessed and tokenized an
 </div>
 </div>
 <div class="section" id="model">
-<h1>Model<a class="headerlink" href="#model" title="Permalink to this headline">¶</a></h1>
+<h1>Model<a class="headerlink" href="#model" title="Permalink to this headline"></a></h1>
 <p>The NER model is based on the Bidirectional LSTM with Conditional Random Field sequence classifier published in a paper by <a class="reference external" href="https://arxiv.org/abs/1603.01360">Lample et al.</a></p>
 <p>The model has 2 inputs:</p>
 <ol class="arabic simple">
@@ -222,29 +140,29 @@ The data must be divided into train and test sets, preprocessed and tokenized an
 <p>A high level overview of the model is provided in figure below:</p>
 <img alt="tagging/assets/ner_crf_model.png" src="tagging/assets/ner_crf_model.png" />
 <div class="section" id="feature-generation">
-<h2>Feature generation<a class="headerlink" href="#feature-generation" title="Permalink to this headline">¶</a></h2>
+<h2>Feature generation<a class="headerlink" href="#feature-generation" title="Permalink to this headline"></a></h2>
 <p>NER words or phrases can sometimes be easily identified by the shape of the words, by pre-built lexicons, by Part-of-speech analysis or rules combining patterns of the above features. In many other cases, those features are not known or non existent and the context in which the words appear provide the indication whether a word or a phrase is an entity.</p>
 <p>With the help of RNN topologies we can use LSTMs to extract the character based features of words. In this model we use convolutions to extract n-grams features from the characters making up words. A similar approach with RNNs takes the last state of a BiLSTM layer as a representation of the character embeddings. More info on character embedding can be found in the paper.</p>
 </div>
 <div class="section" id="prediction-layer">
-<h2>Prediction layer<a class="headerlink" href="#prediction-layer" title="Permalink to this headline">¶</a></h2>
+<h2>Prediction layer<a class="headerlink" href="#prediction-layer" title="Permalink to this headline"></a></h2>
 <p>The main tagger model consists of a bidirectional LSTM layers. The input of the LSTM layers consists of a concatenation of the word embedding vector and the character embedding vector (provided by the character embedding network).</p>
 <p>Finally, the output of the LSTM layers are merged into a fully-connected layer (for each token) and fed into a <a class="reference external" href="https://en.wikipedia.org/wiki/Conditional_random_field">Conditional Random Field classifier</a>. Using CRF has been empirically shown to provide more accurate models when compared to single token prediction layers (such as a <cite>softmax</cite> layer).</p>
 </div>
 </div>
 <div class="section" id="running-modalities">
-<h1>Running Modalities<a class="headerlink" href="#running-modalities" title="Permalink to this headline">¶</a></h1>
+<h1>Running Modalities<a class="headerlink" href="#running-modalities" title="Permalink to this headline"></a></h1>
 <div class="section" id="training">
-<h2>Training<a class="headerlink" href="#training" title="Permalink to this headline">¶</a></h2>
+<h2>Training<a class="headerlink" href="#training" title="Permalink to this headline"></a></h2>
 <div class="section" id="quick-train">
-<h3>Quick train<a class="headerlink" href="#quick-train" title="Permalink to this headline">¶</a></h3>
+<h3>Quick train<a class="headerlink" href="#quick-train" title="Permalink to this headline"></a></h3>
 <p>Train a model with default parameters given input data files:</p>
 <div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">examples</span><span class="o">/</span><span class="n">ner</span><span class="o">/</span><span class="n">train</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">train_file</span> <span class="n">train</span><span class="o">.</span><span class="n">txt</span> <span class="o">--</span><span class="n">test_file</span> <span class="n">test</span><span class="o">.</span><span class="n">txt</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="full-training-parameters">
-<h3>Full training parameters<a class="headerlink" href="#full-training-parameters" title="Permalink to this headline">¶</a></h3>
+<h3>Full training parameters<a class="headerlink" href="#full-training-parameters" title="Permalink to this headline"></a></h3>
 <p>All customizable parameters can be obtained by running: <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">examples/ner/train.py</span> <span class="pre">-h</span></code></p>
 <table class="docutils option-list" frame="void" rules="none">
 <col class="option" />
@@ -320,7 +238,7 @@ The data must be divided into train and test sets, preprocessed and tokenized an
 </div>
 </div>
 <div class="section" id="interactive-mode">
-<h2>Interactive mode<a class="headerlink" href="#interactive-mode" title="Permalink to this headline">¶</a></h2>
+<h2>Interactive mode<a class="headerlink" href="#interactive-mode" title="Permalink to this headline"></a></h2>
 <p>The provided <code class="docutils literal notranslate"><span class="pre">interactive.py</span></code> file enables using a pre-trained model in interactive mode, providing input directly from stdin.</p>
 <p>Run <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">examples/ner/interactive.py</span> <span class="pre">-h</span></code> for a full list of options:</p>
 <table class="docutils option-list" frame="void" rules="none">
@@ -344,7 +262,7 @@ The data must be divided into train and test sets, preprocessed and tokenized an
 </div>
 </div>
 <div class="section" id="references">
-<h1>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h1>
+<h1>References<a class="headerlink" href="#references" title="Permalink to this headline"></a></h1>
 <ol class="arabic simple">
 <li><a class="reference external" href="https://arxiv.org/abs/1603.01360">Neural Architectures for Named Entity Recognition</a> - Guillaume Lample, Miguel Ballesteros, Sandeep Subramanian, Kazuya Kawakami, Chris Dyer. 2016</li>
 </ol>
@@ -352,41 +270,30 @@ The data must be divided into train and test sets, preprocessed and tokenized an
 
 
            </div>
-           
           </div>
           <footer>
-  
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-
-    </p>
+    <p></p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
-
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

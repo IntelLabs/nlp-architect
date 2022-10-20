@@ -1,70 +1,35 @@
-
-
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
-  <meta charset="utf-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <title>Spacy-BIST Parser &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
-  
-
-  
-  
-  
-  
-
-  
-  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spacy-BIST Parser &mdash; NLP Architect by Intel® AI Lab 0.5.5 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/nlp_arch_theme.css" type="text/css" />
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
         <script type="text/javascript" src="_static/jquery.js"></script>
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
         <script type="text/javascript" src="_static/language_data.js"></script>
         <script type="text/javascript" src="_static/install.js"></script>
         <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-
-    
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/nlp_arch_theme.css" type="text/css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
-            <a href="index.html">
-          
-
-          
-            
-            <img src="_static/logo.png" class="logo" alt="Logo"/>
-          
+            <a href="index.html"><img src="_static/logo.png" class="logo" alt="Logo"/>
           </a>
-
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -72,17 +37,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
@@ -119,70 +74,33 @@
 <li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
 </ul>
 
-            
-          
         </div>
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">NLP Architect by Intel® AI Lab</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="index.html">Docs</a> &raquo;</li>
-        
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
       <li>Spacy-BIST Parser</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-            
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <div class="section" id="spacy-bist-parser">
-<h1>Spacy-BIST Parser<a class="headerlink" href="#spacy-bist-parser" title="Permalink to this headline">¶</a></h1>
+<h1>Spacy-BIST Parser<a class="headerlink" href="#spacy-bist-parser" title="Permalink to this headline"></a></h1>
 <div class="section" id="raw-text-parser-based-on-spacy-and-bist-parsers">
-<h2>Raw text parser based on Spacy and BIST parsers<a class="headerlink" href="#raw-text-parser-based-on-spacy-and-bist-parsers" title="Permalink to this headline">¶</a></h2>
+<h2>Raw text parser based on Spacy and BIST parsers<a class="headerlink" href="#raw-text-parser-based-on-spacy-and-bist-parsers" title="Permalink to this headline"></a></h2>
 <p>The parser uses <a class="reference external" href="https://spacy.io">Spacy</a>’s english model for sentence breaking,
 tokenization and token annotations (part-of-speech, lemma, NER).
 Dependency relations between tokens are extracted using BIST parser.
@@ -190,14 +108,14 @@ The BIST parser is described <a class="reference external" href="https://www.tra
 and its code is documented <a class="reference internal" href="bist_parser.html"><span class="doc">here</span></a>.</p>
 </div>
 <div class="section" id="usage">
-<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline"></a></h2>
 <p>To use the module, import it like so:</p>
 <div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">nlp_architect.pipelines.spacy_bist</span> <span class="kn">import</span> <span class="n">SpacyBISTParser</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="training">
-<h2>Training<a class="headerlink" href="#training" title="Permalink to this headline">¶</a></h2>
+<h2>Training<a class="headerlink" href="#training" title="Permalink to this headline"></a></h2>
 <p>By default, the parser uses a pre-trained BIST model and Spacy’s English
 model (<code class="docutils literal notranslate"><span class="pre">en</span></code>). A pre-trained BIST model is automatically
 downloaded (on-demand) to <code class="docutils literal notranslate"><span class="pre">spacy_bist/bist-pretrained/</span></code> and then loaded
@@ -206,18 +124,18 @@ model at initialization (see example below).</p>
 <p>For instructions on how to train a BIST model, see <a class="reference internal" href="bist_parser.html"><span class="doc">BIST documentation</span></a>.
 For instructions on how to get spaCy <a class="reference external" href="https://spacy.io/usage/models">models</a> or how to train a model see <a class="reference external" href="https://spacy.io/usage/training">spaCy training instructions</a></p>
 <div class="section" id="example">
-<h3>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
+<h3>Example<a class="headerlink" href="#example" title="Permalink to this headline"></a></h3>
 <div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">parser</span> <span class="o">=</span> <span class="n">SpacyBISTParser</span><span class="p">(</span><span class="n">spacy_model</span><span class="o">=</span><span class="s1">&#39;/path/or/link/to/spacy/model&#39;</span><span class="p">,</span> <span class="n">bist_model</span><span class="o">=</span><span class="s1">&#39;/path/to/bist/model&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="section" id="parsing">
-<h2>Parsing<a class="headerlink" href="#parsing" title="Permalink to this headline">¶</a></h2>
+<h2>Parsing<a class="headerlink" href="#parsing" title="Permalink to this headline"></a></h2>
 <p>The parser accepts a document as a raw text string encoded in UTF-8 format and outputs a
 <a class="reference internal" href="generated_api/nlp_architect.common.html#nlp_architect.common.core_nlp_doc.CoreNLPDoc" title="nlp_architect.common.core_nlp_doc.CoreNLPDoc"><code class="xref py py-class docutils literal notranslate"><span class="pre">CoreNLPDoc</span></code></a> instance which contains the annotations (example output below).</p>
 <div class="section" id="id1">
-<h3>Example<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<h3>Example<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h3>
 <div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">parser</span> <span class="o">=</span> <span class="n">SpacyBISTParser</span><span class="p">()</span>
 <span class="n">parsed_doc</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">doc_text</span><span class="o">=</span><span class="s1">&#39;First sentence. Second sentence&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">parsed_doc</span><span class="p">)</span>
@@ -225,7 +143,7 @@ For instructions on how to get spaCy <a class="reference external" href="https:/
 </div>
 </div>
 <div class="section" id="output">
-<h3>Output<a class="headerlink" href="#output" title="Permalink to this headline">¶</a></h3>
+<h3>Output<a class="headerlink" href="#output" title="Permalink to this headline"></a></h3>
 <div class="code json highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
     <span class="s2">&quot;doc_text&quot;</span><span class="p">:</span> <span class="s2">&quot;First sentence. Second sentence&quot;</span><span class="p">,</span>
     <span class="s2">&quot;sentences&quot;</span><span class="p">:</span> <span class="p">[</span>
@@ -290,7 +208,7 @@ For instructions on how to get spaCy <a class="reference external" href="https:/
 </div>
 </div>
 <div class="section" id="references">
-<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline"></a></h2>
 <table class="docutils footnote" frame="void" id="id2" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
@@ -302,41 +220,30 @@ For instructions on how to get spaCy <a class="reference external" href="https:/
 
 
            </div>
-           
           </div>
           <footer>
-  
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-
-    </p>
+    <p></p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
-
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

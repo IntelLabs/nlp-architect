@@ -22,7 +22,7 @@ NLP Architect is an open source Python library for exploring state-of-the-art de
 
 The library includes our past and ongoing NLP research and development efforts as part of Intel AI Lab.
 
-NLP Architect can be downloaded from Github: https://github.com/NervanaSystems/nlp-architect
+NLP Architect can be downloaded from Github: https://github.com/IntelLabs/nlp-architect
 
 Overview
 ========

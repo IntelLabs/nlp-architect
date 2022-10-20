@@ -1,70 +1,35 @@
-
-
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
-  <meta charset="utf-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <title>nlp_architect.utils.metrics &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
-  
-
-  
-  
-  
-  
-
-  
-  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>nlp_architect.utils.metrics &mdash; NLP Architect by Intel® AI Lab 0.5.5 documentation</title><link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/nlp_arch_theme.css" type="text/css" />
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
         <script type="text/javascript" src="../../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../../_static/doctools.js"></script>
         <script type="text/javascript" src="../../../_static/language_data.js"></script>
         <script type="text/javascript" src="../../../_static/install.js"></script>
         <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-
-    
-
-  
-  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/nlp_arch_theme.css" type="text/css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+    <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
-            <a href="../../../index.html">
-          
-
-          
-            
-            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
-          
+            <a href="../../../index.html"><img src="../../../_static/logo.png" class="logo" alt="Logo"/>
           </a>
-
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -72,17 +37,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../quick_start.html">Quick start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
@@ -119,66 +74,30 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../developer_guide.html">Developer Guide</a></li>
 </ul>
 
-            
-          
         </div>
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">NLP Architect by Intel® AI Lab</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="../../../index.html">Docs</a> &raquo;</li>
-        
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="../../index.html">Module code</a> &raquo;</li>
-        
       <li>nlp_architect.utils.metrics</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <h1>Source code for nlp_architect.utils.metrics</h1><div class="highlight"><pre>
 <span></span><span class="c1"># ******************************************************************************</span>
 <span class="c1"># Copyright 2017-2018 Intel Corporation</span>
@@ -195,17 +114,44 @@
 <span class="c1"># See the License for the specific language governing permissions and</span>
 <span class="c1"># limitations under the License.</span>
 <span class="c1"># ******************************************************************************</span>
+<span class="c1">##</span>
+<span class="c1"># This file contains code from</span>
+<span class="c1">#  (https://github.com/chakki-works/seqeval/tree/master/seqeval/metrics)</span>
+<span class="c1">#</span>
+<span class="c1"># The code was changed to support BILOU format evaluation</span>
+<span class="c1">#</span>
+<span class="c1">#  MIT License</span>
+<span class="c1">#</span>
+<span class="c1"># Copyright (c) 2018 chakki</span>
+<span class="c1">#</span>
+<span class="c1"># Permission is hereby granted, free of charge, to any person obtaining a copy</span>
+<span class="c1"># of this software and associated documentation files (the &quot;Software&quot;), to deal</span>
+<span class="c1"># in the Software without restriction, including without limitation the rights</span>
+<span class="c1"># to use, copy, modify, merge, publish, distribute, sublicense, and/or sell</span>
+<span class="c1"># copies of the Software, and to permit persons to whom the Software is</span>
+<span class="c1"># furnished to do so, subject to the following conditions:</span>
+<span class="c1">#</span>
+<span class="c1"># The above copyright notice and this permission notice shall be included in all</span>
+<span class="c1"># copies or substantial portions of the Software.</span>
+<span class="c1">#</span>
+<span class="c1"># THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR</span>
+<span class="c1"># IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,</span>
+<span class="c1"># FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE</span>
+<span class="c1"># AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER</span>
+<span class="c1"># LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,</span>
+<span class="c1"># OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE</span>
+<span class="c1"># SOFTWARE.</span>
 
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">unicode_literals</span>
 
 <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">pearsonr</span><span class="p">,</span> <span class="n">spearmanr</span>
-<span class="kn">from</span> <span class="nn">seqeval.metrics</span> <span class="kn">import</span> <span class="n">classification_report</span><span class="p">,</span> <span class="n">precision_score</span><span class="p">,</span> <span class="n">recall_score</span><span class="p">,</span> <span class="n">f1_score</span>
 <span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">f1_score</span> <span class="k">as</span> <span class="n">classification_f1_score</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 
 <div class="viewcode-block" id="get_conll_scores"><a class="viewcode-back" href="../../../generated_api/nlp_architect.utils.html#nlp_architect.utils.metrics.get_conll_scores">[docs]</a><span class="k">def</span> <span class="nf">get_conll_scores</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">y_lex</span><span class="p">,</span> <span class="n">unk</span><span class="o">=</span><span class="s2">&quot;O&quot;</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Get Conll style scores (precision, recall, f1)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Get Conll style scores (precision, recall, f1)&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
         <span class="n">predictions</span> <span class="o">=</span> <span class="n">predictions</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">test_p</span> <span class="o">=</span> <span class="n">predictions</span>
@@ -235,21 +181,18 @@
 
 
 <div class="viewcode-block" id="simple_accuracy"><a class="viewcode-back" href="../../../generated_api/nlp_architect.utils.html#nlp_architect.utils.metrics.simple_accuracy">[docs]</a><span class="k">def</span> <span class="nf">simple_accuracy</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;return simple accuracy</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;return simple accuracy&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">preds</span> <span class="o">==</span> <span class="n">labels</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="accuracy"><a class="viewcode-back" href="../../../generated_api/nlp_architect.utils.html#nlp_architect.utils.metrics.accuracy">[docs]</a><span class="k">def</span> <span class="nf">accuracy</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;return simple accuracy in expected dict format</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;return simple accuracy in expected dict format&quot;&quot;&quot;</span>
     <span class="n">acc</span> <span class="o">=</span> <span class="n">simple_accuracy</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;acc&quot;</span><span class="p">:</span> <span class="n">acc</span><span class="p">}</span></div>
 
 
 <div class="viewcode-block" id="acc_and_f1"><a class="viewcode-back" href="../../../generated_api/nlp_architect.utils.html#nlp_architect.utils.metrics.acc_and_f1">[docs]</a><span class="k">def</span> <span class="nf">acc_and_f1</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;return accuracy and f1 score</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;return accuracy and f1 score&quot;&quot;&quot;</span>
     <span class="n">acc</span> <span class="o">=</span> <span class="n">simple_accuracy</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
     <span class="n">f1</span> <span class="o">=</span> <span class="n">classification_f1_score</span><span class="p">(</span><span class="n">y_true</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span> <span class="n">y_pred</span><span class="o">=</span><span class="n">preds</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">{</span>
@@ -260,8 +203,7 @@
 
 
 <div class="viewcode-block" id="pearson_and_spearman"><a class="viewcode-back" href="../../../generated_api/nlp_architect.utils.html#nlp_architect.utils.metrics.pearson_and_spearman">[docs]</a><span class="k">def</span> <span class="nf">pearson_and_spearman</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;get pearson and spearman correlation</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;get pearson and spearman correlation&quot;&quot;&quot;</span>
     <span class="n">pearson_corr</span> <span class="o">=</span> <span class="n">pearsonr</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">labels</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">spearman_corr</span> <span class="o">=</span> <span class="n">spearmanr</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">labels</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
     <span class="k">return</span> <span class="p">{</span>
@@ -272,48 +214,443 @@
 
 
 <div class="viewcode-block" id="tagging"><a class="viewcode-back" href="../../../generated_api/nlp_architect.utils.html#nlp_architect.utils.metrics.tagging">[docs]</a><span class="k">def</span> <span class="nf">tagging</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
-    <span class="n">p</span> <span class="o">=</span> <span class="n">precision_score</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">preds</span><span class="p">)</span>
-    <span class="n">r</span> <span class="o">=</span> <span class="n">recall_score</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">preds</span><span class="p">)</span>
-    <span class="n">f1</span> <span class="o">=</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">preds</span><span class="p">)</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">sequence_precision_score</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">preds</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">sequence_recall_score</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">preds</span><span class="p">)</span>
+    <span class="n">f1</span> <span class="o">=</span> <span class="n">sequence_f1_score</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">preds</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">p</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">f1</span></div>
+
+
+<span class="c1">##</span>
+<span class="c1"># The below code is taken and changed from package chakki-works/seqeval</span>
+<span class="c1"># (seqeval/metrics/sequence_labeling.py) The code was changed to support</span>
+<span class="c1"># BILOU format evaluation</span>
+<span class="c1">##</span>
+
+
+<span class="sd">&quot;&quot;&quot;Metrics to assess performance on sequence labeling task given prediction</span>
+<span class="sd">Functions named as ``*_score`` return a scalar value to maximize: the higher</span>
+<span class="sd">the better</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="get_entities"><a class="viewcode-back" href="../../../generated_api/nlp_architect.utils.html#nlp_architect.utils.metrics.get_entities">[docs]</a><span class="k">def</span> <span class="nf">get_entities</span><span class="p">(</span><span class="n">seq</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Gets entities from sequence.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        seq (list): sequence of labels.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list: list of (chunk_type, chunk_start, chunk_end).</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; from seqeval.metrics.sequence_labeling import get_entities</span>
+<span class="sd">        &gt;&gt;&gt; seq = [&#39;B-PER&#39;, &#39;I-PER&#39;, &#39;O&#39;, &#39;B-LOC&#39;]</span>
+<span class="sd">        &gt;&gt;&gt; get_entities(seq)</span>
+<span class="sd">        [(&#39;PER&#39;, 0, 1), (&#39;LOC&#39;, 3, 3)]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># for nested list</span>
+    <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">seq</span><span class="p">):</span>
+        <span class="n">seq</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span> <span class="k">for</span> <span class="n">sublist</span> <span class="ow">in</span> <span class="n">seq</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">sublist</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;O&quot;</span><span class="p">]]</span>
+
+    <span class="n">prev_tag</span> <span class="o">=</span> <span class="s2">&quot;O&quot;</span>
+    <span class="n">prev_type</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">begin_offset</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">chunks</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">seq</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;O&quot;</span><span class="p">]):</span>
+        <span class="k">if</span> <span class="n">suffix</span><span class="p">:</span>
+            <span class="n">tag</span> <span class="o">=</span> <span class="n">chunk</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">type_</span> <span class="o">=</span> <span class="n">chunk</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">tag</span> <span class="o">=</span> <span class="n">chunk</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">type_</span> <span class="o">=</span> <span class="n">chunk</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">end_of_chunk</span><span class="p">(</span><span class="n">prev_tag</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">prev_type</span><span class="p">,</span> <span class="n">type_</span><span class="p">):</span>
+            <span class="n">chunks</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">prev_type</span><span class="p">,</span> <span class="n">begin_offset</span><span class="p">,</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">start_of_chunk</span><span class="p">(</span><span class="n">prev_tag</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">prev_type</span><span class="p">,</span> <span class="n">type_</span><span class="p">):</span>
+            <span class="n">begin_offset</span> <span class="o">=</span> <span class="n">i</span>
+        <span class="n">prev_tag</span> <span class="o">=</span> <span class="n">tag</span>
+        <span class="n">prev_type</span> <span class="o">=</span> <span class="n">type_</span>
+
+    <span class="k">return</span> <span class="n">chunks</span></div>
+
+
+<div class="viewcode-block" id="end_of_chunk"><a class="viewcode-back" href="../../../generated_api/nlp_architect.utils.html#nlp_architect.utils.metrics.end_of_chunk">[docs]</a><span class="k">def</span> <span class="nf">end_of_chunk</span><span class="p">(</span><span class="n">prev_tag</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">prev_type</span><span class="p">,</span> <span class="n">type_</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Checks if a chunk ended between the previous and current word.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        prev_tag: previous chunk tag.</span>
+<span class="sd">        tag: current chunk tag.</span>
+<span class="sd">        prev_type: previous type.</span>
+<span class="sd">        type_: current type.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        chunk_end: boolean.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">chunk_end</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="n">end_tag</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;L&quot;</span><span class="p">,</span> <span class="s2">&quot;E&quot;</span><span class="p">)</span>
+    <span class="n">start_tag</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;U&quot;</span><span class="p">,</span> <span class="s2">&quot;S&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">prev_tag</span> <span class="ow">in</span> <span class="n">end_tag</span><span class="p">:</span>
+        <span class="n">chunk_end</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">if</span> <span class="n">prev_tag</span> <span class="ow">in</span> <span class="n">start_tag</span><span class="p">:</span>
+        <span class="n">chunk_end</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">if</span> <span class="n">prev_tag</span> <span class="o">==</span> <span class="s2">&quot;B&quot;</span> <span class="ow">and</span> <span class="n">tag</span> <span class="o">==</span> <span class="s2">&quot;B&quot;</span><span class="p">:</span>
+        <span class="n">chunk_end</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">if</span> <span class="n">prev_tag</span> <span class="o">==</span> <span class="s2">&quot;B&quot;</span> <span class="ow">and</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">start_tag</span><span class="p">:</span>
+        <span class="n">chunk_end</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">if</span> <span class="n">prev_tag</span> <span class="o">==</span> <span class="s2">&quot;B&quot;</span> <span class="ow">and</span> <span class="n">tag</span> <span class="o">==</span> <span class="s2">&quot;O&quot;</span><span class="p">:</span>
+        <span class="n">chunk_end</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">if</span> <span class="n">prev_tag</span> <span class="o">==</span> <span class="s2">&quot;I&quot;</span> <span class="ow">and</span> <span class="n">tag</span> <span class="o">==</span> <span class="s2">&quot;B&quot;</span><span class="p">:</span>
+        <span class="n">chunk_end</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">if</span> <span class="n">prev_tag</span> <span class="o">==</span> <span class="s2">&quot;I&quot;</span> <span class="ow">and</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">start_tag</span><span class="p">:</span>
+        <span class="n">chunk_end</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">if</span> <span class="n">prev_tag</span> <span class="o">==</span> <span class="s2">&quot;I&quot;</span> <span class="ow">and</span> <span class="n">tag</span> <span class="o">==</span> <span class="s2">&quot;O&quot;</span><span class="p">:</span>
+        <span class="n">chunk_end</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">if</span> <span class="n">prev_tag</span> <span class="o">!=</span> <span class="s2">&quot;O&quot;</span> <span class="ow">and</span> <span class="n">prev_tag</span> <span class="o">!=</span> <span class="s2">&quot;.&quot;</span> <span class="ow">and</span> <span class="n">prev_type</span> <span class="o">!=</span> <span class="n">type_</span><span class="p">:</span>
+        <span class="n">chunk_end</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">return</span> <span class="n">chunk_end</span></div>
+
+
+<div class="viewcode-block" id="start_of_chunk"><a class="viewcode-back" href="../../../generated_api/nlp_architect.utils.html#nlp_architect.utils.metrics.start_of_chunk">[docs]</a><span class="k">def</span> <span class="nf">start_of_chunk</span><span class="p">(</span><span class="n">prev_tag</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">prev_type</span><span class="p">,</span> <span class="n">type_</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Checks if a chunk started between the previous and current word.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        prev_tag: previous chunk tag.</span>
+<span class="sd">        tag: current chunk tag.</span>
+<span class="sd">        prev_type: previous type.</span>
+<span class="sd">        type_: current type.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        chunk_start: boolean.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">chunk_start</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="n">end_tag</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;L&quot;</span><span class="p">,</span> <span class="s2">&quot;E&quot;</span><span class="p">)</span>
+    <span class="n">start_tag</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;U&quot;</span><span class="p">,</span> <span class="s2">&quot;S&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">tag</span> <span class="o">==</span> <span class="s2">&quot;B&quot;</span><span class="p">:</span>
+        <span class="n">chunk_start</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">if</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">start_tag</span><span class="p">:</span>
+        <span class="n">chunk_start</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">if</span> <span class="n">prev_tag</span> <span class="ow">in</span> <span class="n">end_tag</span> <span class="ow">and</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">end_tag</span><span class="p">:</span>
+        <span class="n">chunk_start</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">if</span> <span class="n">prev_tag</span> <span class="ow">in</span> <span class="n">end_tag</span> <span class="ow">and</span> <span class="n">tag</span> <span class="o">==</span> <span class="s2">&quot;I&quot;</span><span class="p">:</span>
+        <span class="n">chunk_start</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">if</span> <span class="n">prev_tag</span> <span class="ow">in</span> <span class="n">start_tag</span> <span class="ow">and</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">end_tag</span><span class="p">:</span>
+        <span class="n">chunk_start</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">if</span> <span class="n">prev_tag</span> <span class="ow">in</span> <span class="n">start_tag</span> <span class="ow">and</span> <span class="n">tag</span> <span class="o">==</span> <span class="s2">&quot;I&quot;</span><span class="p">:</span>
+        <span class="n">chunk_start</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">if</span> <span class="n">prev_tag</span> <span class="o">==</span> <span class="s2">&quot;O&quot;</span> <span class="ow">and</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">end_tag</span><span class="p">:</span>
+        <span class="n">chunk_start</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">if</span> <span class="n">prev_tag</span> <span class="o">==</span> <span class="s2">&quot;O&quot;</span> <span class="ow">and</span> <span class="n">tag</span> <span class="o">==</span> <span class="s2">&quot;I&quot;</span><span class="p">:</span>
+        <span class="n">chunk_start</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">if</span> <span class="n">tag</span> <span class="o">!=</span> <span class="s2">&quot;O&quot;</span> <span class="ow">and</span> <span class="n">tag</span> <span class="o">!=</span> <span class="s2">&quot;.&quot;</span> <span class="ow">and</span> <span class="n">prev_type</span> <span class="o">!=</span> <span class="n">type_</span><span class="p">:</span>
+        <span class="n">chunk_start</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="k">return</span> <span class="n">chunk_start</span></div>
+
+
+<div class="viewcode-block" id="sequence_f1_score"><a class="viewcode-back" href="../../../generated_api/nlp_architect.utils.html#nlp_architect.utils.metrics.sequence_f1_score">[docs]</a><span class="k">def</span> <span class="nf">sequence_f1_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute the F1 score.</span>
+
+<span class="sd">    The F1 score can be interpreted as a weighted average of the precision and</span>
+<span class="sd">    recall, where an F1 score reaches its best value at 1 and worst score at 0.</span>
+<span class="sd">    The relative contribution of precision and recall to the F1 score are</span>
+<span class="sd">    equal. The formula for the F1 score is::</span>
+
+<span class="sd">        F1 = 2 * (precision * recall) / (precision + recall)</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        y_true : 2d array. Ground truth (correct) target values.</span>
+<span class="sd">        y_pred : 2d array. Estimated targets as returned by a tagger.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        score : float.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; from seqeval.metrics import f1_score</span>
+<span class="sd">        &gt;&gt;&gt; y_true = [[&#39;O&#39;, &#39;O&#39;, &#39;O&#39;, &#39;B-MISC&#39;, &#39;I-MISC&#39;, &#39;I-MISC&#39;, &#39;O&#39;], [&#39;B-PER&#39;, &#39;I-PER&#39;, &#39;O&#39;]]</span>
+<span class="sd">        &gt;&gt;&gt; y_pred = [[&#39;O&#39;, &#39;O&#39;, &#39;B-MISC&#39;, &#39;I-MISC&#39;, &#39;I-MISC&#39;, &#39;I-MISC&#39;, &#39;O&#39;],</span>
+<span class="sd">        &gt;&gt;&gt; [&#39;B-PER&#39;, &#39;I-PER&#39;, &#39;O&#39;]]</span>
+<span class="sd">        &gt;&gt;&gt; f1_score(y_true, y_pred)</span>
+<span class="sd">        0.50</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">true_entities</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">get_entities</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">suffix</span><span class="p">))</span>
+    <span class="n">pred_entities</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">get_entities</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">suffix</span><span class="p">))</span>
+
+    <span class="n">nb_correct</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">true_entities</span> <span class="o">&amp;</span> <span class="n">pred_entities</span><span class="p">)</span>
+    <span class="n">nb_pred</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pred_entities</span><span class="p">)</span>
+    <span class="n">nb_true</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">true_entities</span><span class="p">)</span>
+
+    <span class="n">p</span> <span class="o">=</span> <span class="n">nb_correct</span> <span class="o">/</span> <span class="n">nb_pred</span> <span class="k">if</span> <span class="n">nb_pred</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">nb_correct</span> <span class="o">/</span> <span class="n">nb_true</span> <span class="k">if</span> <span class="n">nb_true</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
+    <span class="n">score</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">p</span> <span class="o">*</span> <span class="n">r</span> <span class="o">/</span> <span class="p">(</span><span class="n">p</span> <span class="o">+</span> <span class="n">r</span><span class="p">)</span> <span class="k">if</span> <span class="n">p</span> <span class="o">+</span> <span class="n">r</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
+
+    <span class="k">return</span> <span class="n">score</span></div>
+
+
+<div class="viewcode-block" id="sequence_accuracy_score"><a class="viewcode-back" href="../../../generated_api/nlp_architect.utils.html#nlp_architect.utils.metrics.sequence_accuracy_score">[docs]</a><span class="k">def</span> <span class="nf">sequence_accuracy_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Accuracy classification score.</span>
+
+<span class="sd">    In multilabel classification, this function computes subset accuracy:</span>
+<span class="sd">    the set of labels predicted for a sample must *exactly* match the</span>
+<span class="sd">    corresponding set of labels in y_true.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        y_true : 2d array. Ground truth (correct) target values.</span>
+<span class="sd">        y_pred : 2d array. Estimated targets as returned by a tagger.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        score : float.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; from seqeval.metrics import accuracy_score</span>
+<span class="sd">        &gt;&gt;&gt; y_true = [[&#39;O&#39;, &#39;O&#39;, &#39;O&#39;, &#39;B-MISC&#39;, &#39;I-MISC&#39;, &#39;I-MISC&#39;, &#39;O&#39;], [&#39;B-PER&#39;, &#39;I-PER&#39;, &#39;O&#39;]]</span>
+<span class="sd">        &gt;&gt;&gt; y_pred = [[&#39;O&#39;, &#39;O&#39;, &#39;B-MISC&#39;, &#39;I-MISC&#39;, &#39;I-MISC&#39;, &#39;I-MISC&#39;, &#39;O&#39;],</span>
+<span class="sd">        &gt;&gt;&gt; [&#39;B-PER&#39;, &#39;I-PER&#39;, &#39;O&#39;]]</span>
+<span class="sd">        &gt;&gt;&gt; accuracy_score(y_true, y_pred)</span>
+<span class="sd">        0.80</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">y_true</span><span class="p">):</span>
+        <span class="n">y_true</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span> <span class="k">for</span> <span class="n">sublist</span> <span class="ow">in</span> <span class="n">y_true</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">sublist</span><span class="p">]</span>
+        <span class="n">y_pred</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span> <span class="k">for</span> <span class="n">sublist</span> <span class="ow">in</span> <span class="n">y_pred</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">sublist</span><span class="p">]</span>
+
+    <span class="n">nb_correct</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">y_t</span> <span class="o">==</span> <span class="n">y_p</span> <span class="k">for</span> <span class="n">y_t</span><span class="p">,</span> <span class="n">y_p</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+    <span class="n">nb_true</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_true</span><span class="p">)</span>
+
+    <span class="n">score</span> <span class="o">=</span> <span class="n">nb_correct</span> <span class="o">/</span> <span class="n">nb_true</span>
+
+    <span class="k">return</span> <span class="n">score</span></div>
+
+
+<div class="viewcode-block" id="sequence_precision_score"><a class="viewcode-back" href="../../../generated_api/nlp_architect.utils.html#nlp_architect.utils.metrics.sequence_precision_score">[docs]</a><span class="k">def</span> <span class="nf">sequence_precision_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute the precision.</span>
+
+<span class="sd">    The precision is the ratio ``tp / (tp + fp)`` where ``tp`` is the number of</span>
+<span class="sd">    true positives and ``fp`` the number of false positives. The precision is</span>
+<span class="sd">    intuitively the ability of the classifier not to label as positive a sample.</span>
+
+<span class="sd">    The best value is 1 and the worst value is 0.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        y_true : 2d array. Ground truth (correct) target values.</span>
+<span class="sd">        y_pred : 2d array. Estimated targets as returned by a tagger.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        score : float.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; from seqeval.metrics import precision_score</span>
+<span class="sd">        &gt;&gt;&gt; y_true = [[&#39;O&#39;, &#39;O&#39;, &#39;O&#39;, &#39;B-MISC&#39;, &#39;I-MISC&#39;, &#39;I-MISC&#39;, &#39;O&#39;], [&#39;B-PER&#39;, &#39;I-PER&#39;, &#39;O&#39;]]</span>
+<span class="sd">        &gt;&gt;&gt; y_pred = [[&#39;O&#39;, &#39;O&#39;, &#39;B-MISC&#39;, &#39;I-MISC&#39;, &#39;I-MISC&#39;, &#39;I-MISC&#39;, &#39;O&#39;],</span>
+<span class="sd">        &gt;&gt;&gt; [&#39;B-PER&#39;, &#39;I-PER&#39;, &#39;O&#39;]]</span>
+<span class="sd">        &gt;&gt;&gt; precision_score(y_true, y_pred)</span>
+<span class="sd">        0.50</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">true_entities</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">get_entities</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">suffix</span><span class="p">))</span>
+    <span class="n">pred_entities</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">get_entities</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">suffix</span><span class="p">))</span>
+
+    <span class="n">nb_correct</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">true_entities</span> <span class="o">&amp;</span> <span class="n">pred_entities</span><span class="p">)</span>
+    <span class="n">nb_pred</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pred_entities</span><span class="p">)</span>
+
+    <span class="n">score</span> <span class="o">=</span> <span class="n">nb_correct</span> <span class="o">/</span> <span class="n">nb_pred</span> <span class="k">if</span> <span class="n">nb_pred</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
+
+    <span class="k">return</span> <span class="n">score</span></div>
+
+
+<div class="viewcode-block" id="sequence_recall_score"><a class="viewcode-back" href="../../../generated_api/nlp_architect.utils.html#nlp_architect.utils.metrics.sequence_recall_score">[docs]</a><span class="k">def</span> <span class="nf">sequence_recall_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute the recall.</span>
+
+<span class="sd">    The recall is the ratio ``tp / (tp + fn)`` where ``tp`` is the number of</span>
+<span class="sd">    true positives and ``fn`` the number of false negatives. The recall is</span>
+<span class="sd">    intuitively the ability of the classifier to find all the positive samples.</span>
+
+<span class="sd">    The best value is 1 and the worst value is 0.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        y_true : 2d array. Ground truth (correct) target values.</span>
+<span class="sd">        y_pred : 2d array. Estimated targets as returned by a tagger.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        score : float.</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; from seqeval.metrics import recall_score</span>
+<span class="sd">        &gt;&gt;&gt; y_true = [[&#39;O&#39;, &#39;O&#39;, &#39;O&#39;, &#39;B-MISC&#39;, &#39;I-MISC&#39;, &#39;I-MISC&#39;, &#39;O&#39;], [&#39;B-PER&#39;, &#39;I-PER&#39;, &#39;O&#39;]]</span>
+<span class="sd">        &gt;&gt;&gt; y_pred = [[&#39;O&#39;, &#39;O&#39;, &#39;B-MISC&#39;, &#39;I-MISC&#39;, &#39;I-MISC&#39;, &#39;I-MISC&#39;, &#39;O&#39;],</span>
+<span class="sd">        &gt;&gt;&gt; [&#39;B-PER&#39;, &#39;I-PER&#39;, &#39;O&#39;]]</span>
+<span class="sd">        &gt;&gt;&gt; recall_score(y_true, y_pred)</span>
+<span class="sd">        0.50</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">true_entities</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">get_entities</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">suffix</span><span class="p">))</span>
+    <span class="n">pred_entities</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">get_entities</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">suffix</span><span class="p">))</span>
+
+    <span class="n">nb_correct</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">true_entities</span> <span class="o">&amp;</span> <span class="n">pred_entities</span><span class="p">)</span>
+    <span class="n">nb_true</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">true_entities</span><span class="p">)</span>
+
+    <span class="n">score</span> <span class="o">=</span> <span class="n">nb_correct</span> <span class="o">/</span> <span class="n">nb_true</span> <span class="k">if</span> <span class="n">nb_true</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
+
+    <span class="k">return</span> <span class="n">score</span></div>
+
+
+<div class="viewcode-block" id="sequence_performance_measure"><a class="viewcode-back" href="../../../generated_api/nlp_architect.utils.html#nlp_architect.utils.metrics.sequence_performance_measure">[docs]</a><span class="k">def</span> <span class="nf">sequence_performance_measure</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute the performance metrics: TP, FP, FN, TN</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        y_true : 2d array. Ground truth (correct) target values.</span>
+<span class="sd">        y_pred : 2d array. Estimated targets as returned by a tagger.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        performance_dict : dict</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; from seqeval.metrics import performance_measure</span>
+<span class="sd">        &gt;&gt;&gt; y_true = [[&#39;O&#39;, &#39;O&#39;, &#39;O&#39;, &#39;B-MISC&#39;, &#39;I-MISC&#39;, &#39;O&#39;, &#39;B-ORG&#39;], [&#39;B-PER&#39;, &#39;I-PER&#39;, &#39;O&#39;]]</span>
+<span class="sd">        &gt;&gt;&gt; y_pred = [[&#39;O&#39;, &#39;O&#39;, &#39;B-MISC&#39;, &#39;I-MISC&#39;, &#39;I-MISC&#39;, &#39;O&#39;, &#39;O&#39;], [&#39;B-PER&#39;, &#39;I-PER&#39;, &#39;O&#39;]]</span>
+<span class="sd">        &gt;&gt;&gt; performance_measure(y_true, y_pred)</span>
+<span class="sd">        (3, 3, 1, 4)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">performace_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">y_true</span><span class="p">):</span>
+        <span class="n">y_true</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span> <span class="k">for</span> <span class="n">sublist</span> <span class="ow">in</span> <span class="n">y_true</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">sublist</span><span class="p">]</span>
+        <span class="n">y_pred</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span> <span class="k">for</span> <span class="n">sublist</span> <span class="ow">in</span> <span class="n">y_pred</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">sublist</span><span class="p">]</span>
+    <span class="n">performace_dict</span><span class="p">[</span><span class="s2">&quot;TP&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span>
+        <span class="n">y_t</span> <span class="o">==</span> <span class="n">y_p</span> <span class="k">for</span> <span class="n">y_t</span><span class="p">,</span> <span class="n">y_p</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span> <span class="k">if</span> <span class="p">((</span><span class="n">y_t</span> <span class="o">!=</span> <span class="s2">&quot;O&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">y_p</span> <span class="o">!=</span> <span class="s2">&quot;O&quot;</span><span class="p">))</span>
+    <span class="p">)</span>
+    <span class="n">performace_dict</span><span class="p">[</span><span class="s2">&quot;FP&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">y_t</span> <span class="o">!=</span> <span class="n">y_p</span> <span class="k">for</span> <span class="n">y_t</span><span class="p">,</span> <span class="n">y_p</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+    <span class="n">performace_dict</span><span class="p">[</span><span class="s2">&quot;FN&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(((</span><span class="n">y_t</span> <span class="o">!=</span> <span class="s2">&quot;O&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">y_p</span> <span class="o">==</span> <span class="s2">&quot;O&quot;</span><span class="p">))</span> <span class="k">for</span> <span class="n">y_t</span><span class="p">,</span> <span class="n">y_p</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+    <span class="n">performace_dict</span><span class="p">[</span><span class="s2">&quot;TN&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">((</span><span class="n">y_t</span> <span class="o">==</span> <span class="n">y_p</span> <span class="o">==</span> <span class="s2">&quot;O&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">y_t</span><span class="p">,</span> <span class="n">y_p</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">performace_dict</span></div>
+
+
+<div class="viewcode-block" id="classification_report"><a class="viewcode-back" href="../../../generated_api/nlp_architect.utils.html#nlp_architect.utils.metrics.classification_report">[docs]</a><span class="k">def</span> <span class="nf">classification_report</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">digits</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Build a text report showing the main classification metrics.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        y_true : 2d array. Ground truth (correct) target values.</span>
+<span class="sd">        y_pred : 2d array. Estimated targets as returned by a classifier.</span>
+<span class="sd">        digits : int. Number of digits for formatting output floating point values.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        report : string. Text summary of the precision, recall, F1 score for each class.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; from seqeval.metrics import classification_report</span>
+<span class="sd">        &gt;&gt;&gt; y_true = [[&#39;O&#39;, &#39;O&#39;, &#39;O&#39;, &#39;B-MISC&#39;, &#39;I-MISC&#39;, &#39;I-MISC&#39;, &#39;O&#39;], [&#39;B-PER&#39;, &#39;I-PER&#39;, &#39;O&#39;]]</span>
+<span class="sd">        &gt;&gt;&gt; y_pred = [[&#39;O&#39;, &#39;O&#39;, &#39;B-MISC&#39;, &#39;I-MISC&#39;, &#39;I-MISC&#39;, &#39;I-MISC&#39;, &#39;O&#39;],</span>
+<span class="sd">        &gt;&gt;&gt; [&#39;B-PER&#39;, &#39;I-PER&#39;, &#39;O&#39;]]</span>
+<span class="sd">        &gt;&gt;&gt; print(classification_report(y_true, y_pred))</span>
+<span class="sd">                     precision    recall  f1-score   support</span>
+<span class="sd">        &lt;BLANKLINE&gt;</span>
+<span class="sd">               MISC       0.00      0.00      0.00         1</span>
+<span class="sd">                PER       1.00      1.00      1.00         1</span>
+<span class="sd">        &lt;BLANKLINE&gt;</span>
+<span class="sd">          micro avg       0.50      0.50      0.50         2</span>
+<span class="sd">          macro avg       0.50      0.50      0.50         2</span>
+<span class="sd">        &lt;BLANKLINE&gt;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">true_entities</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">get_entities</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">suffix</span><span class="p">))</span>
+    <span class="n">pred_entities</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">get_entities</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">suffix</span><span class="p">))</span>
+
+    <span class="n">name_width</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">d1</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">set</span><span class="p">)</span>
+    <span class="n">d2</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">set</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">true_entities</span><span class="p">:</span>
+        <span class="n">d1</span><span class="p">[</span><span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">e</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">e</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+        <span class="n">name_width</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">name_width</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">pred_entities</span><span class="p">:</span>
+        <span class="n">d2</span><span class="p">[</span><span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">e</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">e</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+
+    <span class="n">last_line_heading</span> <span class="o">=</span> <span class="s2">&quot;macro avg&quot;</span>
+    <span class="n">width</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">name_width</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">last_line_heading</span><span class="p">),</span> <span class="n">digits</span><span class="p">)</span>
+
+    <span class="n">headers</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;precision&quot;</span><span class="p">,</span> <span class="s2">&quot;recall&quot;</span><span class="p">,</span> <span class="s2">&quot;f1-score&quot;</span><span class="p">,</span> <span class="s2">&quot;support&quot;</span><span class="p">]</span>
+    <span class="n">head_fmt</span> <span class="o">=</span> <span class="s2">&quot;{:&gt;</span><span class="si">{width}</span><span class="s2">s} &quot;</span> <span class="o">+</span> <span class="s2">&quot; </span><span class="si">{:&gt;9}</span><span class="s2">&quot;</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">headers</span><span class="p">)</span>
+    <span class="n">report</span> <span class="o">=</span> <span class="n">head_fmt</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">headers</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">)</span>
+    <span class="n">report</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span>
+
+    <span class="n">row_fmt</span> <span class="o">=</span> <span class="s2">&quot;{:&gt;</span><span class="si">{width}</span><span class="s2">s} &quot;</span> <span class="o">+</span> <span class="s2">&quot; {:&gt;9.</span><span class="si">{digits}</span><span class="s2">f}&quot;</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">+</span> <span class="s2">&quot; </span><span class="si">{:&gt;9}</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+    <span class="n">ps</span><span class="p">,</span> <span class="n">rs</span><span class="p">,</span> <span class="n">f1s</span><span class="p">,</span> <span class="n">s</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">type_name</span><span class="p">,</span> <span class="n">true_entities</span> <span class="ow">in</span> <span class="n">d1</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">pred_entities</span> <span class="o">=</span> <span class="n">d2</span><span class="p">[</span><span class="n">type_name</span><span class="p">]</span>
+        <span class="n">nb_correct</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">true_entities</span> <span class="o">&amp;</span> <span class="n">pred_entities</span><span class="p">)</span>
+        <span class="n">nb_pred</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pred_entities</span><span class="p">)</span>
+        <span class="n">nb_true</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">true_entities</span><span class="p">)</span>
+
+        <span class="n">p</span> <span class="o">=</span> <span class="n">nb_correct</span> <span class="o">/</span> <span class="n">nb_pred</span> <span class="k">if</span> <span class="n">nb_pred</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">nb_correct</span> <span class="o">/</span> <span class="n">nb_true</span> <span class="k">if</span> <span class="n">nb_true</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
+        <span class="n">f1</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">p</span> <span class="o">*</span> <span class="n">r</span> <span class="o">/</span> <span class="p">(</span><span class="n">p</span> <span class="o">+</span> <span class="n">r</span><span class="p">)</span> <span class="k">if</span> <span class="n">p</span> <span class="o">+</span> <span class="n">r</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
+
+        <span class="n">report</span> <span class="o">+=</span> <span class="n">row_fmt</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">type_name</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">f1</span><span class="p">,</span> <span class="n">nb_true</span><span class="p">],</span> <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span> <span class="n">digits</span><span class="o">=</span><span class="n">digits</span><span class="p">)</span>
+
+        <span class="n">ps</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        <span class="n">rs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+        <span class="n">f1s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">f1</span><span class="p">)</span>
+        <span class="n">s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nb_true</span><span class="p">)</span>
+
+    <span class="n">report</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+    <span class="c1"># compute averages</span>
+    <span class="n">report</span> <span class="o">+=</span> <span class="n">row_fmt</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="s2">&quot;micro avg&quot;</span><span class="p">,</span>
+        <span class="n">sequence_precision_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="n">suffix</span><span class="p">),</span>
+        <span class="n">sequence_recall_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="n">suffix</span><span class="p">),</span>
+        <span class="n">sequence_f1_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="n">suffix</span><span class="p">),</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">s</span><span class="p">),</span>
+        <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span>
+        <span class="n">digits</span><span class="o">=</span><span class="n">digits</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">report</span> <span class="o">+=</span> <span class="n">row_fmt</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">last_line_heading</span><span class="p">,</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">ps</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">s</span><span class="p">),</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">rs</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">s</span><span class="p">),</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">average</span><span class="p">(</span><span class="n">f1s</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">s</span><span class="p">),</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">s</span><span class="p">),</span>
+        <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span>
+        <span class="n">digits</span><span class="o">=</span><span class="n">digits</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">report</span></div>
+
+
+<span class="c1"># up to here code from seqeval/metrics/sequence_labeling.py</span>
+<span class="c1"># (https://github.com/chakki-works/seqeval/tree/master/seqeval/metrics)</span>
 </pre></div>
 
            </div>
-           
           </div>
           <footer>
-  
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-
-    </p>
+    <p></p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
-
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

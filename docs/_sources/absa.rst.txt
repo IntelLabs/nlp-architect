@@ -61,7 +61,7 @@ apply the dependency parser to the data:
 
 .. code:: bash
 
-    python3 examples/absa/train.py --data=TRAINING_DATASET
+    python3 examples/absa/train/train.py --data=TRAINING_DATASET
 
 
 **Arguments:**
@@ -77,7 +77,7 @@ for the first time this model will be downloaded to ``~/nlp-architect/cache/absa
 
 **Notes:**
 
-- The generated opinion and aspect lexicons are written as csv files to: ``~/nlp-architect/cache/absa/train/output/generated_opinion_lex_reranked.csv`` and to ``~/nlp-architect/cache/absa/train/output/generated_aspect_lex.csv``
+- The generated opinion and aspect lexicons are written as csv files to: ``~/nlp-architect/cache/absa/train/lexicons/generated_opinion_lex_reranked.csv`` and to ``~/nlp-architect/cache/absa/train/lexicons/generated_aspect_lex.csv``
 
 - In this mode the parsed data (jsons of ParsedDocument objects) is written to: ``~/nlp-architect/cache/absa/train/parsed``
 
@@ -89,7 +89,7 @@ for the first time this model will be downloaded to ``~/nlp-architect/cache/absa
 
 .. code:: bash
 
-    python3 examples/absa/train.py --parsed-data=PARSED_TRAINING_DATASET
+    python3 examples/absa/train/train.py --parsed-data=PARSED_TRAINING_DATASET
 
 **Arguments:**
 

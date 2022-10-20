@@ -1,72 +1,37 @@
-
-
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
-  <meta charset="utf-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <title>BIST Dependency Parser &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
-  
-
-  
-  
-  
-  
-
-  
-  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BIST Dependency Parser &mdash; NLP Architect by Intel® AI Lab 0.5.5 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/nlp_arch_theme.css" type="text/css" />
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
         <script type="text/javascript" src="_static/jquery.js"></script>
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
         <script type="text/javascript" src="_static/language_data.js"></script>
         <script type="text/javascript" src="_static/install.js"></script>
         <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-
-    
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/nlp_arch_theme.css" type="text/css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Intent Extraction" href="intent.html" />
     <link rel="prev" title="Sentiment Analysis" href="sentiment.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
-            <a href="index.html">
-          
-
-          
-            
-            <img src="_static/logo.png" class="logo" alt="Logo"/>
-          
+            <a href="index.html"><img src="_static/logo.png" class="logo" alt="Logo"/>
           </a>
-
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -74,17 +39,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
@@ -139,90 +94,53 @@
 <li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
 </ul>
 
-            
-          
         </div>
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">NLP Architect by Intel® AI Lab</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="index.html">Docs</a> &raquo;</li>
-        
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
       <li>BIST Dependency Parser</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-            
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <div class="section" id="bist-dependency-parser">
-<h1>BIST Dependency Parser<a class="headerlink" href="#bist-dependency-parser" title="Permalink to this headline">¶</a></h1>
+<h1>BIST Dependency Parser<a class="headerlink" href="#bist-dependency-parser" title="Permalink to this headline"></a></h1>
 <div class="section" id="graph-based-dependency-parser-using-bilstm-feature-extractors">
-<h2>Graph-based dependency parser using BiLSTM feature extractors<a class="headerlink" href="#graph-based-dependency-parser-using-bilstm-feature-extractors" title="Permalink to this headline">¶</a></h2>
+<h2>Graph-based dependency parser using BiLSTM feature extractors<a class="headerlink" href="#graph-based-dependency-parser-using-bilstm-feature-extractors" title="Permalink to this headline"></a></h2>
 <p>The techniques behind the parser are described in the <a class="reference external" href="https://www.transacl.org/ojs/index.php/tacl/article/viewFile/885/198">Simple and
 Accurate Dependency Parsing Using Bidirectional LSTM Feature
 Representations</a> <a class="footnote-reference" href="#id2" id="id1">[1]</a>.</p>
 </div>
 <div class="section" id="usage">
-<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline"></a></h2>
 <p>To use the module, import it like so:</p>
 <div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">nlp_architect.models.bist_parser</span> <span class="kn">import</span> <span class="n">BISTModel</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="training">
-<h2>Training<a class="headerlink" href="#training" title="Permalink to this headline">¶</a></h2>
+<h2>Training<a class="headerlink" href="#training" title="Permalink to this headline"></a></h2>
 <p>Training the parser requires having a <code class="docutils literal notranslate"><span class="pre">train.conllu</span></code> file
 formatted according to the <a class="reference external" href="http://universaldependencies.org/format.html">CoNLL-U</a> data format,
 annotated with part-of-speech tags and dependencies.
 The benchmark was performed on a Mac book pro with i7 processor. The parser achieves
 an accuracy of 93.8 UAS on the standard Penn Treebank dataset (Universal Dependencies).</p>
 <div class="section" id="basic-example">
-<h3>Basic Example<a class="headerlink" href="#basic-example" title="Permalink to this headline">¶</a></h3>
+<h3>Basic Example<a class="headerlink" href="#basic-example" title="Permalink to this headline"></a></h3>
 <p>To train a parsing model with default parameters, type the following:</p>
 <div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">parser</span> <span class="o">=</span> <span class="n">BISTModel</span><span class="p">()</span>
 <span class="n">parser</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="s1">&#39;/path/to/train.conllu&#39;</span><span class="p">)</span>
@@ -230,7 +148,7 @@ an accuracy of 93.8 UAS on the standard Penn Treebank dataset (Universal Depende
 </div>
 </div>
 <div class="section" id="exhaustive-example">
-<h3>Exhaustive Example<a class="headerlink" href="#exhaustive-example" title="Permalink to this headline">¶</a></h3>
+<h3>Exhaustive Example<a class="headerlink" href="#exhaustive-example" title="Permalink to this headline"></a></h3>
 <p>Optionally, the following model/training parameters can be supplied (overriding their default
 values listed below):</p>
 <div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">parser</span> <span class="o">=</span> <span class="n">BISTModel</span><span class="p">(</span><span class="n">activation</span><span class="o">=</span><span class="s1">&#39;tanh&#39;</span><span class="p">,</span> <span class="n">lstm_layers</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">lstm_dims</span><span class="o">=</span><span class="mi">125</span><span class="p">,</span> <span class="n">pos_dims</span><span class="o">=</span><span class="mi">25</span><span class="p">)</span>
@@ -239,7 +157,7 @@ values listed below):</p>
 </div>
 </div>
 <div class="section" id="conducting-intermediate-evaluations">
-<h3>Conducting Intermediate Evaluations<a class="headerlink" href="#conducting-intermediate-evaluations" title="Permalink to this headline">¶</a></h3>
+<h3>Conducting Intermediate Evaluations<a class="headerlink" href="#conducting-intermediate-evaluations" title="Permalink to this headline"></a></h3>
 <p>If a path to a development dataset file (annotated with POS tags and dependencies) is supplied,
 intermediate model evaluations are conducted:</p>
 <div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">parser</span> <span class="o">=</span> <span class="n">BISTModel</span><span class="p">()</span>
@@ -255,11 +173,11 @@ directory:</p>
 </div>
 </div>
 <div class="section" id="inference">
-<h2>Inference<a class="headerlink" href="#inference" title="Permalink to this headline">¶</a></h2>
+<h2>Inference<a class="headerlink" href="#inference" title="Permalink to this headline"></a></h2>
 <p>Once you have a trained <a class="reference internal" href="generated_api/nlp_architect.models.html#nlp_architect.models.bist_parser.BISTModel" title="nlp_architect.models.bist_parser.BISTModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">BISTModel</span></code></a>, there are two acceptable input modes for running inference
 with it. For both modes, the input must be annotated with part-of-speech tags.</p>
 <div class="section" id="file-input-mode">
-<h3>File Input Mode<a class="headerlink" href="#file-input-mode" title="Permalink to this headline">¶</a></h3>
+<h3>File Input Mode<a class="headerlink" href="#file-input-mode" title="Permalink to this headline"></a></h3>
 <p>Supply a path to a dataset file in the <a class="reference external" href="http://universaldependencies.org/format.html">CoNLL-U</a> data format.</p>
 <div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">predictions</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">dataset</span><span class="o">=</span><span class="s1">&#39;/path/to/test.conllu&#39;</span><span class="p">)</span>
 </pre></div>
@@ -269,7 +187,7 @@ dependencies, as a collection of <a class="reference internal" href="generated_a
 annotated token.</p>
 </div>
 <div class="section" id="conllentry-input-mode">
-<h3>ConllEntry Input Mode<a class="headerlink" href="#conllentry-input-mode" title="Permalink to this headline">¶</a></h3>
+<h3>ConllEntry Input Mode<a class="headerlink" href="#conllentry-input-mode" title="Permalink to this headline"></a></h3>
 <p>Supply a list of sentences, where each sentence is a list of annotated tokens, represented by
 <a class="reference internal" href="generated_api/nlp_architect.data.html#nlp_architect.data.conll.ConllEntry" title="nlp_architect.data.conll.ConllEntry"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConllEntry</span></code></a> instances.</p>
 <div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">predictions</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">conll</span><span class="o">=</span><span class="s1">&#39;/path/to/test.conllu&#39;</span><span class="p">)</span>
@@ -278,7 +196,7 @@ annotated token.</p>
 <p>The output format is the same as in file input mode.</p>
 </div>
 <div class="section" id="evaluating-predictions">
-<h3>Evaluating Predictions<a class="headerlink" href="#evaluating-predictions" title="Permalink to this headline">¶</a></h3>
+<h3>Evaluating Predictions<a class="headerlink" href="#evaluating-predictions" title="Permalink to this headline"></a></h3>
 <p>Running an evaluation requires the following:
 - Inference must be run in file input mode
 - The input file must be annotated with dependencies as well</p>
@@ -294,7 +212,7 @@ annotated token.</p>
 </div>
 </div>
 <div class="section" id="saving-and-loading-a-model">
-<h2>Saving and Loading a Model<a class="headerlink" href="#saving-and-loading-a-model" title="Permalink to this headline">¶</a></h2>
+<h2>Saving and Loading a Model<a class="headerlink" href="#saving-and-loading-a-model" title="Permalink to this headline"></a></h2>
 <p>To save a <a class="reference internal" href="generated_api/nlp_architect.models.html#nlp_architect.models.bist_parser.BISTModel" title="nlp_architect.models.bist_parser.BISTModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">BISTModel</span></code></a> to some path, type:</p>
 <div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">parser</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;/path/to/bist.model&#39;</span><span class="p">)</span>
 </pre></div>
@@ -308,7 +226,7 @@ This file is required for loading the model afterwards.</p>
 <p>Note that this operation will also look for the <em>params.json</em> in the same directory.</p>
 </div>
 <div class="section" id="references">
-<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline"></a></h2>
 <table class="docutils footnote" frame="void" id="id2" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
@@ -320,41 +238,30 @@ This file is required for loading the model afterwards.</p>
 
 
            </div>
-           
           </div>
           <footer>
-  
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-
-    </p>
+    <p></p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
-
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

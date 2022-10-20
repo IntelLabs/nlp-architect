@@ -1,72 +1,37 @@
-
-
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
-  <meta charset="utf-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <title>Language Models &mdash; NLP Architect by Intel® AI Lab 0.5.2 documentation</title>
-  
-
-  
-  
-  
-  
-
-  
-  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Language Models &mdash; NLP Architect by Intel® AI Lab 0.5.5 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/nlp_arch_theme.css" type="text/css" />
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
         <script type="text/javascript" src="_static/jquery.js"></script>
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
         <script type="text/javascript" src="_static/language_data.js"></script>
         <script type="text/javascript" src="_static/install.js"></script>
         <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-
-    
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/nlp_arch_theme.css" type="text/css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Mono" type="text/css" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:100,900" type="text/css" />
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Information Extraction" href="information_extraction.html" />
     <link rel="prev" title="Intent Extraction" href="intent.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
-            <a href="index.html">
-          
-
-          
-            
-            <img src="_static/logo.png" class="logo" alt="Logo"/>
-          
+            <a href="index.html"><img src="_static/logo.png" class="logo" alt="Logo"/>
           </a>
-
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -74,17 +39,7 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
@@ -133,77 +88,40 @@
 <li class="toctree-l1"><a class="reference internal" href="developer_guide.html">Developer Guide</a></li>
 </ul>
 
-            
-          
         </div>
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">NLP Architect by Intel® AI Lab</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="index.html">Docs</a> &raquo;</li>
-        
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
       <li>Language Models</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-            
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <div class="section" id="language-models">
-<h1>Language Models<a class="headerlink" href="#language-models" title="Permalink to this headline">¶</a></h1>
+<h1>Language Models<a class="headerlink" href="#language-models" title="Permalink to this headline"></a></h1>
 <div class="section" id="language-modeling-with-tcn">
-<h2>Language Modeling with TCN<a class="headerlink" href="#language-modeling-with-tcn" title="Permalink to this headline">¶</a></h2>
+<h2>Language Modeling with TCN<a class="headerlink" href="#language-modeling-with-tcn" title="Permalink to this headline"></a></h2>
 <div class="section" id="overview">
-<h3>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h3>
+<h3>Overview<a class="headerlink" href="#overview" title="Permalink to this headline"></a></h3>
 <p>A language model (LM) is a probability distribution over a sequence of words. Given a sequence, a trained language model can provide the probability that the sequence is realistic. Using deep learning, one manner of creating an LM is by training a neural network to predict the probability of occurrence of the next word (or character) in the sequence given all the words (or characters) preceding it. (In other words, the joint distribution over elements in a sequence is broken up using the chain rule.)</p>
 <p>This folder contains scripts that implement a word-level language model using Temporal Convolutional Network (TCN) as described in the paper <a class="reference external" href="https://arxiv.org/abs/1803.01271">An Empirical Evaluation of Generic Convolutional and Recurrent Networks for Sequence Modeling</a> by Shaojie Bai, J. Zico Kolter and Vladlen Koltun. In this paper, the authors show that TCNs architectures are competitive with RNNs  across a diverse set of discrete sequence tasks. For language modeling, it is shown that TCN’s performance on two datasets (Penn Tree Bank and WikiText) is comparable to that of an optimized LSTM architecture (with recurrent and embedding dropout, etc).</p>
 </div>
 <div class="section" id="data-loading">
-<h3>Data Loading<a class="headerlink" href="#data-loading" title="Permalink to this headline">¶</a></h3>
+<h3>Data Loading<a class="headerlink" href="#data-loading" title="Permalink to this headline"></a></h3>
 <ul>
 <li><p class="first">PTB can be downloaded from <a class="reference external" href="http://www.fit.vutbr.cz/~imikolov/rnnlm/">here</a></p>
 </li>
@@ -223,9 +141,9 @@
 </ul>
 </div>
 <div class="section" id="running-modalities">
-<h3>Running Modalities<a class="headerlink" href="#running-modalities" title="Permalink to this headline">¶</a></h3>
+<h3>Running Modalities<a class="headerlink" href="#running-modalities" title="Permalink to this headline"></a></h3>
 <div class="section" id="training">
-<h4>Training<a class="headerlink" href="#training" title="Permalink to this headline">¶</a></h4>
+<h4>Training<a class="headerlink" href="#training" title="Permalink to this headline"></a></h4>
 <p>The base class that defines <a class="reference internal" href="generated_api/nlp_architect.models.html#nlp_architect.models.temporal_convolutional_network.TCN" title="nlp_architect.models.temporal_convolutional_network.TCN"><code class="xref py py-class docutils literal notranslate"><span class="pre">TCN</span></code></a> topology can be imported as:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">nlp_architect.models.temporal_convolutional_network</span> <span class="kn">import</span> <span class="n">TCN</span>
 </pre></div>
@@ -244,7 +162,7 @@
 </div>
 </div>
 <div class="section" id="inference">
-<h3>Inference<a class="headerlink" href="#inference" title="Permalink to this headline">¶</a></h3>
+<h3>Inference<a class="headerlink" href="#inference" title="Permalink to this headline"></a></h3>
 <p>To run inference and generate sample data, run the following command:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">examples</span><span class="o">/</span><span class="n">word_language_model_with_tcn</span><span class="o">/</span><span class="n">mle_language_model</span><span class="o">/</span><span class="n">language_modeling_with_tcn</span><span class="o">.</span><span class="n">py</span> \
   <span class="o">--</span><span class="n">dropout</span> <span class="mf">0.45</span> <span class="o">--</span><span class="n">ksize</span> <span class="mi">3</span> <span class="o">--</span><span class="n">levels</span> <span class="mi">4</span> <span class="o">--</span><span class="n">seq_len</span> <span class="mi">60</span> <span class="o">--</span><span class="n">nhid</span> <span class="mi">600</span> <span class="o">--</span><span class="n">em_len</span> <span class="mi">600</span> \
@@ -282,41 +200,30 @@ book values of about N department stores in france
 
 
            </div>
-           
           </div>
           <footer>
-  
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-
-    </p>
+    <p></p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
-
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>
