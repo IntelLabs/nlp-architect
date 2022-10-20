@@ -6,7 +6,18 @@ Repository for aspect extraction with knowledge-enhanced transformers as describ
 > Phillip Howard, Arden Ma, Vasudev Lal, Ana Paula Simoes, Daniel Korat, Oren Pereg, Moshe Wasserblat and Gadi Singer.
 > Proceedings of the 31st ACM International Conference on Information & Knowledge Management (CIKM '22).
 
-## Install dependencies
+## Installation
+
+Install the required python packages. For machines with apt:
+```
+apt-get update && apt-get install python3.8 python3.8-dev python3.8-venv python3.8-distutils
+```
+
+Clone the aspect_extraction_with_kg branch of NLP Architect:
+```
+git clone -b aspect_extraction_with_kg https://github.com/IntelLabs/nlp-architect.git
+cd nlp-architect
+```
 
 Create a new virtual environment and update pip:
 ```
@@ -39,7 +50,7 @@ The ``prepare_kg.ipynb`` notebook will produce a file named ``seed_dist.pkl`` wh
 
 ## Run experiments
 
-Prior to running the experiments, you may want to modify the model configuration files based on the number of GPUs you wish to use. The configuration files are located in ``nlp_architect/models/aspect_extraction_with_kg/config/``. By default, the experiments will be split across 3 GPUs with device IDs speicfied by the ``gpus`` list of the config file.
+Prior to running the experiments, you may want to modify the model configuration files based on the number of available GPUs. The configuration files are located in ``nlp_architect/models/aspect_extraction_with_kg/config/``. By default, the experiments will be split across 3 GPUs with device IDs speicfied by the ``gpus`` list of the config file.
 
 To run the BERT-PT experiment:
 
