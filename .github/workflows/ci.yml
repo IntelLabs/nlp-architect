@@ -30,7 +30,6 @@ jobs:
     
     - name: Code style 
       run: |
-        flake8 examples nlp_architect tests solutions --config setup.cfg
         ./scripts/check_pylint.sh
         black --check --line-length 100 --target-version py36 examples nlp_architect solutions tests
 
