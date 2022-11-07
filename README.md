@@ -1,3 +1,6 @@
+> :warning: **DISCONTINUATION OF PROJECT** - *This project will no longer be maintained by Intel.  This project has been identified as having known security escapes.  Intel has ceased development and contributions including, but not limited to, maintenance, bug fixes, new releases, or updates, to this project.* **Intel no longer accepts patches to this project.**
+
+
 <p align="center">
     <br>
     <img src="https://raw.githubusercontent.com/IntelLabs/nlp-architect/master/docs-source/source/assets/nlp_architect_logo_trans.png" width="400"/>
